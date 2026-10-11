@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Terms & Conditions | BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+        <!--
+            script.js adds the correct
+            menu according to the logged-in role.
+        -->
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+            <h3 id="profileName">
+                User
+            </h3>
+
+            <p id="profileRole">
+                User
+            </p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PAGE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<p class="gallery-small-title">
+
+    BRUSH AND BID
+
+</p>
+
+
+<h2>
+
+    Terms & Conditions
+
+</h2>
+
+
+<p>
+
+    Please read the following information
+    carefully before using BRUSH and BID.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     TERMS CONTENT
+================================= -->
+
+<section class="gallery-section">
+
+ 
+<div class="register-box info-content">
+
+    <section class="gallery-section policy-page">
+
+
+        <!-- ACCOUNT USE -->
+
+        <h3>
+            1. Account Use
+        </h3>
+
+        <p>
+            Users must provide accurate information
+            and keep their account credentials secure.
+        </p>
+
+
+
+        <!-- ARTWORK SUBMISSIONS -->
+
+        <h3>
+            2. Artwork Submissions
+        </h3>
+
+        <p>
+            Artists must submit original or lawfully
+            owned artwork. Submissions are subject to
+            administrative review.
+        </p>
+
+
+
+        <!-- BIDDING -->
+
+        <h3>
+            3. Bidding
+        </h3>
+
+        <p>
+            Bids are binding once submitted.
+            A bidder should enter only amounts they
+            are prepared to pay.
+        </p>
+
+
+
+        <!-- AUCTIONS -->
+
+        <h3>
+            4. Auctions
+        </h3>
+
+        <p>
+            Each weekly auction follows the published
+            start and end time. The highest valid bid
+            at closing is treated as the winning bid,
+            subject to platform verification.
+        </p>
+
+
+
+        <!-- PROHIBITED ACTIVITY -->
+
+        <h3>
+            5. Prohibited Activity
+        </h3>
+
+        <p>
+            Users must not manipulate bids, submit
+            misleading information, or interfere with
+            the operation of the platform.
+        </p>
+
+
+
+        <!-- CHANGES -->
+
+        <h3>
+            6. Changes
+        </h3>
+
+        <p>
+            BRUSH and BID may update these terms when
+            necessary. Continued use after an update
+            indicates acceptance.
+        </p>
+
+
+    </section>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - Brush & Bid</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .admin-login-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .admin-login-box {
+            width: 100%;
+            max-width: 420px;
+            padding: 35px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .admin-login-box h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .admin-login-box p {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: var(--caramel);
+            transition: .3s;
+        }
+
+        /* faded until email and password are filled, dark once ready */
+        .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .login-btn:not(:disabled) {
+            background: var(--espresso);
+        }
+
+        #message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        #message.error {
+            display: block;
+            background: #ffe5e5;
+            color: #b00020;
+        }
+
+        #message.success {
+            display: block;
+            background: #e5f7e5;
+            color: #176b17;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-login-container">
+
+        <div class="admin-login-box">
+
+            <h1>Admin Login</h1>
+
+            <p>Login using the authorized administrator account.</p>
+
+            <form id="adminLoginForm">
+
+                <div class="form-group">
+                    <label for="email">Admin Email</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter admin email"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <span class="password-field">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Show password"
+                        >
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+
+                    </span>
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginButton"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <div id="message"></div>
+
+            <a href="index.html?forgot=admin" class="back-link">
+                Forgot password?
+            </a>
+
+            <a href="index.html" class="back-link">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const form = document.getElementById("adminLoginForm");
+        const loginButton = document.getElementById("loginButton");
+        const message = document.getElementById("message");
+
+
+        function showMessage(text, type) {
+
+            message.textContent = text;
+
+            message.className = type;
+
+            message.style.display = "block";
+
+        }
+
+
+        /*
+            Enable the login button only when
+            email and password are both filled in.
+        */
+
+        function updateLoginButton() {
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            loginButton.disabled = !(email && password);
+
+        }
+
+
+        /* Show / hide password */
+
+        const passwordInput = document.getElementById("password");
+
+        const passwordToggle = document.getElementById("passwordToggle");
+
+        passwordToggle.addEventListener("click", function () {
+
+            const hidden = passwordInput.type === "password";
+
+            passwordInput.type = hidden ? "text" : "password";
+
+            passwordToggle.setAttribute(
+                "aria-label",
+                hidden ? "Hide password" : "Show password"
+            );
+
+            passwordToggle.style.color =
+                hidden ? "var(--espresso)" : "";
+
+            passwordInput.focus();
+
+        });
+
+
+        /* Coming back from "Forgot password?" */
+
+        if (new URLSearchParams(window.location.search).get("reset") === "done") {
+
+            showMessage(
+                "Your password has been reset. Log in with your new password.",
+                "success"
+            );
+
+        }
+
+
+        form.addEventListener("input", updateLoginButton);
+
+        form.addEventListener("change", updateLoginButton);
+
+        updateLoginButton();
+
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+
+            if (!email || !password) {
+
+                showMessage(
+                    "Please enter email and password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            loginButton.disabled = true;
+
+            loginButton.textContent = "Logging in...";
+
+            message.style.display = "none";
+
+
+            try {
+
+                const response = await fetch(
+                    "/api/admin/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                if (!response.ok || !data.success) {
+
+                    showMessage(
+                        data.error ||
+                        data.message ||
+                        "Access Denied: Invalid admin credentials.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                    Store only the information required
+                    by the admin dashboard.
+                */
+
+localStorage.setItem(
+    "loggedIn",
+    "true"
+);
+
+localStorage.setItem(
+    "userId",
+    data.user.user_id || data.user.id || ""
+);
+
+localStorage.setItem(
+    "userName",
+    data.user.full_name || data.user.name || "Admin"
+);
+
+localStorage.setItem(
+    "userEmail",
+    data.user.email || email
+);
+
+localStorage.setItem(
+    "userRole",
+    "Admin"
+);
+
+/*
+    If the admin was sent here from an admin page,
+    go back to it. Only plain local page names are
+    allowed, so ?next= can't redirect to another site.
+*/
+
+const next =
+    new URLSearchParams(window.location.search).get("next");
+
+const safeNext =
+    next && /^[a-z0-9-]+\.html$/i.test(next)
+        ? next
+        : "";
+
+showMessage(
+    safeNext
+        ? "Login successful. Opening admin page..."
+        : "Login successful. Opening home page...",
+    "success"
+);
+
+setTimeout(function() {
+
+    window.location.href =
+        safeNext || "index.html";
+
+}, 500);
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Admin login error:",
+                    error
+                );
+
+
+                showMessage(
+                    "Unable to connect to the server. Please make sure the Brush & Bid server is running.",
+                    "error"
+                );
+
+            }
+
+
+            finally {
+
+                loginButton.textContent = "Login";
+
+                updateLoginButton();
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

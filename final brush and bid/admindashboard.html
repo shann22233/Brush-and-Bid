@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<!-- Admins only: redirects everyone else to admin login -->
+<script src="admin-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Admin Dashboard | BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+
+<style>
+
+/* =================================
+   ADMIN DASHBOARD
+================================= */
+
+.dashboard-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+
+/* =================================
+   TITLE
+================================= */
+
+.dashboard-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.dashboard-title h2 {
+    margin: 0 0 10px;
+}
+
+.dashboard-title p {
+    margin: 0;
+}
+
+
+/* =================================
+   SECTIONS
+================================= */
+
+.dashboard-section {
+    margin-bottom: 1px;
+    display: block !important;
+    width: 100% !important;
+}
+.dashboard-section > h2 {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 5px 0 !important;
+    text-align: left !important;
+}
+
+/* =================================
+   DASHBOARD GRID
+================================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+
+/* =================================
+   DASHBOARD CARDS
+================================= */
+
+.dashboard-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+
+    /* IMPORTANT */
+    display: block;
+    text-align: left;
+}
+
+
+/* Label */
+
+.dashboard-card span {
+    display: block !important;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+
+    /* Prevent global styles */
+    width: auto;
+    text-align: left;
+}
+
+
+/* Number / value */
+
+.dashboard-card h3 {
+    display: block !important;
+    margin: 0;
+    font-size: 30px;
+
+    /* Prevent global styles */
+    width: auto;
+    text-align: left;
+}
+
+
+/* Description */
+
+.dashboard-card p {
+    display: block !important;
+    margin: 8px 0 0;
+
+    /* Prevent global styles */
+    width: auto;
+    text-align: left;
+}
+
+
+/* =================================
+   CURRENT AUCTION
+================================= */
+
+.current-auction-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+.current-auction-card > h3 {
+    margin: 0 0 20px;
+}
+
+
+/* =================================
+   AUCTION GRID
+================================= */
+
+.current-auction-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+
+/* =================================
+   AUCTION ITEMS
+================================= */
+
+.auction-item {
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 6px;
+
+    /* IMPORTANT */
+    display: block;
+    text-align: left;
+}
+
+
+/* Auction label */
+
+.auction-item span {
+    display: block !important;
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 8px;
+
+    width: auto;
+    text-align: left;
+}
+
+
+/* Auction value */
+
+.auction-item strong {
+    display: block !important;
+    width: auto;
+    text-align: left;
+    font-size: 16px;
+}
+
+
+/* =================================
+   STATUS
+================================= */
+
+.status-badge {
+    display: inline-block !important;
+    width: auto !important;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px !important;
+    font-weight: 600;
+}
+
+
+/* Active */
+
+.status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+
+/* Scheduled */
+
+.status-scheduled {
+    background: #fff3cd;
+    color: #856404;
+}
+
+
+/* Closed */
+
+.status-closed {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+
+/* Default */
+
+.status-default {
+    background: #eee;
+    color: #555;
+}
+
+
+/* =================================
+   NO AUCTION MESSAGE
+================================= */
+
+.dashboard-empty {
+    background: #f8f8f8;
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+
+/* =================================
+   ERROR
+================================= */
+
+.dashboard-error {
+    background: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+/* =================================
+   QUICK ACTIONS
+================================= */
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.quick-actions a {
+    text-align: center;
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 900px) {
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .current-auction-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .current-auction-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+                Home
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+                About
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="gallery.html">
+                Gallery
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+                Auctions
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     ADMIN PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+<button
+    class="login-top-btn"
+    id="loginBtn"
+    onclick="window.location.href='adminlogin.html'">
+
+    Admin Login
+
+</button>
+
+
+<div
+    class="profile-area"
+    id="profileArea"
+    style="display:none;">
+
+
+    <div
+        class="profile-icon profile-initial"
+        id="profileIcon"
+        onclick="toggleProfileMenu()">
+
+        A
+
+    </div>
+
+
+    <div
+        class="profile-dropdown"
+        id="profileMenu">
+
+
+        <h3 id="profileName">
+            Administrator
+        </h3>
+
+
+        <p id="profileRole">
+            Admin
+        </p>
+
+
+        <small id="profileEmail"></small>
+
+
+        <hr>
+
+
+        <a href="admindashboard.html">
+            Dashboard
+        </a>
+
+
+        <button
+            type="button"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+<!-- =================================
+     DASHBOARD
+================================= -->
+
+<main class="dashboard-content">
+
+
+<!-- =================================
+     TITLE
+================================= -->
+
+<div class="dashboard-title">
+
+
+    <div>
+
+
+        <h2>
+            Admin Dashboard
+        </h2>
+
+
+        <p class="welcome">
+
+            Welcome, Admin!
+            Here's an overview of
+            BRUSH and BID.
+
+        </p>
+
+
+    </div>
+
+
+    <a
+        href="index.html"
+        class="details-btn">
+
+        ← Back to Website
+
+    </a>
+
+
+</div>
+
+
+
+<div
+    id="dashboardError"
+    class="dashboard-error"
+    style="display:none;">
+</div>
+
+
+
+<!-- =================================
+     PLATFORM OVERVIEW
+================================= -->
+
+<section class="dashboard-section">
+
+
+<h2>
+    Platform Overview
+</h2>
+
+
+<div class="dashboard-grid">
+
+
+    <!-- TOTAL USERS -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Total Users
+        </span>
+
+
+        <h3 id="totalUsers">
+            0
+        </h3>
+
+
+        <p>
+            Registered accounts
+        </p>
+
+    </div>
+
+
+
+    <!-- TOTAL ARTISTS -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Total Artists
+        </span>
+
+
+        <h3 id="totalArtists">
+            0
+        </h3>
+
+
+        <p>
+            Registered artists
+        </p>
+
+    </div>
+
+
+
+    <!-- TOTAL BIDDERS -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Total Bidders
+        </span>
+
+
+        <h3 id="totalBidders">
+            0
+        </h3>
+
+
+        <p>
+            Registered bidders
+        </p>
+
+    </div>
+
+
+
+    <!-- ACTIVE USERS -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Active Users
+        </span>
+
+
+        <h3 id="activeUsers">
+            0
+        </h3>
+
+
+        <p>
+            Active accounts
+        </p>
+
+    </div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =================================
+     ARTWORK OVERVIEW
+================================= -->
+
+<section class="dashboard-section">
+
+
+<h2>
+    Artwork Overview
+</h2>
+
+
+<div class="dashboard-grid">
+
+
+    <!-- TOTAL ARTWORKS -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Total Artworks
+        </span>
+
+
+        <h3 id="totalArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Uploaded artworks
+        </p>
+
+    </div>
+
+
+
+    <!-- PENDING -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Pending Artworks
+        </span>
+
+
+        <h3 id="pendingArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Awaiting approval
+        </p>
+
+    </div>
+
+
+
+    <!-- APPROVED -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Approved Artworks
+        </span>
+
+
+        <h3 id="approvedArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Approved submissions
+        </p>
+
+    </div>
+
+
+
+    <!-- SELECTED -->
+
+    <div class="dashboard-card">
+
+        <span>
+            Auction Artwork
+        </span>
+
+
+        <h3 id="selectedArtwork">
+            None
+        </h3>
+
+
+        <p>
+            Artwork selected for auction
+        </p>
+
+    </div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =================================
+     AUCTION OVERVIEW
+================================= -->
+
+<section class="dashboard-section">
+
+
+<h2>
+    Auction Overview
+</h2>
+
+
+<div
+    id="noAuctionMessage"
+    class="dashboard-empty"
+    style="display:none;">
+
+    No active auction at the moment.
+
+</div>
+
+
+<div
+    id="currentAuctionCard"
+    class="current-auction-card"
+    style="display:none;">
+
+
+    <h3>
+        Current Auction
+    </h3>
+
+
+    <div class="current-auction-grid">
+
+
+        <!-- ARTWORK -->
+
+        <div class="auction-item">
+
+            <span>
+                Artwork
+            </span>
+
+
+            <strong id="auctionArtwork">
+                —
+            </strong>
+
+        </div>
+
+
+
+        <!-- ARTIST -->
+
+        <div class="auction-item">
+
+            <span>
+                Artist
+            </span>
+
+
+            <strong id="auctionArtist">
+                —
+            </strong>
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div class="auction-item">
+
+            <span>
+                Status
+            </span>
+
+
+            <strong
+                id="auctionStatus"
+                class="status-badge status-default">
+
+                —
+
+            </strong>
+
+        </div>
+
+
+
+        <!-- HIGHEST BID -->
+
+        <div class="auction-item">
+
+            <span>
+                Current Highest Bid
+            </span>
+
+
+            <strong id="auctionHighestBid">
+                ₹0
+            </strong>
+
+        </div>
+
+
+
+        <!-- START -->
+
+        <div class="auction-item">
+
+            <span>
+                Starting Date
+            </span>
+
+
+            <strong id="auctionStart">
+                —
+            </strong>
+
+        </div>
+
+
+
+        <!-- END -->
+
+        <div class="auction-item">
+
+            <span>
+                Ending Date
+            </span>
+
+
+            <strong id="auctionEnd">
+                —
+            </strong>
+
+        </div>
+
+
+
+        <!-- TOTAL BIDS -->
+
+        <div class="auction-item">
+
+            <span>
+                Total Bids
+            </span>
+
+
+            <strong id="auctionTotalBids">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <!-- DURATION -->
+
+        <div class="auction-item">
+
+            <span>
+                Duration
+            </span>
+
+
+            <strong id="auctionDuration">
+                —
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =================================
+     BIDDING OVERVIEW
+================================= -->
+
+<section class="dashboard-section">
+
+
+<h2>
+    Bidding Overview
+</h2>
+
+
+<div class="dashboard-grid">
+
+
+    <div class="dashboard-card">
+
+        <span>
+            Total Bids
+        </span>
+
+
+        <h3 id="totalBids">
+            0
+        </h3>
+
+
+        <p>
+            Bids placed on artworks
+        </p>
+
+    </div>
+
+
+
+    <div class="dashboard-card">
+
+        <span>
+            Highest Bid
+        </span>
+
+
+        <h3 id="highestBid">
+            ₹0
+        </h3>
+
+
+        <p>
+            Highest bid recorded
+        </p>
+
+    </div>
+
+
+
+    <div class="dashboard-card">
+
+        <span>
+            Highest Bidder
+        </span>
+
+
+        <h3 id="highestBidder">
+            No Bids
+        </h3>
+
+
+        <p>
+            Current highest bidder
+        </p>
+
+    </div>
+
+
+
+    <div class="dashboard-card">
+
+        <span>
+            Active Auctions
+        </span>
+
+
+        <h3 id="activeAuctions">
+            0
+        </h3>
+
+
+        <p>
+            Auctions currently active
+        </p>
+
+    </div>
+
+
+</div>
+
+
+</section>
+
+<!-- =================================
+     QUICK ADMINISTRATION
+================================= -->
+
+<section class="dashboard-section">
+
+
+<h2>
+    Quick Administration
+</h2>
+
+
+<div class="quick-actions">
+
+
+    <a
+        href="manageusers.html"
+        class="details-btn">
+
+        Manage Users
+
+    </a>
+
+
+    <a
+        href="manageartworks.html"
+        class="details-btn">
+
+        Manage Artworks
+
+    </a>
+
+
+    <a
+        href="manageauctions.html"
+        class="details-btn">
+
+        Manage Auctions
+
+    </a>
+
+
+    <a
+        href="reports.html"
+        class="details-btn">
+
+        View Reports
+
+    </a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<!-- =================================
+     SHIPPING & PAYMENT MANAGEMENT
+================================= -->
+
+<section class="dashboard-section" style="margin-top:40px;">
+
+<h2>Shipping &amp; Payment Management</h2>
+
+<div style="background:#fff;padding:25px;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.07);overflow-x:auto;">
+
+<table style="width:100%;border-collapse:collapse;min-width:1000px;">
+<thead>
+<tr>
+<th style="padding:12px;text-align:left;">Bidder</th>
+<th style="padding:12px;text-align:left;">Artwork</th>
+<th style="padding:12px;text-align:left;">Tracking Number</th>
+<th style="padding:12px;text-align:left;">Shipping Status</th>
+<th style="padding:12px;text-align:left;">Payment Status</th>
+<th style="padding:12px;text-align:left;">Transaction</th>
+<th style="padding:12px;text-align:left;">Action</th>
+</tr>
+</thead>
+<tbody id="adminShippingPaymentBody">
+<tr><td colspan="7" style="padding:20px;text-align:center;">Loading shipping and payment records...</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<p id="adminShippingPaymentMessage" style="margin-top:15px;"></p>
+
+</section>
+
+</main>
+
+
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+
+
+</footer>
+
+
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =================================
+     DASHBOARD JAVASCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+    /* =================================
+       ADMIN ACCESS CHECK
+    ================================= */
+
+    const user =
+        getCurrentUser();
+
+
+    if (
+        !user.loggedIn ||
+        String(user.role).toLowerCase() !== "admin"
+    ) {
+
+        window.location.href =
+            "adminlogin.html";
+
+        return;
+
+    }
+
+
+
+    /* =================================
+       ELEMENTS
+    ================================= */
+
+    const elements = {
+
+
+        totalUsers:
+            document.getElementById(
+                "totalUsers"
+            ),
+
+
+        totalArtists:
+            document.getElementById(
+                "totalArtists"
+            ),
+
+
+        totalBidders:
+            document.getElementById(
+                "totalBidders"
+            ),
+
+
+        activeUsers:
+            document.getElementById(
+                "activeUsers"
+            ),
+
+
+        totalArtworks:
+            document.getElementById(
+                "totalArtworks"
+            ),
+
+
+        pendingArtworks:
+            document.getElementById(
+                "pendingArtworks"
+            ),
+
+
+        approvedArtworks:
+            document.getElementById(
+                "approvedArtworks"
+            ),
+
+
+        selectedArtwork:
+            document.getElementById(
+                "selectedArtwork"
+            ),
+
+
+        activeAuctions:
+            document.getElementById(
+                "activeAuctions"
+            ),
+
+
+        totalBids:
+            document.getElementById(
+                "totalBids"
+            ),
+
+
+        highestBid:
+            document.getElementById(
+                "highestBid"
+            ),
+
+
+        highestBidder:
+            document.getElementById(
+                "highestBidder"
+            ),
+
+
+        auctionArtwork:
+            document.getElementById(
+                "auctionArtwork"
+            ),
+
+
+        auctionArtist:
+            document.getElementById(
+                "auctionArtist"
+            ),
+
+
+        auctionStatus:
+            document.getElementById(
+                "auctionStatus"
+            ),
+
+
+        auctionHighestBid:
+            document.getElementById(
+                "auctionHighestBid"
+            ),
+
+
+        auctionStart:
+            document.getElementById(
+                "auctionStart"
+            ),
+
+
+        auctionEnd:
+            document.getElementById(
+                "auctionEnd"
+            ),
+
+
+        auctionTotalBids:
+            document.getElementById(
+                "auctionTotalBids"
+            ),
+
+
+        auctionDuration:
+            document.getElementById(
+                "auctionDuration"
+            ),
+
+
+        currentAuctionCard:
+            document.getElementById(
+                "currentAuctionCard"
+            ),
+
+
+        noAuctionMessage:
+            document.getElementById(
+                "noAuctionMessage"
+            ),
+
+dashboardError:
+    document.getElementById(
+        "dashboardError"
+    )
+
+    };
+
+
+
+    /* =================================
+       HELPERS
+    ================================= */
+
+    function setText(
+        element,
+        value
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+
+        element.textContent =
+            value ?? "—";
+
+    }
+
+
+
+    function formatCurrency(
+        value
+    ) {
+
+        return "₹" +
+            Number(value || 0)
+                .toLocaleString("en-IN");
+
+    }
+
+
+
+    function escapeHTML(
+        value
+    ) {
+
+        return String(
+            value ?? ""
+        )
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+    }
+
+
+
+    function formatDateTime(
+        value
+    ) {
+
+        if (!value) {
+
+            return "—";
+
+        }
+
+
+        const date =
+            new Date(value);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return escapeHTML(
+                String(value)
+            );
+
+        }
+
+
+return date.toLocaleString(
+    "en-IN",
+    {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata"
+    }
+);
+    }
+
+
+
+    function formatDuration(
+        startValue,
+        endValue
+    ) {
+
+        if (
+            !startValue ||
+            !endValue
+        ) {
+
+            return "—";
+
+        }
+
+
+        const start =
+            new Date(startValue);
+
+
+        const end =
+            new Date(endValue);
+
+
+        if (
+            Number.isNaN(
+                start.getTime()
+            ) ||
+            Number.isNaN(
+                end.getTime()
+            ) ||
+            end <= start
+        ) {
+
+            return "—";
+
+        }
+
+
+        const totalMinutes =
+            Math.round(
+                (end - start) /
+                60000
+            );
+
+
+        const days =
+            Math.floor(
+                totalMinutes / 1440
+            );
+
+
+        const hours =
+            Math.floor(
+                (totalMinutes % 1440) / 60
+            );
+
+
+        const minutes =
+            totalMinutes % 60;
+
+
+        if (days > 0) {
+
+            if (hours > 0) {
+
+                return (
+                    `${days} Day${days !== 1 ? "s" : ""} ` +
+                    `${hours} Hour${hours !== 1 ? "s" : ""}`
+                );
+
+            }
+
+
+            return (
+                `${days} Day${days !== 1 ? "s" : ""}`
+            );
+
+        }
+
+
+        if (hours > 0) {
+
+            if (minutes > 0) {
+
+                return (
+                    `${hours} Hour${hours !== 1 ? "s" : ""} ` +
+                    `${minutes} Min`
+                );
+
+            }
+
+
+            return (
+                `${hours} Hour${hours !== 1 ? "s" : ""}`
+            );
+
+        }
+
+
+        return (
+            `${minutes} Minutes`
+        );
+
+    }
+
+
+
+    /* =================================
+       LOAD USER INFORMATION
+    ================================= */
+
+    async function loadUsers() {
+
+        const response =
+            await apiFetch(
+                "/api/users/summary"
+            );
+
+
+        const summary =
+            response?.summary ||
+            response ||
+            {};
+
+
+        setText(
+            elements.totalUsers,
+            summary.total_users ??
+            summary.totalUsers ??
+            0
+        );
+
+
+        setText(
+            elements.totalBidders,
+            summary.total_bidders ??
+            summary.totalBidders ??
+            0
+        );
+
+
+        setText(
+            elements.totalArtists,
+            summary.total_artists ??
+            summary.totalArtists ??
+            0
+        );
+
+
+        setText(
+            elements.activeUsers,
+            summary.active_users ??
+            summary.activeUsers ??
+            0
+        );
+
+    }
+
+
+
+    /* =================================
+       LOAD ARTWORK INFORMATION
+    ================================= */
+
+    async function loadArtworks() {
+
+        const response =
+            await apiFetch(
+                "/api/artworks/summary"
+            );
+
+
+        const summary =
+            response?.summary ||
+            response ||
+            {};
+
+
+        setText(
+            elements.totalArtworks,
+            summary.total_artworks ??
+            summary.totalArtworks ??
+            0
+        );
+
+
+        setText(
+            elements.pendingArtworks,
+            summary.pending_artworks ??
+            summary.pendingArtworks ??
+            0
+        );
+
+
+        setText(
+            elements.approvedArtworks,
+            summary.approved_artworks ??
+            summary.approvedArtworks ??
+            0
+        );
+
+
+        /*
+         * FIX FOR [object Object]
+         */
+
+        const selected =
+            summary.selected_artwork ??
+            summary.selectedArtwork ??
+            null;
+
+
+        let selectedArtworkName =
+            "None";
+
+
+        if (selected) {
+
+
+            if (
+                typeof selected ===
+                "object"
+            ) {
+
+                selectedArtworkName =
+                    selected.title ??
+                    selected.artwork_name ??
+                    selected.artworkName ??
+                    selected.name ??
+                    "None";
+
+            }
+
+            else {
+
+                selectedArtworkName =
+                    String(selected);
+
+            }
+
+        }
+
+
+        setText(
+            elements.selectedArtwork,
+            selectedArtworkName
+        );
+
+    }
+
+/* =================================
+   LOAD BIDDING OVERVIEW
+================================= */
+
+async function loadBiddingOverview() {
+
+    const response =
+        await apiFetch("/api/bids");
+
+    const bids =
+        Array.isArray(response?.bids)
+            ? response.bids
+            : [];
+
+    setText(
+        elements.totalBids,
+        bids.length
+    );
+
+    if (!bids.length) {
+
+        setText(
+            elements.highestBid,
+            "₹0"
+        );
+
+        setText(
+            elements.highestBidder,
+            "No Bids"
+        );
+
+        return;
+    }
+
+    let highestBid =
+        bids[0];
+
+    bids.forEach(function (bid) {
+
+        if (
+            Number(
+                bid.bid_amount ??
+                bid.bidAmount ??
+                0
+            ) >
+            Number(
+                highestBid.bid_amount ??
+                highestBid.bidAmount ??
+                0
+            )
+        ) {
+
+            highestBid =
+                bid;
+
+        }
+
+    });
+
+    const highestAmount =
+        Number(
+            highestBid.bid_amount ??
+            highestBid.bidAmount ??
+            0
+        );
+
+    const highestBidder =
+        highestBid.bidder_name ||
+        highestBid.bidderName ||
+        "No Bids";
+
+    setText(
+        elements.highestBid,
+        formatCurrency(
+            highestAmount
+        )
+    );
+
+    setText(
+        elements.highestBidder,
+        highestBidder
+    );
+
+}
+
+    /* =================================
+       LOAD CURRENT AUCTION
+    ================================= */
+
+    async function loadCurrentAuction() {
+
+        const response =
+            await apiFetch(
+                "/api/admin/auction/current"
+            );
+
+
+        const auction =
+            response?.auction ||
+            response ||
+            null;
+
+
+        if (!auction) {
+
+
+            elements.currentAuctionCard.style.display =
+                "none";
+
+
+            elements.noAuctionMessage.style.display =
+                "block";
+
+
+            setText(
+                elements.activeAuctions,
+                0
+            );
+
+
+            return;
+
+        }
+
+
+        elements.currentAuctionCard.style.display =
+            "block";
+
+
+        elements.noAuctionMessage.style.display =
+            "none";
+
+
+
+        /* ARTWORK */
+
+        const artworkName =
+            auction.artwork_name ||
+            auction.artworkName ||
+            auction.name ||
+            "—";
+
+
+        /* ARTIST */
+
+        const artistName =
+            auction.artist_name ||
+            auction.artistName ||
+            auction.full_name ||
+            "—";
+
+
+        /* STATUS */
+
+        const status =
+            auction.status ||
+            "—";
+
+
+        /* CURRENT BID */
+
+        const currentBid =
+            auction.current_bid ??
+            auction.currentBid ??
+            0;
+
+
+        /* TOTAL BIDS */
+
+        const totalBids =
+            auction.total_bids ??
+            auction.totalBids ??
+            0;
+
+
+        /* START */
+
+        const startDateTime =
+            auction.start_time ||
+            auction.startTime ||
+            null;
+
+
+        /* END */
+
+        const endDateTime =
+            auction.end_time ||
+            auction.endTime ||
+            null;
+
+
+
+        setText(
+            elements.auctionArtwork,
+            artworkName
+        );
+
+
+        setText(
+            elements.auctionArtist,
+            artistName
+        );
+
+
+        setText(
+            elements.auctionHighestBid,
+            formatCurrency(
+                currentBid
+            )
+        );
+
+
+        setText(
+            elements.auctionStart,
+            formatDateTime(
+                startDateTime
+            )
+        );
+
+
+        setText(
+            elements.auctionEnd,
+            formatDateTime(
+                endDateTime
+            )
+        );
+
+
+        setText(
+            elements.auctionTotalBids,
+            totalBids
+        );
+
+
+        setText(
+            elements.auctionDuration,
+            formatDuration(
+                startDateTime,
+                endDateTime
+            )
+        );
+
+
+
+        /* STATUS */
+
+        if (
+            elements.auctionStatus
+        ) {
+
+            elements.auctionStatus.textContent =
+                status;
+
+
+            elements.auctionStatus.className =
+                "status-badge";
+
+
+            const normalizedStatus =
+                String(status)
+                    .toLowerCase();
+
+
+            if (
+                normalizedStatus ===
+                "active"
+            ) {
+
+                elements.auctionStatus.classList.add(
+                    "status-active"
+                );
+
+            }
+
+            else if (
+                normalizedStatus ===
+                "scheduled"
+            ) {
+
+                elements.auctionStatus.classList.add(
+                    "status-scheduled"
+                );
+
+            }
+
+            else if (
+                normalizedStatus ===
+                "closed"
+            ) {
+
+                elements.auctionStatus.classList.add(
+                    "status-closed"
+                );
+
+            }
+
+            else {
+
+                elements.auctionStatus.classList.add(
+                    "status-default"
+                );
+
+            }
+
+        }
+
+
+
+        /*
+         * Active auction count
+         */
+
+        if (
+            String(status)
+                .toLowerCase() ===
+            "active"
+        ) {
+
+            setText(
+                elements.activeAuctions,
+                1
+            );
+
+        }
+
+        else {
+
+            setText(
+                elements.activeAuctions,
+                0
+            );
+
+        }
+
+    }
+
+
+
+
+
+    /* =================================
+       SHIPPING & PAYMENT MANAGEMENT
+    ================================= */
+
+    async function loadShippingPaymentManagement() {
+
+        const body = document.getElementById("adminShippingPaymentBody");
+        const message = document.getElementById("adminShippingPaymentMessage");
+        if (!body) return;
+
+        try {
+            const response = await apiFetch("/api/admin/shipping");
+            const rows = response?.shipping || [];
+
+            if (!rows.length) {
+                body.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="padding:20px;text-align:center;">No shipping records yet.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            body.innerHTML = rows.map(function (row) {
+
+                const shippingStatuses = [
+                    "Order Confirmed",
+                    "Packing",
+                    "Shipped",
+                    "Out for Delivery",
+                    "Delivered"
+                ];
+
+                const statusOptions = shippingStatuses.map(function (status) {
+                    return `<option value="${status}" ${row.shipping_status === status ? "selected" : ""}>${status}</option>`;
+                }).join("");
+
+                const paymentStatus = row.payment_status || "Not Paid";
+                const paymentControls = row.transaction_id ? `
+                    <select id="admin-payment-${row.transaction_id}" style="padding:8px;margin-top:5px;">
+                        <option value="Pending" ${paymentStatus === "Pending" ? "selected" : ""}>Pending</option>
+                        <option value="Paid" ${paymentStatus === "Paid" ? "selected" : ""}>Success / Paid</option>
+                        <option value="Failed" ${paymentStatus === "Failed" ? "selected" : ""}>Failed</option>
+                    </select>
+                ` : `<span>${paymentStatus}</span>`;
+
+                return `
+                    <tr>
+                        <td style="padding:12px;">${row.bidder_name || "—"}</td>
+                        <td style="padding:12px;">${row.artwork_name || "—"}</td>
+                        <td style="padding:12px;">
+                            <input id="admin-tracking-${row.shipping_id}" value="${row.tracking_number || ""}" placeholder="Tracking number" style="padding:8px;width:150px;">
+                        </td>
+                        <td style="padding:12px;">
+                            <select id="admin-shipping-status-${row.shipping_id}" style="padding:8px;">${statusOptions}</select>
+                        </td>
+                        <td style="padding:12px;">${paymentControls}</td>
+                        <td style="padding:12px;">${row.transaction_reference || "No transaction"}</td>
+                        <td style="padding:12px;">
+                            <button type="button" class="details-btn" onclick="updateAdminShippingPayment(${row.shipping_id}, ${row.transaction_id || 0})">Update</button>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+
+            window.updateAdminShippingPayment = async function (shippingId, transactionId) {
+                try {
+                    await apiFetch(`/api/admin/shipping/${shippingId}`, {
+                        method: "PUT",
+                        body: {
+                            shipping_status: document.getElementById(`admin-shipping-status-${shippingId}`).value,
+                            tracking_number: document.getElementById(`admin-tracking-${shippingId}`).value.trim()
+                        }
+                    });
+
+                    if (transactionId) {
+                        await apiFetch(`/api/admin/payments/${transactionId}`, {
+                            method: "PUT",
+                            body: {
+                                payment_status: document.getElementById(`admin-payment-${transactionId}`).value
+                            }
+                        });
+                    }
+
+                    message.textContent = "Shipping tracking and payment status updated successfully.";
+                    await loadShippingPaymentManagement();
+
+                } catch (error) {
+                    console.error("Admin shipping/payment update:", error);
+                    message.textContent = error.message || "Unable to update shipping/payment details.";
+                }
+            };
+
+        } catch (error) {
+            console.error("Admin shipping/payment load:", error);
+            body.innerHTML = `
+                <tr>
+                    <td colspan="7" style="padding:20px;text-align:center;">Unable to load shipping and payment records.</td>
+                </tr>
+            `;
+        }
+    }
+
+    try {
+
+
+await Promise.all([
+
+    loadUsers(),
+
+    loadArtworks(),
+
+    loadCurrentAuction(),
+
+    loadBiddingOverview(),
+
+    loadShippingPaymentManagement(),
+
+]);
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            "DASHBOARD ERROR:",
+            error
+        );
+
+
+        elements.dashboardError.textContent =
+            error.message ||
+            "Unable to load dashboard information.";
+
+
+        elements.dashboardError.style.display =
+            "block";
+
+    }
+
+
+});
+
+</script>
+
+
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div
+        class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+            Loading...
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>

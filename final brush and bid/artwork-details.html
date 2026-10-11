@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Artwork Details | BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+
+<style>
+
+    .artwork-details-page {
+        background: #F3F4EF;
+        min-height: 100vh;
+        padding: 50px 0;
+    }
+
+
+    .details-container {
+        width: 85%;
+        max-width: 1100px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        display: flex;
+    }
+
+
+    .details-image {
+        width: 45%;
+        min-height: 550px;
+    }
+
+
+    .details-image img {
+        width: 100%;
+        height: 100%;
+        min-height: 550px;
+        object-fit: cover;
+    }
+
+
+    .details-content {
+        width: 55%;
+        padding: 45px;
+    }
+
+
+    .details-content h1 {
+        color: #17201E;
+        font-size: 38px;
+        margin-bottom: 25px;
+    }
+
+
+    .details-content p {
+        color: #56625D;
+        font-size: 18px;
+        line-height: 1.7;
+        margin-bottom: 18px;
+    }
+
+
+    .detail-row {
+        display: flex;
+        padding: 14px 0;
+        border-bottom: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+
+    .detail-label {
+        width: 40%;
+        font-weight: bold;
+        color: #17201E;
+    }
+
+
+    .detail-value {
+        width: 60%;
+        color: #555;
+    }
+
+
+    .price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #8C6A1C;
+    }
+
+
+    .auction-status-box {
+        margin-top: 25px;
+        padding: 18px;
+        background: #F3F4EF;
+        border-radius: 12px;
+    }
+
+
+    .auction-status-box strong {
+        color: #0F2E2A;
+    }
+
+
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+
+    .action-btn {
+        display: inline-block;
+        padding: 14px 22px;
+        background: #D4AF5A;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+
+    .action-btn:hover {
+        background: #8C6A1C;
+    }
+
+
+    .secondary-btn {
+        background: #56625D;
+    }
+
+
+    .secondary-btn:hover {
+        background: #17201E;
+    }
+
+
+    .details-error {
+        width: 85%;
+        max-width: 900px;
+        margin: 50px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+
+    .details-error h2 {
+        color: #17201E;
+    }
+
+
+    .details-error p {
+        color: #56625D;
+    }
+
+
+    @media(max-width: 800px) {
+
+        .details-container {
+            flex-direction: column;
+        }
+
+
+        .details-image,
+        .details-content {
+            width: 100%;
+        }
+
+
+        .details-image img {
+            min-height: 400px;
+        }
+
+
+        .detail-row {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+
+        .detail-label,
+        .detail-value {
+            width: 100%;
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="gallery.html"
+                class="active">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+
+            <p id="profileRole"></p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     ARTWORK DETAILS
+================================= -->
+
+<main class="artwork-details-page">
+
+ 
+<!-- Loading state -->
+
+<div
+    id="loadingState"
+    class="details-error">
+
+    <h2>
+
+        Loading Artwork...
+
+    </h2>
+
+
+    <p>
+
+        Please wait while we retrieve
+        the artwork information.
+
+    </p>
+
+</div>
+
+
+
+<!-- Error state -->
+
+<div
+    id="errorState"
+    class="details-error"
+    style="display:none;">
+
+
+    <h2>
+
+        Artwork Not Found
+
+    </h2>
+
+
+    <p id="errorMessage">
+
+        The requested artwork could not
+        be found.
+
+    </p>
+
+
+    <a
+        href="viewartworks.html"
+        class="action-btn">
+
+        ← Back to Artworks
+
+    </a>
+
+</div>
+
+
+
+<!-- Details -->
+
+<div
+    id="detailsContainer"
+    class="details-container"
+    style="display:none;">
+
+
+    <!-- =================================
+         IMAGE
+    ================================= -->
+
+    <div class="details-image">
+
+
+        <img
+            id="artworkImage"
+            src=""
+            alt="Artwork">
+
+
+    </div>
+
+
+
+    <!-- =================================
+         CONTENT
+    ================================= -->
+
+    <div class="details-content">
+
+
+        <h1 id="artworkName">
+
+            Artwork Name
+
+        </h1>
+
+
+        <p id="artworkDescription">
+
+            Artwork description.
+
+        </p>
+
+
+
+        <!-- ARTIST -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Artist
+
+            </div>
+
+
+            <div
+                class="detail-value"
+                id="artworkArtist">
+
+                —
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- CATEGORY -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Artwork Type
+
+            </div>
+
+
+            <div
+                class="detail-value"
+                id="artworkType">
+
+                —
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MEDIUM -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Medium
+
+            </div>
+
+
+            <div
+                class="detail-value"
+                id="artworkMedium">
+
+                —
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- SIZE -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Size
+
+            </div>
+
+
+            <div
+                class="detail-value"
+                id="artworkSize">
+
+                —
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- STARTING PRICE -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Starting Price
+
+            </div>
+
+
+            <div class="detail-value price">
+
+
+                ₹<span id="artworkPrice">
+
+                    0
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- CURRENT BID -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Current Highest Bid
+
+            </div>
+
+
+            <div class="detail-value price">
+
+
+                ₹<span id="artworkBid">
+
+                    0
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ADMIN STATUS -->
+
+        <div class="detail-row">
+
+
+            <div class="detail-label">
+
+                Approval Status
+
+            </div>
+
+
+            <div
+                class="detail-value"
+                id="artworkApprovalStatus">
+
+                —
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- AUCTION INFORMATION -->
+
+        <div
+            id="auctionStatusBox"
+            class="auction-status-box"
+            style="display:none;">
+
+
+            <p>
+
+                <strong>
+
+                    Auction Status:
+
+                </strong>
+
+
+                <span id="auctionStatus">
+
+                    —
+
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+
+                    Auction Start:
+
+                </strong>
+
+
+                <span id="auctionStart">
+
+                    —
+
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+
+                    Auction End:
+
+                </strong>
+
+
+                <span id="auctionEnd">
+
+                    —
+
+                </span>
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- ACTIONS -->
+
+        <div class="action-buttons">
+
+
+            <a
+                id="placeBidButton"
+                class="action-btn"
+                data-show-for="bidder"
+                href="index.html?login=true">
+
+                Place Bid
+
+            </a>
+
+
+            <a
+                id="backButton"
+                class="action-btn secondary-btn"
+                href="viewartworks.html">
+
+                ← Back to Artworks
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+ 
+
+</main>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     ARTWORK DETAILS SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           GET ARTWORK ID
+        ================================= */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const artworkId =
+            params.get("id");
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const loading =
+            document.getElementById(
+                "loadingState"
+            );
+
+
+        const error =
+            document.getElementById(
+                "errorState"
+            );
+
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+
+        const container =
+            document.getElementById(
+                "detailsContainer"
+            );
+
+
+
+        /* =================================
+           VALIDATE ID
+        ================================= */
+
+        if (
+            !artworkId ||
+            !/^\d+$/.test(
+                artworkId
+            )
+        ) {
+
+
+            loading.style.display =
+                "none";
+
+
+            error.style.display =
+                "block";
+
+
+            errorMessage.textContent =
+                "A valid artwork ID was not provided.";
+
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           HELPER
+        ================================= */
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (element) {
+
+                element.textContent =
+                    value ??
+                    "—";
+
+            }
+
+        }
+
+
+
+        /* =================================
+           CURRENCY
+        ================================= */
+
+        function formatCurrency(
+            value
+        ) {
+
+            return Number(
+                value || 0
+            ).toLocaleString(
+                "en-IN"
+            );
+
+        }
+
+
+
+        /* =================================
+           DATE FORMAT
+        ================================= */
+
+function formatDateTime(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+    const parsed =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            parsed.getTime()
+        )
+    ) {
+        return "—";
+    }
+
+    return parsed.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "Asia/Kolkata"
+        }
+    );
+}
+
+        /* =================================
+           LOAD ARTWORK
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    `/api/artworks/${encodeURIComponent(
+                        artworkId
+                    )}`
+                );
+
+
+            const artwork =
+                response?.artwork ||
+                response;
+
+
+            if (
+                !artwork ||
+                !(
+                    artwork.artwork_id ||
+                    artwork.id
+                )
+            ) {
+
+                throw new Error(
+                    "Artwork was not found."
+                );
+
+            }
+
+
+
+            /* =================================
+               IMAGE
+            ================================= */
+
+            const image =
+                document.getElementById(
+                    "artworkImage"
+                );
+
+
+            const imageURL =
+                artwork.image_url ||
+                artwork.image ||
+                "";
+
+
+            if (
+                imageURL
+            ) {
+
+                image.src =
+                    imageURL;
+
+            }
+
+
+            else {
+
+                image.style.display =
+                    "none";
+
+            }
+
+
+            image.alt =
+                artwork.title ||
+                "Artwork";
+
+
+
+            /* =================================
+               BASIC INFORMATION
+            ================================= */
+
+            setText(
+                "artworkName",
+                artwork.title ||
+                "Untitled Artwork"
+            );
+
+
+            setText(
+                "artworkDescription",
+                artwork.description ||
+                "No description available."
+            );
+
+
+            setText(
+                "artworkArtist",
+                artwork.artist_name ||
+                artwork.artistName ||
+                artwork.artist_id ||
+                "Unknown Artist"
+            );
+
+
+            setText(
+                "artworkType",
+                artwork.category ||
+                "—"
+            );
+
+
+            setText(
+                "artworkMedium",
+                artwork.medium ||
+                "—"
+            );
+
+
+            setText(
+                "artworkSize",
+                artwork.dimensions ||
+                "—"
+            );
+
+
+
+            /* =================================
+               PRICES
+            ================================= */
+
+            setText(
+                "artworkPrice",
+                formatCurrency(
+                    artwork.starting_price
+                )
+            );
+
+
+            const currentBid =
+                artwork.current_bid ??
+                artwork.starting_price ??
+                0;
+
+
+            setText(
+                "artworkBid",
+                formatCurrency(
+                    currentBid
+                )
+            );
+
+
+
+            /* =================================
+               APPROVAL STATUS
+            ================================= */
+
+            setText(
+                "artworkApprovalStatus",
+                artwork.status ||
+                artwork.adminStatus ||
+                "Pending"
+            );
+
+
+
+            /* =================================
+               AUCTION
+            ================================= */
+
+const auction =
+    artwork.auction ||
+    null;
+
+
+const auctionBox =
+    document.getElementById(
+        "auctionStatusBox"
+    );
+
+
+auctionBox.style.display =
+    "block";
+
+
+if (auction) {
+
+    setText(
+        "auctionStatus",
+        auction.status ||
+        "Scheduled"
+    );
+
+
+    setText(
+        "auctionStart",
+        formatDateTime(
+            auction.start_time
+        )
+    );
+
+
+    setText(
+        "auctionEnd",
+        formatDateTime(
+            auction.end_time
+        )
+    );
+
+} else {
+
+    setText(
+        "auctionStatus",
+        "Not for auction currently"
+    );
+
+
+    setText(
+        "auctionStart",
+        "—"
+    );
+
+
+    setText(
+        "auctionEnd",
+        "—"
+    );
+
+}
+
+
+/* =================================
+   PLACE BID
+================================= */
+
+const placeBid =
+    document.getElementById(
+        "placeBidButton"
+    );
+
+const auctionId =
+    Number(
+        auction?.auction_id ||
+        0
+    );
+
+const auctionStatus =
+    String(
+        auction?.status ||
+        ""
+    )
+        .trim()
+        .toLowerCase();
+
+const canBid =
+    auctionId > 0 &&
+    auctionStatus === "active";
+
+if (canBid) {
+
+    placeBid.style.display =
+        "inline-block";
+
+    placeBid.href =
+        "placebid.html?artworkId=" +
+        encodeURIComponent(
+            artwork.artwork_id ||
+            artwork.id
+        );
+
+} else {
+
+    placeBid.style.display =
+        "none";
+
+}
+
+
+            /* =================================
+               BACK BUTTON
+            ================================= */
+
+            const back =
+                document.getElementById(
+                    "backButton"
+                );
+
+
+            if (
+                document.referrer &&
+                (
+                    document.referrer.includes(
+                        "artist-artworks.html"
+                    ) ||
+                    document.referrer.includes(
+                        "viewartworks.html"
+                    )
+                )
+            ) {
+
+                back.href =
+                    document.referrer;
+
+            }
+
+
+            /* =================================
+               SHOW PAGE
+            ================================= */
+
+            loading.style.display =
+                "none";
+
+
+            container.style.display =
+                "flex";
+
+        }
+
+        catch (err) {
+
+
+            console.error(
+                "Artwork details error:",
+                err
+            );
+
+
+            loading.style.display =
+                "none";
+
+
+            container.style.display =
+                "none";
+
+
+            error.style.display =
+                "block";
+
+
+            errorMessage.textContent =
+                err.message ||
+                "Unable to load artwork details.";
+
+        }
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+
+            Loading...
+
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

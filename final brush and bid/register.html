@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Register | BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+
+    <button
+        id="loginBtn"
+        class="login-top-btn"
+        type="button"
+        onclick="location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        id="profileArea"
+        class="profile-area"
+        style="display:none;">
+
+        <div
+            id="profileIcon"
+            class="profile-icon profile-initial"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            id="profileMenu"
+            class="profile-dropdown">
+
+            <h3 id="profileName"></h3>
+
+            <p id="profileRole"></p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+            <a
+                id="profilePage"
+                href="#">
+
+                My Profile
+
+            </a>
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =====================================================
+     PAGE HERO
+===================================================== -->
+
+<section class="gallery-hero">
+
+ 
+<h2 id="registerHeading">
+    Create an Account
+</h2>
+
+<p id="registerIntro">
+    Join the BRUSH and BID online art auction community.
+</p>
+ 
+
+</section>
+
+<!-- =====================================================
+     REGISTRATION
+===================================================== -->
+
+<section class="gallery-section">
+
+ 
+<div class="register-box">
+
+
+    <form id="standaloneRegisterForm">
+
+
+        <!-- FULL NAME -->
+
+        <label for="regNameStandalone">
+            Full Name
+        </label>
+
+        <input
+            id="regNameStandalone"
+            type="text"
+            placeholder="Enter your full name"
+            required>
+
+        <small
+            id="standaloneNameError"
+            class="error">
+        </small>
+
+
+        <!-- PHONE -->
+
+        <label for="regPhoneStandalone">
+            Phone Number
+        </label>
+
+        <input
+            id="regPhoneStandalone"
+            type="tel"
+            maxlength="10"
+            placeholder="Enter 10 digit phone number"
+            required>
+
+        <small
+            id="standalonePhoneError"
+            class="error">
+        </small>
+
+
+        <!-- EMAIL -->
+
+        <label for="regEmailStandalone">
+            Email Address
+        </label>
+
+        <input
+            id="regEmailStandalone"
+            type="email"
+            placeholder="example@gmail.com"
+            required>
+
+        <small
+            id="standaloneEmailError"
+            class="error">
+        </small>
+
+
+        <!-- ROLE -->
+
+        <label for="regRoleStandalone">
+            Register As
+        </label>
+
+        <select
+            id="regRoleStandalone"
+            required>
+
+            <option value="">
+                Select User Type
+            </option>
+
+            <option value="Bidder">
+                Bidder
+            </option>
+
+            <option value="Artist">
+                Artist
+            </option>
+
+        </select>
+
+        <small
+            id="standaloneRoleError"
+            class="error">
+        </small>
+
+
+        <!-- PASSWORD -->
+
+        <label for="regPasswordStandalone">
+            Password
+        </label>
+
+        <input
+            id="regPasswordStandalone"
+            type="password"
+            placeholder="Create a password"
+            required>
+
+        <small class="hint">
+
+            Password must contain at least
+            8 characters, including uppercase,
+            lowercase, number and special character.
+
+        </small>
+
+        <small
+            id="standalonePasswordError"
+            class="error">
+        </small>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <label for="regConfirmStandalone">
+            Confirm Password
+        </label>
+
+        <input
+            id="regConfirmStandalone"
+            type="password"
+            placeholder="Confirm your password"
+            required>
+
+        <small
+            id="standaloneConfirmError"
+            class="error">
+        </small>
+
+
+        <!-- TERMS -->
+
+        <label class="terms">
+
+            <input
+                id="regTermsStandalone"
+                type="checkbox"
+                required>
+
+            I agree to the
+
+            <a
+                href="terms.html"
+                class="policy-link">
+
+                Terms &amp; Conditions
+
+            </a>
+
+            and
+
+            <a
+                href="privacy.html"
+                class="policy-link">
+
+                Privacy Policy
+
+            </a>.
+
+        </label>
+
+
+        <!-- SUBMIT -->
+
+        <button
+            class="details-btn"
+            type="submit">
+
+            Create Account
+
+        </button>
+
+
+    </form>
+
+
+    <p>
+
+        Already have an account?
+
+        <a href="index.html?login=true">
+
+            Login Here
+
+        </a>
+
+    </p>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =====================================================
+     OTP VERIFICATION
+===================================================== -->
+
+<div
+    id="registerOtpModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true">
+
+
+    <div class="policy-modal-header">
+
+        <h2>
+            Verify Your Email
+        </h2>
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="closeRegisterOtp">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div class="policy-modal-content">
+
+
+        <p>
+
+            A 6-digit OTP has been sent to:
+
+        </p>
+
+
+        <strong
+            id="registerOtpEmail">
+        </strong>
+
+
+        <form
+            id="registerOtpForm">
+
+
+            <label for="registerOtpCode">
+
+                Enter OTP
+
+            </label>
+
+
+            <input
+                id="registerOtpCode"
+                type="text"
+                maxlength="6"
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                placeholder="Enter 6-digit OTP"
+                required>
+
+
+            <small
+                id="registerOtpError"
+                class="error">
+            </small>
+
+
+            <button
+                class="details-btn"
+                type="submit">
+
+                Verify Email
+
+            </button>
+
+
+        </form>
+
+
+        <button
+            type="button"
+            id="registerResendOtp"
+            class="details-btn">
+
+            Resend OTP
+
+        </button>
+
+
+    </div>
+
+</div>
+ 
+
+</div>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+ 
+<p>
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+</p>
+ 
+
+</footer>
+
+<!-- =====================================================
+     SHARED SCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+<!-- =====================================================
+     REGISTER SCRIPT
+===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const form =
+            document.getElementById(
+                "standaloneRegisterForm"
+            );
+
+
+        /*
+         * register.html?role=artist (or bidder) locks the
+         * account type, e.g. from "Register as an artist".
+         */
+
+        const fixedRole = {
+            artist: {
+                value: "Artist",
+                heading: "Create an artist account",
+                intro: "Register to upload your artwork and have it considered for a weekly auction."
+            },
+            bidder: {
+                value: "Bidder",
+                heading: "Create a bidder account",
+                intro: "Register to place bids on the weekly auction."
+            }
+        }[
+            (new URLSearchParams(window.location.search).get("role") || "")
+                .toLowerCase()
+        ];
+
+        if (fixedRole) {
+
+            const roleSelect =
+                document.getElementById("regRoleStandalone");
+
+            Array.from(roleSelect.options).forEach(function (option) {
+
+                if (option.value !== fixedRole.value) {
+                    option.remove();
+                }
+
+            });
+
+            roleSelect.value = fixedRole.value;
+
+            document.getElementById("registerHeading").textContent =
+                fixedRole.heading;
+
+            document.getElementById("registerIntro").textContent =
+                fixedRole.intro;
+
+            updateSubmitState(form);
+
+        }
+
+
+        const otpModal =
+            document.getElementById(
+                "registerOtpModal"
+            );
+
+
+        const otpForm =
+            document.getElementById(
+                "registerOtpForm"
+            );
+
+
+        const closeOtp =
+            document.getElementById(
+                "closeRegisterOtp"
+            );
+
+
+        const resendOtp =
+            document.getElementById(
+                "registerResendOtp"
+            );
+
+
+        const nameRegex =
+            /^[A-Za-z ]{3,40}$/;
+
+
+        const emailRegex =
+            /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+
+        const phoneRegex =
+            /^[6-9][0-9]{9}$/;
+
+
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+
+        function clearErrors() {
+
+            document.getElementById(
+                "standaloneNameError"
+            ).textContent = "";
+
+            document.getElementById(
+                "standalonePhoneError"
+            ).textContent = "";
+
+            document.getElementById(
+                "standaloneEmailError"
+            ).textContent = "";
+
+            document.getElementById(
+                "standalonePasswordError"
+            ).textContent = "";
+
+            document.getElementById(
+                "standaloneConfirmError"
+            ).textContent = "";
+
+            document.getElementById(
+                "standaloneRoleError"
+            ).textContent = "";
+
+        }
+
+
+        /* =================================================
+           REGISTER
+        ================================================= */
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                clearErrors();
+
+
+                const name =
+                    document
+                        .getElementById(
+                            "regNameStandalone"
+                        )
+                        .value
+                        .trim();
+
+
+                const phone =
+                    document
+                        .getElementById(
+                            "regPhoneStandalone"
+                        )
+                        .value
+                        .trim();
+
+
+                const email =
+                    document
+                        .getElementById(
+                            "regEmailStandalone"
+                        )
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+
+                const role =
+                    document
+                        .getElementById(
+                            "regRoleStandalone"
+                        )
+                        .value;
+
+
+                const password =
+                    document
+                        .getElementById(
+                            "regPasswordStandalone"
+                        )
+                        .value;
+
+
+                const confirmPassword =
+                    document
+                        .getElementById(
+                            "regConfirmStandalone"
+                        )
+                        .value;
+
+
+                /* NAME */
+
+                if (
+                    !nameRegex.test(name)
+                ) {
+
+                    document.getElementById(
+                        "standaloneNameError"
+                    ).textContent =
+                        "Enter a valid name using alphabets and spaces only.";
+
+                    return;
+
+                }
+
+
+                /* PHONE */
+
+                if (
+                    !phoneRegex.test(phone)
+                ) {
+
+                    document.getElementById(
+                        "standalonePhoneError"
+                    ).textContent =
+                        "Enter a valid 10 digit Indian phone number.";
+
+                    return;
+
+                }
+
+
+                /* EMAIL */
+
+                if (
+                    !emailRegex.test(email)
+                ) {
+
+                    document.getElementById(
+                        "standaloneEmailError"
+                    ).textContent =
+                        "Enter a valid email address.";
+
+                    return;
+
+                }
+
+
+                /* ROLE */
+
+                if (
+                    ![
+                        "Bidder",
+                        "Artist"
+                    ].includes(role)
+                ) {
+
+                    document.getElementById(
+                        "standaloneRoleError"
+                    ).textContent =
+                        "Please select Bidder or Artist.";
+
+                    return;
+
+                }
+
+
+                /* PASSWORD */
+
+                if (
+                    !passwordRegex.test(password)
+                ) {
+
+                    document.getElementById(
+                        "standalonePasswordError"
+                    ).textContent =
+                        "Password does not meet the required conditions.";
+
+                    return;
+
+                }
+
+
+                /* CONFIRM PASSWORD */
+
+                if (
+                    password !== confirmPassword
+                ) {
+
+                    document.getElementById(
+                        "standaloneConfirmError"
+                    ).textContent =
+                        "Passwords do not match.";
+
+                    return;
+
+                }
+
+
+                const button =
+                    form.querySelector(
+                        "button[type='submit']"
+                    );
+
+
+                try {
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "Registering...";
+
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5010/api/register",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    full_name:
+                                        name,
+
+                                    name:
+                                        name,
+
+                                    phone:
+                                        phone,
+
+                                    email:
+                                        email,
+
+                                    role:
+                                        role.toLowerCase(),
+
+                                    password:
+                                        password
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            data.error ||
+                            "Registration failed."
+                        );
+
+                    }
+
+
+                    /*
+                     * Only email is kept temporarily.
+                     *
+                     * Password is NOT stored in
+                     * localStorage or sessionStorage.
+                     */
+
+                    sessionStorage.setItem(
+                        "pendingOtpEmail",
+                        email
+                    );
+
+
+                    document.getElementById(
+                        "registerOtpEmail"
+                    ).textContent =
+                        email;
+
+
+                    otpModal.classList.add(
+                        "show"
+                    );
+
+
+                    otpModal.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+
+                    showToast(
+                        data.message ||
+                        "Registration successful. Please check your email for the OTP.",
+                        "success"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "REGISTRATION ERROR:",
+                        error
+                    );
+
+
+                    const message =
+                        error.message ||
+                        "Unable to register. Please try again.";
+
+                    /* Email problems (e.g. already registered) go next to the email field. */
+
+                    if (/email/i.test(message)) {
+
+                        document.getElementById(
+                            "standaloneEmailError"
+                        ).textContent = message;
+
+                    }
+
+                    else {
+
+                        showToast(message, "error");
+
+                    }
+
+                }
+
+                finally {
+
+                    button.textContent =
+                        "Create Account";
+
+                    updateSubmitState(
+                        document.getElementById(
+                            "standaloneRegisterForm"
+                        )
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           VERIFY OTP
+        ================================================= */
+
+        otpForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    sessionStorage.getItem(
+                        "pendingOtpEmail"
+                    );
+
+
+                const otp =
+                    document
+                        .getElementById(
+                            "registerOtpCode"
+                        )
+                        .value
+                        .trim();
+
+
+                const errorElement =
+                    document.getElementById(
+                        "registerOtpError"
+                    );
+
+
+                errorElement.textContent =
+                    "";
+
+
+                if (!email) {
+
+                    errorElement.textContent =
+                        "Registration session expired. Please register again.";
+
+                    return;
+
+                }
+
+
+                if (
+                    !/^[0-9]{6}$/.test(otp)
+                ) {
+
+                    errorElement.textContent =
+                        "Enter a valid 6-digit OTP.";
+
+                    return;
+
+                }
+
+
+                const button =
+                    otpForm.querySelector(
+                        "button[type='submit']"
+                    );
+
+
+                try {
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "Verifying...";
+
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5010/api/verify-otp",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    email:
+                                        email,
+
+                                    otp:
+                                        otp
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            data.error ||
+                            "OTP verification failed."
+                        );
+
+                    }
+
+
+                    sessionStorage.removeItem(
+                        "pendingOtpEmail"
+                    );
+
+
+                    otpModal.classList.remove(
+                        "show"
+                    );
+
+
+                    otpModal.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+
+                    document.getElementById(
+                        "registerOtpCode"
+                    ).value = "";
+
+
+                    /*
+                     * Log the user in automatically after
+                     * successful verification.
+                     */
+
+                    if (data.user) {
+
+                        saveLoginSession(data.user);
+
+                        flashToast(
+                            "Email verified. Welcome " +
+                            (data.user.full_name || data.user.name || "User"),
+                            "success"
+                        );
+
+                        window.location.href =
+                            "index.html";
+
+                        return;
+
+                    }
+
+
+                    flashToast(
+                        data.message ||
+                        "Email verified successfully. You can now login.",
+                        "success"
+                    );
+
+
+                    window.location.href =
+                        "index.html?login=true";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "OTP ERROR:",
+                        error
+                    );
+
+
+                    errorElement.textContent =
+                        error.message ||
+                        "Invalid or expired OTP.";
+
+                }
+
+                finally {
+
+                    button.textContent =
+                        "Verify Email";
+
+                    updateSubmitState(
+                        document.getElementById(
+                            "registerOtpForm"
+                        )
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           RESEND OTP
+        ================================================= */
+
+        resendOtp.addEventListener(
+            "click",
+            async function () {
+
+                const email =
+                    sessionStorage.getItem(
+                        "pendingOtpEmail"
+                    );
+
+
+                if (!email) {
+
+                    showToast(
+                        "Registration session expired. Please register again.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    resendOtp.disabled = true;
+
+                    resendOtp.textContent =
+                        "Sending...";
+
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5010/api/resend-otp",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    email:
+                                        email
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            data.error ||
+                            "Unable to resend OTP."
+                        );
+
+                    }
+
+
+                    showToast(
+                        data.message ||
+                        "A new OTP has been sent.",
+                        "success"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "RESEND OTP ERROR:",
+                        error
+                    );
+
+
+                    showToast(
+                        error.message ||
+                        "Unable to resend OTP.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    resendOtp.disabled = false;
+
+                    resendOtp.textContent =
+                        "Resend OTP";
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           CLOSE OTP
+        ================================================= */
+
+        closeOtp.addEventListener(
+            "click",
+            function () {
+
+                otpModal.classList.remove(
+                    "show"
+                );
+
+
+                otpModal.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           CLICK OUTSIDE OTP
+        ================================================= */
+
+        otpModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === otpModal
+                ) {
+
+                    otpModal.classList.remove(
+                        "show"
+                    );
+
+                    otpModal.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                }
+
+            }
+        );
+
+
+    });
+
+</script>
+
+</body>
+
+</html>

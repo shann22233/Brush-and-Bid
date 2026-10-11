@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="artist"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Upload Artwork - BRUSH and BID
+</title>
+
+<link
+    href="style.css"
+    rel="stylesheet">
+
+
+<style>
+
+    .upload-artwork-section {
+        padding: 50px 7%;
+        background: #F3F4EF;
+    }
+
+
+    .upload-artwork-title {
+        max-width: 850px;
+        margin: 0 auto 35px;
+        text-align: center;
+    }
+
+
+    .upload-artwork-title h2 {
+        color: #17201E;
+        margin-bottom: 15px;
+    }
+
+
+    .upload-artwork-title p {
+        color: #56625D;
+        line-height: 1.7;
+    }
+
+
+    .upload-form-container {
+        max-width: 950px;
+        margin: auto;
+        background: white;
+        padding: 35px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+
+    .upload-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+
+    .upload-input-group {
+        margin-bottom: 5px;
+    }
+
+
+    .upload-input-group.full-width,
+    .image-preview-container,
+    .upload-artwork-btn,
+    #uploadMessage {
+        grid-column: 1 / -1;
+    }
+
+
+    .upload-input-group label {
+        display: block;
+        color: #17201E;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+
+    .upload-input-group input,
+    .upload-input-group select,
+    .upload-input-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 15px;
+        border: 1px solid #D9DDD3;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 15px;
+        background: #fff;
+    }
+
+
+    .upload-input-group textarea {
+        min-height: 130px;
+        resize: vertical;
+    }
+
+
+    .upload-input-group input:focus,
+    .upload-input-group select:focus,
+    .upload-input-group textarea:focus {
+        outline: none;
+        border-color: #8C6A1C;
+    }
+
+
+    .upload-input-group small {
+        display: block;
+        margin-top: 7px;
+        color: #56625D;
+    }
+
+
+    .image-preview-container {
+        min-height: 230px;
+        border: 2px dashed #D9DDD3;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+        background: #F3F4EF;
+        text-align: center;
+    }
+
+
+    .image-preview-container img {
+        max-width: 100%;
+        max-height: 300px;
+        object-fit: contain;
+        border-radius: 10px;
+    }
+
+
+    .image-preview-container p {
+        color: #56625D;
+        margin: 0;
+    }
+
+
+    .upload-artwork-btn {
+        border: none;
+        background: #8C6A1C;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+
+    .upload-artwork-btn:hover {
+        background: #6F5313;
+    }
+
+
+    .upload-artwork-btn:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+    }
+
+
+    #uploadMessage {
+        margin: 0;
+        min-height: 24px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+
+    .upload-success {
+        color: #2e7d32;
+    }
+
+
+    .upload-error {
+        color: #b71c1c;
+    }
+
+
+    .upload-info {
+        color: #56625D;
+    }
+
+
+    .upload-note {
+        margin-top: 25px;
+        padding: 18px;
+        border-radius: 10px;
+        background: #F3F4EF;
+        color: #56625D;
+        line-height: 1.7;
+    }
+
+
+    .upload-note strong {
+        color: #17201E;
+    }
+
+
+    @media (max-width: 700px) {
+
+        .upload-artwork-section {
+            padding: 40px 5%;
+        }
+
+
+        .upload-form-container {
+            padding: 25px 20px;
+        }
+
+
+        .upload-form {
+            grid-template-columns: 1fr;
+        }
+
+
+        .upload-input-group.full-width,
+        .image-preview-container,
+        .upload-artwork-btn,
+        #uploadMessage {
+            grid-column: auto;
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+                Home
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+                About
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="gallery.html">
+                Gallery
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+                Auctions
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+
+            <p id="profileRole"></p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                id="profilePage"
+                href="#">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2>
+
+    Upload Your Artwork
+
+</h2>
+
+
+<p>
+
+    Share your creativity with art lovers
+    and submit your artwork for future
+    weekly auctions.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     UPLOAD SECTION
+================================= -->
+
+<section class="upload-artwork-section">
+
+ 
+<div class="upload-artwork-title">
+
+
+    <p class="gallery-small-title">
+
+        Artist dashboard
+
+    </p>
+
+
+    <h2>
+
+        Add a New Artwork
+
+    </h2>
+
+
+    <p>
+
+        Enter the artwork details below.
+        Your submission will be reviewed by
+        an administrator before it can appear
+        in an auction.
+
+    </p>
+
+
+</div>
+
+
+
+<div class="upload-form-container">
+
+
+    <form
+        id="uploadArtworkForm"
+        class="upload-form">
+
+
+        <!-- IMAGE -->
+
+        <div
+            class="upload-input-group full-width">
+
+
+            <label for="artworkImage">
+
+                Upload Artwork Image
+
+            </label>
+
+
+            <input
+                id="artworkImage"
+                name="artwork_image"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                required>
+
+
+            <small>
+
+                JPG, PNG, WEBP or GIF.
+                Maximum size: 5 MB.
+
+            </small>
+
+
+        </div>
+
+
+
+        <!-- PREVIEW -->
+
+        <div
+            class="image-preview-container">
+
+
+            <img
+                id="imagePreview"
+                src=""
+                alt="Artwork Preview"
+                style="display:none;">
+
+
+            <p id="previewText">
+
+                Your selected artwork image
+                will appear here.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- NAME -->
+
+        <div class="upload-input-group">
+
+
+            <label for="artworkName">
+
+                Artwork Name
+
+            </label>
+
+
+            <input
+                id="artworkName"
+                name="name"
+                type="text"
+                placeholder="Enter artwork name"
+                maxlength="150"
+                required>
+
+
+        </div>
+
+
+
+        <!-- CATEGORY -->
+
+        <div class="upload-input-group">
+
+
+            <label for="artworkCategory">
+
+                Artwork Category
+
+            </label>
+
+
+            <select
+                id="artworkCategory"
+                name="category"
+                required>
+
+
+                <option value="">
+
+                    Select Category
+
+                </option>
+
+
+                <option value="Abstract">
+
+                    Abstract
+
+                </option>
+
+
+                <option value="Landscape">
+
+                    Landscape
+
+                </option>
+
+
+                <option value="Portrait">
+
+                    Portrait
+
+                </option>
+
+
+                <option value="Modern Art">
+
+                    Modern Art
+
+                </option>
+
+
+                <option value="Nature">
+
+                    Nature
+
+                </option>
+
+
+                <option value="Digital Art">
+
+                    Digital Art
+
+                </option>
+
+
+                <option value="Other">
+
+                    Other
+
+                </option>
+
+
+            </select>
+
+        </div>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <div
+            class="upload-input-group full-width">
+
+
+            <label for="artworkDescription">
+
+                Artwork Description
+
+            </label>
+
+
+            <textarea
+                id="artworkDescription"
+                name="description"
+                placeholder="Write a short description about your artwork"
+                maxlength="2000"
+                required></textarea>
+
+
+        </div>
+
+
+
+        <!-- STARTING BID -->
+
+        <div class="upload-input-group">
+
+
+            <label for="startingBid">
+
+                Starting Bid Amount
+
+            </label>
+
+
+            <input
+                id="startingBid"
+                name="starting_bid"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="Enter starting bid amount"
+                required>
+
+
+        </div>
+
+
+
+        <!-- SIZE -->
+
+        <div class="upload-input-group">
+
+
+            <label for="artworkSize">
+
+                Artwork Size
+
+            </label>
+
+
+            <input
+                id="artworkSize"
+                name="size"
+                type="text"
+                placeholder="Example: 60 cm × 40 cm"
+                maxlength="100"
+                required>
+
+
+        </div>
+
+
+
+        <!-- MEDIUM -->
+
+        <div class="upload-input-group">
+
+
+            <label for="artworkMedium">
+
+                Artwork Medium
+
+            </label>
+
+
+            <input
+                id="artworkMedium"
+                name="medium"
+                type="text"
+                placeholder="Example: Acrylic on Canvas"
+                maxlength="150"
+                required>
+
+
+        </div>
+
+
+
+        <!-- SUBMIT -->
+
+        <button
+            class="upload-artwork-btn"
+            id="uploadArtworkBtn"
+            type="submit">
+
+
+            Upload Artwork
+
+
+        </button>
+
+
+        <!-- MESSAGE -->
+
+        <p
+            id="uploadMessage"
+            class="upload-info"
+            aria-live="polite">
+        </p>
+
+
+    </form>
+
+
+
+    <div class="upload-note">
+
+        <strong>
+            Approval process:
+        </strong>
+
+        After you submit your artwork,
+        it will be stored with a
+        <strong>Pending</strong> status.
+        An administrator must approve it
+        before it becomes available for
+        public auction.
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           USER
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        const resolvedId =
+            await ensureUserId();
+
+
+        if (resolvedId) {
+
+            user.id =
+                resolvedId;
+
+        }
+
+
+
+        /* =================================
+           ARTIST ONLY
+        ================================= */
+
+        if (
+            !user.loggedIn ||
+            String(user.role).toLowerCase() !==
+            "artist"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const form =
+            document.getElementById(
+                "uploadArtworkForm"
+            );
+
+
+        const fileInput =
+            document.getElementById(
+                "artworkImage"
+            );
+
+
+        const preview =
+            document.getElementById(
+                "imagePreview"
+            );
+
+
+        const previewText =
+            document.getElementById(
+                "previewText"
+            );
+
+
+        const button =
+            document.getElementById(
+                "uploadArtworkBtn"
+            );
+
+
+        const message =
+            document.getElementById(
+                "uploadMessage"
+            );
+
+
+        let imageBase64 =
+            "";
+
+
+
+        /* =================================
+           MESSAGE
+        ================================= */
+
+        function showMessage(
+            text,
+            type = "info"
+        ) {
+
+            message.textContent =
+                text;
+
+            message.className =
+                "upload-" + type;
+
+        }
+
+
+
+        /* =================================
+           IMAGE SELECTION
+        ================================= */
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+
+                const file =
+                    fileInput.files?.[0];
+
+
+                imageBase64 =
+                    "";
+
+
+                if (!file) {
+
+                    preview.style.display =
+                        "none";
+
+                    previewText.style.display =
+                        "block";
+
+                    return;
+
+                }
+
+
+
+                /* =================================
+                   FILE TYPE
+                ================================= */
+
+                const allowedTypes = [
+
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp",
+                    "image/gif"
+
+                ];
+
+
+                if (
+                    !allowedTypes.includes(
+                        file.type
+                    )
+                ) {
+
+                    fileInput.value =
+                        "";
+
+
+                    preview.style.display =
+                        "none";
+
+
+                    previewText.style.display =
+                        "block";
+
+
+                    showMessage(
+                        "Please select a JPG, PNG, WEBP or GIF image.",
+                        "error"
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                /* =================================
+                   FILE SIZE
+                ================================= */
+
+                const maxSize =
+                    5 * 1024 * 1024;
+
+
+                if (
+                    file.size >
+                    maxSize
+                ) {
+
+                    fileInput.value =
+                        "";
+
+
+                    preview.style.display =
+                        "none";
+
+
+                    previewText.style.display =
+                        "block";
+
+
+                    showMessage(
+                        "Image size must be 5 MB or less.",
+                        "error"
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                /* =================================
+                   PREVIEW
+                ================================= */
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function () {
+
+
+                        imageBase64 =
+                            reader.result;
+
+
+                        preview.src =
+                            imageBase64;
+
+
+                        preview.style.display =
+                            "block";
+
+
+                        previewText.style.display =
+                            "none";
+
+
+                        showMessage(
+                            "Image selected successfully.",
+                            "info"
+                        );
+
+                    };
+
+
+                reader.onerror =
+                    function () {
+
+                        showMessage(
+                            "Unable to read the selected image.",
+                            "error"
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(
+                    file
+                );
+
+            }
+        );
+
+
+
+        /* =================================
+           SUBMIT
+        ================================= */
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+
+                event.preventDefault();
+
+
+
+                if (!user.id) {
+
+                    showMessage(
+                        "Your account could not be identified. Please log in again.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                if (!imageBase64) {
+
+                    showMessage(
+                        "Please select an artwork image.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                const name =
+                    document
+                        .getElementById(
+                            "artworkName"
+                        )
+                        .value
+                        .trim();
+
+
+                const category =
+                    document
+                        .getElementById(
+                            "artworkCategory"
+                        )
+                        .value;
+
+
+                const description =
+                    document
+                        .getElementById(
+                            "artworkDescription"
+                        )
+                        .value
+                        .trim();
+
+
+                const startingBid =
+                    Number(
+                        document
+                            .getElementById(
+                                "startingBid"
+                            )
+                            .value
+                    );
+
+
+                const size =
+                    document
+                        .getElementById(
+                            "artworkSize"
+                        )
+                        .value
+                        .trim();
+
+
+                const medium =
+                    document
+                        .getElementById(
+                            "artworkMedium"
+                        )
+                        .value
+                        .trim();
+
+
+
+                /* =================================
+                   VALIDATION
+                ================================= */
+
+                if (
+                    !name ||
+                    !category ||
+                    !description ||
+                    !size ||
+                    !medium
+                ) {
+
+                    showMessage(
+                        "Please fill in all artwork details.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    !Number.isFinite(
+                        startingBid
+                    ) ||
+                    startingBid <= 0
+                ) {
+
+                    showMessage(
+                        "Starting bid must be greater than ₹0.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* =================================
+                   PAYLOAD
+                ================================= */
+
+const payload = {
+
+    artist_id:
+        Number(user.id),
+
+    title:
+        name,
+
+    category:
+        category,
+
+    description:
+        description,
+
+    starting_price:
+        startingBid,
+
+    dimensions:
+        size,
+
+    medium:
+        medium,
+
+    image_url:
+        imageBase64
+
+};
+
+
+                /* =================================
+                   SUBMIT
+                ================================= */
+
+                button.disabled =
+                    true;
+
+
+                showMessage(
+                    "Uploading artwork...",
+                    "info"
+                );
+
+
+                try {
+
+
+                    const result =
+                        await apiFetch(
+                            "/api/artworks",
+                            {
+
+                                method: "POST",
+
+                                body: payload
+
+                            }
+                        );
+
+
+                    console.log(
+                        "Artwork upload result:",
+                        result
+                    );
+
+
+                    showMessage(
+                        "Artwork uploaded successfully. It is now awaiting admin approval.",
+                        "success"
+                    );
+
+
+                    form.reset();
+
+
+                    imageBase64 =
+                        "";
+
+
+                    preview.src =
+                        "";
+
+
+                    preview.style.display =
+                        "none";
+
+
+                    previewText.style.display =
+                        "block";
+
+
+                }
+
+                catch (
+                    error
+                ) {
+
+
+                    console.error(
+                        "Artwork upload error:",
+                        error
+                    );
+
+
+                    showMessage(
+                        error.message ||
+                        "Artwork upload failed. Please try again.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    button.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div
+        class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+            Loading...
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

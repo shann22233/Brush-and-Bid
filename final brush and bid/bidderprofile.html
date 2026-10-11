@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="bidder"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Bidder Profile - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="gallery.html">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+
+            <p id="profileRole"></p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PROFILE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2>
+
+    My Bidder Profile
+
+</h2>
+
+
+<p>
+
+    View and update your personal information,
+    contact details, and bidder account details.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     BIDDER PROFILE
+================================= -->
+
+<section class="bidder-profile-section">
+
+ 
+<div class="bidder-profile-title">
+
+
+    <p class="gallery-small-title">
+
+        Account information
+
+    </p>
+
+
+    <h2>
+
+        Bidder Profile
+
+    </h2>
+
+
+    <p>
+
+        Keep your profile information updated so
+        BRUSH and BID can provide a smooth bidding
+        and artwork delivery experience.
+
+    </p>
+
+
+</div>
+
+
+
+<div class="bidder-profile-container">
+
+
+    <!-- =================================
+         PROFILE SUMMARY
+    ================================= -->
+
+    <div class="bidder-profile-summary">
+
+
+        <div class="profile-avatar">
+
+            <span id="bidderInitial">
+
+                B
+
+            </span>
+
+        </div>
+
+
+        <h2 id="profileDisplayName">
+
+            Bidder Name
+
+        </h2>
+
+
+        <p>
+
+            Registered Bidder
+
+        </p>
+
+
+        <div class="profile-account-status">
+
+            Account Status:
+
+            <strong id="accountStatus">
+
+                Active
+
+            </strong>
+
+        </div>
+
+
+        <div class="profile-summary-info">
+
+
+            <p>
+
+                <strong>
+
+                    Role:
+
+                </strong>
+
+                Bidder
+
+            </p>
+
+
+            <p>
+
+                <strong>
+
+                    Member Since:
+
+                </strong>
+
+                <span id="memberSince">
+
+                    --
+
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+
+                    Account Type:
+
+                </strong>
+
+                Standard Bidder
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         PROFILE FORM
+    ================================= -->
+
+    <div class="bidder-profile-form-container">
+
+
+        <h2>
+
+            Personal Information
+
+        </h2>
+
+
+        <form
+            id="bidderProfileForm">
+
+
+            <!-- FULL NAME -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderName">
+
+                    Full Name
+
+                </label>
+
+
+                <input
+                    id="bidderName"
+                    name="full_name"
+                    placeholder="Enter your full name"
+                    required
+                    type="text">
+
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderEmail">
+
+                    Email Address
+
+                </label>
+
+
+                <input
+                    id="bidderEmail"
+                    name="email"
+                    placeholder="Enter your email address"
+                    required
+                    type="email">
+
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderPhone">
+
+                    Phone Number
+
+                </label>
+
+
+                <input
+                    id="bidderPhone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    required
+                    type="tel">
+
+
+            </div>
+
+
+
+            <!-- DATE OF BIRTH -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderDOB">
+
+                    Date of Birth
+
+                </label>
+
+
+                <input
+                    id="bidderDOB"
+                    name="date_of_birth"
+                    type="date">
+
+
+            </div>
+
+
+
+            <!-- GENDER -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderGender">
+
+                    Gender
+
+                </label>
+
+
+                <select
+                    id="bidderGender"
+                    name="gender">
+
+
+                    <option value="">
+
+                        Select Gender
+
+                    </option>
+
+
+                    <option value="Female">
+
+                        Female
+
+                    </option>
+
+
+                    <option value="Male">
+
+                        Male
+
+                    </option>
+
+
+                    <option value="Other">
+
+                        Other
+
+                    </option>
+
+
+                    <option value="Prefer not to say">
+
+                        Prefer not to say
+
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- CITY -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderCity">
+
+                    City
+
+                </label>
+
+
+                <input
+                    id="bidderCity"
+                    name="city"
+                    placeholder="Enter your city"
+                    type="text">
+
+
+            </div>
+
+
+
+            <!-- STATE -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderState">
+
+                    State
+
+                </label>
+
+
+                <input
+                    id="bidderState"
+                    name="state"
+                    placeholder="Enter your state"
+                    type="text">
+
+
+            </div>
+
+
+
+            <!-- COUNTRY -->
+
+            <div class="profile-input-group">
+
+
+                <label for="bidderCountry">
+
+                    Country
+
+                </label>
+
+
+                <input
+                    id="bidderCountry"
+                    name="country"
+                    type="text"
+                    value="India">
+
+
+            </div>
+
+
+
+            <!-- SAVE -->
+
+            <button
+                class="profile-save-btn"
+                type="submit">
+
+                Save Profile Changes
+
+            </button>
+
+
+            <!-- MESSAGE -->
+
+            <p
+                id="profileMessage"
+                role="status">
+
+            </p>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     BIDDER PROFILE SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           CURRENT USER
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        const resolvedId =
+            await ensureUserId();
+
+
+        if (
+            resolvedId
+        ) {
+
+            user.id =
+                resolvedId;
+
+        }
+
+
+
+        /* =================================
+           BIDDER ONLY
+        ================================= */
+
+        if (
+            !user.loggedIn ||
+            String(user.role).toLowerCase() !==
+            "bidder"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const form =
+            document.getElementById(
+                "bidderProfileForm"
+            );
+
+
+        const message =
+            document.getElementById(
+                "profileMessage"
+            );
+
+
+        const displayName =
+            document.getElementById(
+                "profileDisplayName"
+            );
+
+
+        const initial =
+            document.getElementById(
+                "bidderInitial"
+            );
+
+
+        const accountStatus =
+            document.getElementById(
+                "accountStatus"
+            );
+
+
+        const memberSince =
+            document.getElementById(
+                "memberSince"
+            );
+
+
+
+        /* =================================
+           MESSAGE
+        ================================= */
+
+        function showMessage(
+            text,
+            isError = false
+        ) {
+
+            if (!message) {
+
+                return;
+
+            }
+
+
+            message.textContent =
+                text;
+
+
+            message.style.color =
+                isError
+                    ? "#8C6A1C"
+                    : "#0F2E2A";
+
+        }
+
+
+
+        /* =================================
+           SET FIELD
+        ================================= */
+
+        function setField(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (element) {
+
+                element.value =
+                    value ?? "";
+
+            }
+
+        }
+
+
+
+        /* =================================
+           UPDATE PROFILE SUMMARY
+        ================================= */
+
+        function updateSummary(
+            name
+        ) {
+
+            const safeName =
+                name ||
+                "Bidder Name";
+
+
+            displayName.textContent =
+                safeName;
+
+
+            initial.textContent =
+                safeName
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase() ||
+                "B";
+
+        }
+
+
+
+        /* =================================
+           CHECK USER ID
+        ================================= */
+
+        if (!user.id) {
+
+            showMessage(
+                "Your user ID could not be found. Please log in again.",
+                true
+            );
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           LOAD BIDDER PROFILE
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    `/api/bidder-profile/${encodeURIComponent(
+                        user.id
+                    )}`
+                );
+
+
+            const profile =
+                response?.profile ||
+                response?.bidderProfile ||
+                response ||
+                {};
+
+
+            /* =================================
+               BASIC USER DATA
+            ================================= */
+
+            const fullName =
+                profile.full_name ||
+                profile.fullName ||
+                user.name ||
+                "";
+
+
+            const email =
+                profile.email ||
+                user.email ||
+                "";
+
+
+            updateSummary(
+                fullName
+            );
+
+
+            setField(
+                "bidderName",
+                fullName
+            );
+
+
+            setField(
+                "bidderEmail",
+                email
+            );
+
+
+            setField(
+                "bidderPhone",
+                profile.phone
+            );
+
+
+            setField(
+                "bidderDOB",
+                profile.date_of_birth ||
+                profile.dateOfBirth
+            );
+
+
+            setField(
+                "bidderGender",
+                profile.gender
+            );
+
+
+            setField(
+                "bidderCity",
+                profile.city
+            );
+
+
+            setField(
+                "bidderState",
+                profile.state
+            );
+
+
+            setField(
+                "bidderCountry",
+                profile.country ||
+                "India"
+            );
+
+
+
+            /* =================================
+               ACCOUNT STATUS
+            ================================= */
+
+            if (
+                profile.status
+            ) {
+
+                accountStatus.textContent =
+                    profile.status;
+
+            }
+
+
+
+            /* =================================
+               MEMBER SINCE
+            ================================= */
+
+            const joinedDate =
+                profile.joined_date ||
+                profile.joinedDate ||
+                profile.created_at ||
+                profile.createdAt;
+
+
+            if (
+                joinedDate
+            ) {
+
+                const date =
+                    new Date(
+                        joinedDate
+                    );
+
+
+                if (
+                    !isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    memberSince.textContent =
+                        date.getFullYear();
+
+                }
+
+            }
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Bidder profile load error:",
+                error
+            );
+
+
+            /*
+             * The bidder may not have created
+             * a profile yet.
+             */
+
+            updateSummary(
+                user.name ||
+                "Bidder Name"
+            );
+
+
+            setField(
+                "bidderName",
+                user.name
+            );
+
+
+            setField(
+                "bidderEmail",
+                user.email
+            );
+
+
+            setField(
+                "bidderCountry",
+                "India"
+            );
+
+
+            showMessage(
+                "No saved bidder profile was found. You can create your profile below."
+            );
+
+        }
+
+
+
+        /* =================================
+           SAVE PROFILE
+        ================================= */
+
+        if (form) {
+
+
+            form.addEventListener(
+                "submit",
+                async function (event) {
+
+
+                    event.preventDefault();
+
+
+                    showMessage(
+                        "Saving profile..."
+                    );
+
+
+
+                    const payload = {
+
+                        user_id:
+                            Number(user.id),
+
+                        full_name:
+                            document
+                                .getElementById(
+                                    "bidderName"
+                                )
+                                .value
+                                .trim(),
+
+                        email:
+                            document
+                                .getElementById(
+                                    "bidderEmail"
+                                )
+                                .value
+                                .trim(),
+
+                        phone:
+                            document
+                                .getElementById(
+                                    "bidderPhone"
+                                )
+                                .value
+                                .trim(),
+
+                        date_of_birth:
+                            document
+                                .getElementById(
+                                    "bidderDOB"
+                                )
+                                .value ||
+                            null,
+
+                        gender:
+                            document
+                                .getElementById(
+                                    "bidderGender"
+                                )
+                                .value ||
+                            null,
+
+                        city:
+                            document
+                                .getElementById(
+                                    "bidderCity"
+                                )
+                                .value
+                                .trim(),
+
+                        state:
+                            document
+                                .getElementById(
+                                    "bidderState"
+                                )
+                                .value
+                                .trim(),
+
+                        country:
+                            document
+                                .getElementById(
+                                    "bidderCountry"
+                                )
+                                .value
+                                .trim() ||
+                            "India"
+
+                    };
+
+
+
+                    /* =================================
+                       VALIDATION
+                    ================================= */
+
+                    if (
+                        !payload.full_name ||
+                        !payload.email ||
+                        !payload.phone
+                    ) {
+
+                        showMessage(
+                            "Please fill in all required fields.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    try {
+
+
+                        await apiFetch(
+                            "/api/bidder-profile",
+                            {
+                                method: "POST",
+                                body: payload
+                            }
+                        );
+
+
+                        /* =================================
+                           UPDATE SESSION DISPLAY
+                        ================================= */
+
+                        localStorage.setItem(
+                            "userName",
+                            payload.full_name
+                        );
+
+
+                        localStorage.setItem(
+                            "userEmail",
+                            payload.email
+                        );
+
+
+                        updateSummary(
+                            payload.full_name
+                        );
+
+
+                        showMessage(
+                            "Bidder profile saved successfully."
+                        );
+
+                    }
+
+                    catch (error) {
+
+
+                        console.error(
+                            "Bidder profile save error:",
+                            error
+                        );
+
+
+                        showMessage(
+                            "Unable to save profile: " +
+                            error.message,
+                            true
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+
+            Loading...
+
+        </p>
+
+
+    </div>
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,3131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="bidder"></script>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Shipping Details | BRUSH and BID
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           SHIPPING PAGE
+        ===================================================== */
+
+        .shipping-page-section {
+
+            padding: 50px 7%;
+
+            background: #F3F4EF;
+
+        }
+
+
+        .shipping-page-title {
+
+            max-width: 850px;
+
+            margin: 0 auto 35px;
+
+            text-align: center;
+
+        }
+
+
+        .shipping-page-title h2 {
+
+            color: #17201E;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .shipping-page-title p {
+
+            color: #56625D;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =====================================================
+           TRACKING CONTAINER
+        ===================================================== */
+
+        .tracking-container {
+
+            max-width: 900px;
+
+            margin: 0 auto 35px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .tracking-heading {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .tracking-heading h2 {
+
+            color: #17201E;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .tracking-heading p {
+
+            color: #56625D;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           ARTWORK DELIVERY INFORMATION
+        ===================================================== */
+
+        .delivery-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .delivery-summary-box {
+
+            background: #F3F4EF;
+
+            border-radius: 10px;
+
+            padding: 18px;
+
+        }
+
+
+        .delivery-summary-box span {
+
+            display: block;
+
+            color: #56625D;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .delivery-summary-box strong {
+
+            display: block;
+
+            color: #17201E;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =====================================================
+           TRACKING TIMELINE
+        ===================================================== */
+
+        .tracking-timeline {
+
+            position: relative;
+
+            padding: 10px 0;
+
+        }
+
+
+        .tracking-line {
+
+            position: absolute;
+
+            left: 24px;
+
+            top: 25px;
+
+            bottom: 25px;
+
+            width: 3px;
+
+            background: #D9DDD3;
+
+        }
+
+
+        .tracking-stage {
+
+            position: relative;
+
+            display: flex;
+
+            gap: 20px;
+
+            min-height: 90px;
+
+            z-index: 1;
+
+        }
+
+
+        .tracking-number {
+
+            width: 48px;
+
+            height: 48px;
+
+            min-width: 48px;
+
+            border-radius: 50%;
+
+            background: #D9DDD3;
+
+            color: #56625D;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 700;
+
+            font-size: 15px;
+
+            border: 4px solid white;
+
+            box-sizing: border-box;
+
+        }
+
+
+        .tracking-stage.completed
+        .tracking-number {
+
+            background: #2e7d32;
+
+            color: white;
+
+        }
+
+
+        .tracking-stage.current
+        .tracking-number {
+
+            background: #43a047;
+
+            color: white;
+
+            box-shadow:
+                0 0 0 5px rgba(46,125,50,0.15);
+
+        }
+
+
+        .tracking-stage-content {
+
+            padding-bottom: 25px;
+
+        }
+
+
+        .tracking-stage-content h3 {
+
+            margin: 2px 0 7px;
+
+            color: #17201E;
+
+            font-size: 18px;
+
+        }
+
+
+        .tracking-stage-content p {
+
+            margin: 0;
+
+            color: #56625D;
+
+            line-height: 1.5;
+
+        }
+
+
+        .tracking-stage-content .stage-date {
+
+            display: block;
+
+            margin-top: 7px;
+
+            font-size: 13px;
+
+            color: #8C6A1C;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           CURRENT STATUS
+        ===================================================== */
+
+        .current-status-box {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            background: #F3F4EF;
+
+            border-left: 4px solid #8C6A1C;
+
+        }
+
+
+        .current-status-box.status-confirmed {
+
+            border-left-color: #2e7d32;
+
+        }
+
+
+        .current-status-box span {
+
+            display: block;
+
+            font-size: 13px;
+
+            color: #56625D;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .current-status-box strong {
+
+            color: #17201E;
+
+            font-size: 20px;
+
+        }
+
+
+        /* =====================================================
+           SHIPPING FORM CONTAINER
+        ===================================================== */
+
+        .shipping-container {
+
+            max-width: 900px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .shipping-form {
+
+            width: 100%;
+
+        }
+
+
+        .shipping-input-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .shipping-input-group label {
+
+            display: block;
+
+            color: #17201E;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .shipping-input-group input,
+        .shipping-input-group textarea {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 13px 15px;
+
+            border: 1px solid #D9DDD3;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            font-family: inherit;
+
+            background: #fff;
+
+        }
+
+
+        .shipping-input-group textarea {
+
+            resize: vertical;
+
+            min-height: 110px;
+
+        }
+
+
+        .shipping-input-group input:focus,
+        .shipping-input-group textarea:focus {
+
+            outline: none;
+
+            border-color: #8C6A1C;
+
+        }
+
+
+        /* =====================================================
+           FORM BUTTONS
+        ===================================================== */
+
+        .shipping-form-actions {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 10px;
+
+        }
+
+
+        .save-shipping-btn,
+        .back-bids-btn {
+
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+        }
+
+
+        .save-shipping-btn {
+
+            border: none;
+
+            background: #8C6A1C;
+
+            color: white;
+
+        }
+
+
+        .save-shipping-btn:hover {
+
+            background: #6F5313;
+
+        }
+
+
+        .save-shipping-btn:disabled {
+
+            background: #aaa;
+
+            cursor: not-allowed;
+
+        }
+
+
+        .back-bids-btn {
+
+            background: #F3F4EF;
+
+            color: #17201E;
+
+        }
+
+
+        .back-bids-btn:hover {
+
+            background: #D9DDD3;
+
+        }
+
+
+        /* =====================================================
+           MESSAGES
+        ===================================================== */
+
+        #shippingMessage {
+
+            margin-top: 18px;
+
+            min-height: 22px;
+
+            font-weight: 600;
+
+        }
+
+
+        .shipping-success {
+
+            color: #2e7d32;
+
+        }
+
+
+        .shipping-error {
+
+            color: #b71c1c;
+
+        }
+
+
+        .shipping-info {
+
+            color: #56625D;
+
+        }
+
+
+        /* =====================================================
+           NOTE
+        ===================================================== */
+
+        .shipping-note {
+
+            margin-top: 30px;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            background: #F3F4EF;
+
+            color: #56625D;
+
+            line-height: 1.7;
+
+        }
+
+
+        .shipping-note strong {
+
+            color: #17201E;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE DESIGN
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .delivery-summary {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .shipping-page-section {
+
+                padding: 40px 5%;
+
+            }
+
+
+            .tracking-container,
+            .shipping-container {
+
+                padding: 25px 20px;
+
+            }
+
+
+            .shipping-form-actions {
+
+                flex-direction: column;
+
+            }
+
+
+            .save-shipping-btn,
+            .back-bids-btn {
+
+                text-align: center;
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+
+    <div class="logo">
+
+        <h1>
+            BRUSH and BID
+        </h1>
+
+    </div>
+
+
+    <nav>
+
+        <ul id="navbar">
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+
+            <li>
+                <a href="about.html">
+                    About
+                </a>
+            </li>
+
+
+            <li>
+                <a href="gallery.html">
+                    Gallery
+                </a>
+            </li>
+
+
+            <li>
+                <a href="auctions.html">
+                    Auctions
+                </a>
+            </li>
+
+
+            <li id="roleMenu"></li>
+
+        </ul>
+
+    </nav>
+
+
+    <div class="header-right">
+
+
+        <button
+            id="loginBtn"
+            class="login-top-btn"
+            type="button"
+            onclick="window.location.href='index.html?login=true'"
+        >
+
+            Login
+
+        </button>
+
+
+        <div
+            id="profileArea"
+            class="profile-area"
+            style="display:none;"
+        >
+
+
+            <div
+                id="profileIcon"
+                class="profile-icon profile-initial"
+                onclick="toggleProfileMenu()"
+            >
+
+                U
+
+            </div>
+
+
+            <div
+                id="profileMenu"
+                class="profile-dropdown"
+            >
+
+                <h3 id="profileName"></h3>
+
+                <p id="profileRole"></p>
+
+                <small id="profileEmail"></small>
+
+                <hr>
+
+
+                <a
+                    id="profilePage"
+                    href="#"
+                >
+
+                    My Profile
+
+                </a>
+
+
+                <button
+                    type="button"
+                    onclick="logoutUser()"
+                >
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="gallery-hero">
+
+    <h2>
+        Shipping Details
+    </h2>
+
+
+    <p>
+        Track the delivery progress of your
+        winning artwork and manage your
+        delivery information.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN SHIPPING SECTION
+===================================================== -->
+
+<section class="shipping-page-section">
+
+
+    <!-- =================================================
+         DELIVERY TRACKING
+    ================================================== -->
+
+    <div class="tracking-container">
+
+
+        <div class="tracking-heading">
+
+            <p class="gallery-small-title">
+                Delivery status
+            </p>
+
+
+            <h2>
+                Track Your Artwork
+            </h2>
+
+
+            <p>
+                Follow the progress of your winning
+                artwork from order confirmation
+                to final delivery.
+            </p>
+
+        </div>
+
+
+
+        <!-- =============================================
+             ARTWORK SUMMARY
+        ============================================== -->
+
+        <div class="delivery-summary">
+
+
+            <div class="delivery-summary-box">
+
+                <span>
+                    Artwork
+                </span>
+
+                <strong id="trackingArtwork">
+                    Your Winning Artwork
+                </strong>
+
+            </div>
+
+
+            <div class="delivery-summary-box">
+
+                <span>
+                    Winning Bid
+                </span>
+
+                <strong id="trackingBid">
+                    Not available
+                </strong>
+
+            </div>
+
+
+            <div class="delivery-summary-box">
+
+                <span>
+                    Tracking Number
+                </span>
+
+                <strong id="trackingNumber">
+                    Not assigned
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =============================================
+             NOT WON YET NOTICE
+             Shown only when the bidder has no winning
+             bid on record — the tracker below and the
+             shipping address form only appear once a
+             bid actually wins a closed auction.
+        ============================================== -->
+
+        <div
+            id="noWinMessage"
+            style="
+                display:none;
+                margin-top:10px;
+                padding:25px;
+                border-radius:10px;
+                background:#F3F4EF;
+                border:1px dashed #D9DDD3;
+                text-align:center;
+            ">
+
+            <h3 style="color:#17201E;margin-bottom:10px;">
+                No Winning Bid Yet
+            </h3>
+
+            <p style="color:#56625D;margin-bottom:18px;">
+                The tracker above will light up and your
+                delivery address form will appear here as
+                soon as one of your bids wins a closed
+                auction and the order is confirmed.
+            </p>
+
+            <a
+                href="mybids.html"
+                class="details-btn">
+
+                View My Bids →
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =============================================
+             TRACKING TIMELINE
+        ============================================== -->
+
+        <div
+            class="tracking-timeline"
+            id="trackingTimeline">
+
+
+            <div class="tracking-line"></div>
+
+
+
+            <!-- =========================================
+                 STAGE 1
+            ========================================== -->
+
+            <div
+                class="tracking-stage"
+                data-stage="Order Confirmed"
+                id="stage1"
+            >
+
+                <div class="tracking-number">
+                    1
+                </div>
+
+
+                <div class="tracking-stage-content">
+
+                    <h3>
+                        Order Confirmed
+                    </h3>
+
+                    <p>
+                        Your winning bid has been
+                        confirmed and your artwork
+                        is being prepared for delivery.
+                    </p>
+
+                    <span
+                        class="stage-date"
+                        id="stage1Date"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STAGE 2
+            ========================================== -->
+
+            <div
+                class="tracking-stage"
+                data-stage="Packing Artwork"
+                id="stage2"
+            >
+
+                <div class="tracking-number">
+                    2
+                </div>
+
+
+                <div class="tracking-stage-content">
+
+                    <h3>
+                        Packing Artwork
+                    </h3>
+
+                    <p>
+                        Your artwork is being carefully
+                        packed and prepared for safe
+                        transportation.
+                    </p>
+
+                    <span
+                        class="stage-date"
+                        id="stage2Date"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STAGE 3
+            ========================================== -->
+
+            <div
+                class="tracking-stage"
+                data-stage="Shipped"
+                id="stage3"
+            >
+
+                <div class="tracking-number">
+                    3
+                </div>
+
+
+                <div class="tracking-stage-content">
+
+                    <h3>
+                        Shipped
+                    </h3>
+
+                    <p>
+                        Your artwork has been handed
+                        over to the delivery service.
+                    </p>
+
+                    <span
+                        class="stage-date"
+                        id="stage3Date"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STAGE 4
+            ========================================== -->
+
+            <div
+                class="tracking-stage"
+                data-stage="Out for Delivery"
+                id="stage4"
+            >
+
+                <div class="tracking-number">
+                    4
+                </div>
+
+
+                <div class="tracking-stage-content">
+
+                    <h3>
+                        Out for Delivery
+                    </h3>
+
+                    <p>
+                        Your artwork is currently
+                        on its way to your delivery
+                        address.
+                    </p>
+
+                    <span
+                        class="stage-date"
+                        id="stage4Date"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STAGE 5
+            ========================================== -->
+
+            <div
+                class="tracking-stage"
+                data-stage="Delivered"
+                id="stage5"
+            >
+
+                <div class="tracking-number">
+                    5
+                </div>
+
+
+                <div class="tracking-stage-content">
+
+                    <h3>
+                        Delivered
+                    </h3>
+
+                    <p>
+                        Your artwork has been
+                        successfully delivered.
+                    </p>
+
+                    <span
+                        class="stage-date"
+                        id="stage5Date"
+                    ></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =============================================
+             CURRENT STATUS
+        ============================================== -->
+
+        <div
+            class="current-status-box"
+            id="currentStatusBox">
+
+            <span>
+                Current Delivery Status
+            </span>
+
+
+            <strong id="currentShippingStatus">
+                Order Confirmed
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SHIPPING ADDRESS
+         (hidden until the bidder has a winning bid —
+         toggled by shippingdetails JS below)
+    ================================================== -->
+
+    <div id="shippingFormSection">
+
+    <div class="shipping-page-title">
+
+        <p class="gallery-small-title">
+            Delivery information
+        </p>
+
+
+        <h2>
+            Your Shipping Address
+        </h2>
+
+
+        <p>
+            Keep these details accurate so your
+            winning artwork can be delivered safely.
+        </p>
+
+    </div>
+
+
+
+
+    <div class="shipping-container">
+
+
+        <form
+            id="shippingForm"
+            class="shipping-form"
+        >
+            <input type="hidden" id="shippingBidId" name="bid_id" value="">
+
+
+
+            <!-- =========================================
+                 FULL NAME
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipName">
+                    Full Name
+                </label>
+
+
+                <input
+                    id="shipName"
+                    name="full_name"
+                    type="text"
+                    autocomplete="name"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 PHONE
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipPhone">
+                    Phone
+                </label>
+
+
+                <input
+                    id="shipPhone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    pattern="[0-9+\-\s()]{7,20}"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 EMAIL
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipEmail">
+                    Email
+                </label>
+
+
+                <input
+                    id="shipEmail"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 ADDRESS
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipAddress">
+                    Address
+                </label>
+
+
+                <textarea
+                    id="shipAddress"
+                    name="address"
+                    autocomplete="street-address"
+                    required
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 CITY
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipCity">
+                    City
+                </label>
+
+
+                <input
+                    id="shipCity"
+                    name="city"
+                    type="text"
+                    autocomplete="address-level2"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STATE
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipState">
+                    State
+                </label>
+
+
+                <input
+                    id="shipState"
+                    name="state"
+                    type="text"
+                    autocomplete="address-level1"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 PINCODE
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipPincode">
+                    Pincode
+                </label>
+
+
+                <input
+                    id="shipPincode"
+                    name="pincode"
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]{4,10}"
+                    autocomplete="postal-code"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 COUNTRY
+            ========================================== -->
+
+            <div class="shipping-input-group">
+
+                <label for="shipCountry">
+                    Country
+                </label>
+
+
+                <input
+                    id="shipCountry"
+                    name="country"
+                    type="text"
+                    value="India"
+                    autocomplete="country-name"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =========================================
+                 BUTTONS
+            ========================================== -->
+
+            <div class="shipping-form-actions">
+
+
+                <button
+                    class="save-shipping-btn"
+                    id="saveShippingBtn"
+                    type="submit"
+                >
+
+                    Save Shipping Details
+
+                </button>
+
+
+                <a
+                    class="back-bids-btn"
+                    href="mybids.html"
+                >
+
+                    Back to My Bids
+
+                </a>
+
+            </div>
+
+
+            <p
+                id="shippingMessage"
+                class="shipping-info"
+                aria-live="polite"
+            ></p>
+
+
+        </form>
+
+<!-- ================= BILLING & PAYMENT ================= -->
+
+<div id="paymentSection" style="display:none; margin-top:35px;">
+
+    <h2>Billing & Payment</h2>
+
+    <div class="payment-box">
+
+        <div class="form-group">
+            <label>Artwork</label>
+            <input
+                type="text"
+                id="paymentArtwork"
+                readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Winning Bid Amount</label>
+            <input
+                type="text"
+                id="paymentAmount"
+                readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Payment Method</label>
+
+            <select id="paymentMethod">
+                <option value="">Select Payment Method</option>
+                <option value="UPI">UPI</option>
+                <option value="Card">Card</option>
+                <option value="Net Banking">Net Banking</option>
+            </select>
+        </div>
+
+        <button
+            type="button"
+            id="recordPaymentBtn"
+        >
+            Record Payment
+        </button>
+
+        <p id="paymentMessage"></p>
+
+        <!-- TRANSACTION DETAILS -->
+
+        <div
+            id="paymentTransactionDetails"
+            style="display:none; margin-top:20px;"
+        >
+
+            <h3>Payment Transaction</h3>
+
+            <p>
+                <strong>Transaction Reference:</strong>
+                <span id="paymentReference">—</span>
+            </p>
+
+            <p>
+                <strong>Payment Status:</strong>
+                <span id="paymentStatus">—</span>
+            </p>
+
+            <p>
+                <strong>Paid At (IST):</strong>
+                <span id="paymentDate">—</span>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= END BILLING & PAYMENT ================= -->
+
+        <!-- =============================================
+             INFORMATION NOTE
+        ============================================== -->
+
+        <div class="shipping-note">
+
+            <strong>
+                Important:
+            </strong>
+
+            Your shipping information is associated
+            with your bidder account. You do not need
+            to enter a different user ID manually.
+            The server will identify the logged-in
+            bidder and save the address to the correct
+            account.
+
+        </div>
+    </div>
+
+    <!-- /#shippingFormSection -->
+
+    <!-- =================================================
+         BILLING / PAYMENT TRANSACTION
+    ================================================== -->
+
+    <div
+        id="paymentSection"
+        style="display:none;margin-top:35px;">
+
+        <div class="shipping-page-title">
+            <p class="gallery-small-title">
+                Billing & payment
+            </p>
+
+            <h2>
+                Payment Transaction
+            </h2>
+
+            <p>
+                Record the payment for your winning artwork.
+            </p>
+        </div>
+
+        <div class="shipping-container">
+
+            <div class="shipping-form" style="width:100%;">
+
+                <div class="shipping-input-group">
+                    <label>Artwork</label>
+                    <input
+                        id="paymentArtwork"
+                        type="text"
+                        readonly
+                    >
+                </div>
+
+                <div class="shipping-input-group">
+                    <label>Winning Amount</label>
+                    <input
+                        id="paymentAmount"
+                        type="text"
+                        readonly
+                    >
+                </div>
+
+                <div class="shipping-input-group">
+                    <label for="paymentMethod">
+                        Payment Method
+                    </label>
+
+                    <select id="paymentMethod">
+                        <option value="">
+                            Select Payment Method
+                        </option>
+
+                        <option value="UPI">
+                            UPI
+                        </option>
+
+                        <option value="Card">
+                            Card
+                        </option>
+
+                        <option value="Net Banking">
+                            Net Banking
+                        </option>
+                    </select>
+                </div>
+
+                <button
+                    type="button"
+                    class="artist-save-btn"
+                    id="recordPaymentBtn"
+                >
+                    Record Payment
+                </button>
+
+                <p
+                    id="paymentMessage"
+                    role="status"
+                ></p>
+
+                <div
+                    id="paymentTransactionDetails"
+                    style="
+                        display:none;
+                        margin-top:18px;
+                        padding:18px;
+                        background:#F3F4EF;
+                        border-radius:10px;
+                    "
+                >
+
+                    <p>
+                        <strong>
+                            Transaction Reference:
+                        </strong>
+
+                        <span id="paymentReference">
+                            —
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>
+                            Status:
+                        </strong>
+
+                        <span id="paymentStatus">
+                            —
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>
+                            Paid At (IST):
+                        </strong>
+
+                        <span id="paymentDate">
+                            —
+                        </span>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+
+        © 2026 BRUSH and BID |
+        Online Art Auction Platform |
+        All Rights Reserved
+
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     SHARED JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =====================================================
+     SHIPPING JAVASCRIPT
+===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =============================================
+           GET CURRENT USER
+        ============================================== */
+
+        const user =
+            getCurrentUser();
+
+
+        const message =
+            document.getElementById(
+                "shippingMessage"
+            );
+
+
+        const form =
+            document.getElementById(
+                "shippingForm"
+            );
+
+
+        const saveButton =
+            document.getElementById(
+                "saveShippingBtn"
+            );
+
+
+
+        /* =============================================
+           FIND DATABASE USER ID
+        ============================================== */
+
+        const resolvedId =
+            await ensureUserId();
+
+
+        if (resolvedId) {
+
+            user.id =
+                resolvedId;
+
+        }
+
+
+
+        /* =============================================
+           BIDDER ONLY
+        ============================================== */
+
+        if (
+            !user.loggedIn ||
+            String(user.role).toLowerCase() !==
+            "bidder"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+
+        }
+
+
+
+        /* =============================================
+           CHECK USER ID
+        ============================================== */
+
+        if (!user.id) {
+
+            message.textContent =
+                "Your account could not be identified. Please log in again.";
+
+            message.className =
+                "shipping-error";
+
+            return;
+
+        }
+
+
+
+        /* =============================================
+           HELPER: SET FORM VALUE
+        ============================================== */
+
+        function setValue(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (element) {
+
+                element.value =
+                    value ?? "";
+
+            }
+
+        }
+
+
+
+        /* =============================================
+           HELPER: SHOW MESSAGE
+        ============================================== */
+
+        function showMessage(
+            text,
+            type
+        ) {
+
+            message.textContent =
+                text;
+
+
+            message.className =
+                type
+                    ? "shipping-" + type
+                    : "shipping-info";
+
+        }
+
+
+
+        /* =============================================
+           FORMAT DATE
+        ============================================== */
+
+        function formatDate(
+            value
+        ) {
+
+            if (!value) {
+
+                return "";
+
+            }
+
+
+            const date =
+                new Date(value);
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "";
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    timeZone: "Asia/Kolkata"
+                }
+            );
+
+        }
+
+
+
+        /* =============================================
+           UPDATE TRACKING DISPLAY
+
+           Stages only turn green (completed / current)
+           once the backend has actually confirmed that
+           status for this order. If no confirmed status
+           is available yet, every stage stays in its
+           neutral/unconfirmed state.
+        ============================================== */
+
+        function updateTracking(
+            shipping
+        ) {
+
+
+            /* =========================================
+               GET STATUS
+            ========================================== */
+
+            const status =
+                shipping.shipping_status ||
+                shipping.shippingStatus ||
+                "";
+
+
+            const isConfirmed =
+                Boolean(status);
+
+
+            const stages = [
+
+                "Order Confirmed",
+
+                "Packing Artwork",
+
+                "Shipped",
+
+                "Out for Delivery",
+
+                "Delivered"
+
+            ];
+
+
+            let currentIndex =
+                stages.indexOf(status);
+
+
+            if (
+                currentIndex < 0
+            ) {
+
+                currentIndex = -1;
+
+            }
+
+
+
+            /* =========================================
+               CURRENT STATUS
+            ========================================== */
+
+            const currentStatus =
+                document.getElementById(
+                    "currentShippingStatus"
+                );
+
+
+            if (currentStatus) {
+
+                currentStatus.textContent =
+                    isConfirmed
+                        ? status
+                        : "Awaiting Confirmation";
+
+            }
+
+
+            const statusBox =
+                document.getElementById(
+                    "currentStatusBox"
+                );
+
+
+            if (statusBox) {
+
+                statusBox.classList.toggle(
+                    "status-confirmed",
+                    isConfirmed
+                );
+
+            }
+
+
+
+            /* =========================================
+               ARTWORK
+            ========================================== */
+
+            const artworkElement =
+                document.getElementById(
+                    "trackingArtwork"
+                );
+
+
+            if (artworkElement) {
+
+                artworkElement.textContent =
+                    shipping.artwork_name ||
+                    shipping.artworkName ||
+                    "Your Winning Artwork";
+
+            }
+
+
+
+            /* =========================================
+               WINNING BID
+            ========================================== */
+
+            const bidElement =
+                document.getElementById(
+                    "trackingBid"
+                );
+
+
+            if (bidElement) {
+
+                const bid =
+                    Number(
+                        shipping.winning_bid ||
+                        shipping.winningBid ||
+                        0
+                    );
+
+
+                if (bid > 0) {
+
+                    bidElement.textContent =
+                        "₹" +
+                        bid.toLocaleString(
+                            "en-IN"
+                        );
+
+                }
+                else {
+
+                    bidElement.textContent =
+                        "Not available";
+
+                }
+
+            }
+
+
+
+            /* =========================================
+               TRACKING NUMBER
+            ========================================== */
+
+            const trackingElement =
+                document.getElementById(
+                    "trackingNumber"
+                );
+
+
+            if (trackingElement) {
+
+                trackingElement.textContent =
+                    shipping.tracking_number ||
+                    shipping.trackingNumber ||
+                    "Not assigned";
+
+            }
+
+
+
+            /* =========================================
+               UPDATE ALL STAGES
+
+               Only stages up to and including the
+               confirmed currentIndex get the
+               completed/current (green) styling.
+               If nothing is confirmed yet
+               (currentIndex === -1), every stage
+               stays neutral.
+            ========================================== */
+
+            stages.forEach(
+                function (
+                    stageName,
+                    index
+                ) {
+
+
+                    const stage =
+                        document.getElementById(
+                            "stage" +
+                            (index + 1)
+                        );
+
+
+                    if (!stage) {
+
+                        return;
+
+                    }
+
+
+                    stage.classList.remove(
+                        "completed"
+                    );
+
+
+                    stage.classList.remove(
+                        "current"
+                    );
+
+
+                    if (
+                        !isConfirmed ||
+                        currentIndex < 0
+                    ) {
+
+                        return;
+
+                    }
+
+
+
+                    if (
+                        index <
+                        currentIndex
+                    ) {
+
+                        stage.classList.add(
+                            "completed"
+                        );
+
+                    }
+
+
+                    else if (
+                        index ===
+                        currentIndex
+                    ) {
+
+                        stage.classList.add(
+                            "current"
+                        );
+
+                    }
+
+                }
+            );
+
+
+
+            /* =========================================
+               STATUS DATES
+            ========================================== */
+
+            const dateFields = [
+
+                shipping.order_confirmed_at,
+
+                shipping.packing_at,
+
+                shipping.shipped_at,
+
+                shipping.out_for_delivery_at,
+
+                shipping.delivered_at
+
+            ];
+
+
+            dateFields.forEach(
+                function (
+                    date,
+                    index
+                ) {
+
+                    const dateElement =
+                        document.getElementById(
+                            "stage" +
+                            (index + 1) +
+                            "Date"
+                        );
+
+
+                    if (dateElement) {
+
+                        dateElement.textContent =
+                            formatDate(date);
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+async function loadPaymentForBid(bid) {
+
+    const section = document.getElementById("paymentSection");
+
+    if (!section || !bid) {
+        return;
+    }
+
+    const bidId = Number(
+        bid.bid_id ||
+        bid.bidId ||
+        0
+    );
+
+    if (!Number.isInteger(bidId) || bidId <= 0) {
+        console.log("Invalid winning bid ID:", bid);
+        return;
+    }
+
+    /* -----------------------------------------
+       SHOW BILLING / PAYMENT SECTION
+    ----------------------------------------- */
+
+    section.style.display = "block";
+
+    section.dataset.bidId = String(bidId);
+
+    /* -----------------------------------------
+       SHOW ARTWORK
+    ----------------------------------------- */
+
+    document.getElementById("paymentArtwork").value =
+        bid.artwork_title ||
+        bid.artwork_name ||
+        bid.artworkName ||
+        "Winning Artwork";
+
+    /* -----------------------------------------
+       SHOW WINNING AMOUNT
+    ----------------------------------------- */
+
+    const amount = Number(
+        bid.bid_amount ||
+        bid.winning_bid ||
+        0
+    );
+
+    document.getElementById("paymentAmount").value =
+        "₹" + amount.toLocaleString("en-IN");
+
+    /* -----------------------------------------
+       RESET PAYMENT CONTROLS
+    ----------------------------------------- */
+
+    const method =
+        document.getElementById("paymentMethod");
+
+    const button =
+        document.getElementById("recordPaymentBtn");
+
+    const details =
+        document.getElementById("paymentTransactionDetails");
+
+    const message =
+        document.getElementById("paymentMessage");
+
+    if (method) {
+        method.disabled = false;
+    }
+
+    if (button) {
+        button.disabled = false;
+        button.textContent = "Record Payment";
+    }
+
+    if (details) {
+        details.style.display = "none";
+    }
+
+    if (message) {
+        message.textContent = "";
+    }
+
+    /* -----------------------------------------
+       LOAD EXISTING TRANSACTION
+    ----------------------------------------- */
+
+    try {
+
+        const data = await apiFetch(
+            "/api/payment/" +
+            encodeURIComponent(user.id) +
+            "?bid_id=" +
+            encodeURIComponent(bidId)
+        );
+
+        const payments =
+            Array.isArray(data?.payments)
+                ? data.payments
+                : [];
+
+        const payment =
+            payments.find(
+                item =>
+                    Number(item.bid_id) === bidId
+            );
+
+        if (!payment) {
+            return;
+        }
+
+        /* Existing transaction */
+
+        if (method) {
+            method.value =
+                payment.payment_method || "";
+            method.disabled = true;
+        }
+
+        if (document.getElementById("paymentReference")) {
+            document.getElementById("paymentReference").textContent =
+                payment.transaction_reference || "—";
+        }
+
+        if (document.getElementById("paymentStatus")) {
+            document.getElementById("paymentStatus").textContent =
+                payment.payment_status || "—";
+        }
+
+        if (document.getElementById("paymentDate")) {
+            document.getElementById("paymentDate").textContent =
+                formatDateTime(payment.paid_at);
+        }
+
+        if (details) {
+            details.style.display = "block";
+        }
+
+        if (button) {
+            button.disabled = true;
+            button.textContent = "Payment Recorded";
+        }
+
+        if (message) {
+            message.textContent =
+                "Payment transaction already recorded.";
+            message.style.color = "#2e7d32";
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Payment load error:",
+            error
+        );
+
+        /*
+         * Do NOT hide the payment section if
+         * loading the old transaction fails.
+         *
+         * The bidder must still be able to
+         * record the payment.
+         */
+
+    }
+
+}
+        function formatDateTime(value) {
+            if (!value) return "—";
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return "—";
+            return date.toLocaleString("en-IN", {
+                day: "2-digit", month: "short", year: "numeric",
+                hour: "numeric", minute: "2-digit", hour12: true,
+                timeZone: "Asia/Kolkata"
+            });
+        }
+
+        /* =============================================
+           LOAD SAVED SHIPPING DETAILS
+        ============================================== */
+
+        async function loadShippingDetails() {
+
+            const params = new URLSearchParams(window.location.search);
+            const bidFromUrl = params.get("bid_id");
+            if (bidFromUrl) document.getElementById("shippingBidId").value = bidFromUrl;
+
+
+            const timeline =
+                document.getElementById(
+                    "trackingTimeline"
+                );
+
+            const statusBox =
+                document.getElementById(
+                    "currentStatusBox"
+                );
+
+            const noWinMessage =
+                document.getElementById(
+                    "noWinMessage"
+                );
+
+            const formSection =
+                document.getElementById(
+                    "shippingFormSection"
+                );
+
+
+            /* =====================================
+               SHOW / HIDE HELPERS
+
+               The tracker and the address form are
+               only relevant once the bidder has
+               actually won a closed auction.
+            ===================================== */
+
+            function showWinnerView() {
+
+                if (timeline) timeline.style.display = "";
+
+                if (statusBox) statusBox.style.display = "";
+
+                if (noWinMessage) noWinMessage.style.display = "none";
+
+                if (formSection) formSection.style.display = "";
+
+            }
+
+
+            /*
+             * The tracker itself stays visible even when
+             * there's no winning bid yet — it just stays
+             * in its neutral/grey (unconfirmed) state.
+             * Only the address form is hidden until the
+             * bidder actually wins and the order is
+             * confirmed.
+             */
+
+            function showNoWinView() {
+
+                if (timeline) timeline.style.display = "";
+
+                if (statusBox) statusBox.style.display = "";
+
+                if (noWinMessage) noWinMessage.style.display = "block";
+
+                if (formSection) formSection.style.display = "none";
+
+                const paymentSection = document.getElementById("paymentSection");
+                if (paymentSection) paymentSection.style.display = "none";
+
+                updateTracking(
+                    {
+                        shipping_status: "",
+                        artwork_name: "",
+                        winning_bid: 0
+                    }
+                );
+
+                showMessage(
+                    "",
+                    "info"
+                );
+
+            }
+
+
+            try {
+
+
+                const data =
+                    await apiFetch(
+                        "/api/shipping/" +
+                        encodeURIComponent(
+                            user.id
+                        )
+                    );
+
+
+                const shipping =
+                    data?.shipping ||
+                    null;
+
+
+                if (shipping) {
+
+                    /*
+                     * A real shipping record already
+                     * exists, meaning this bidder has
+                     * genuinely won and confirmed an
+                     * order already.
+                     */
+
+                    showWinnerView();
+
+
+                    setValue(
+                        "shipName",
+                        shipping.full_name ||
+                        shipping.fullName ||
+                        user.name ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipPhone",
+                        shipping.phone ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipEmail",
+                        shipping.email ||
+                        user.email ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipAddress",
+                        shipping.address ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipCity",
+                        shipping.city ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipState",
+                        shipping.state ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipPincode",
+                        shipping.pincode ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipCountry",
+                        shipping.country ||
+                        "India"
+                    );
+
+
+                    updateTracking(
+                        shipping
+                    );
+
+
+                    showMessage(
+                        "Saved shipping details loaded.",
+                        "info"
+                    );
+
+await loadPaymentForBid({
+    bid_id:
+        shipping.bid_id,
+
+    artwork_name:
+        shipping.artwork_name ||
+        shipping.artwork_title ||
+        "Winning Artwork",
+
+    bid_amount:
+        shipping.winning_bid ||
+        shipping.bid_amount ||
+        0
+});
+
+return;
+                }
+
+
+                /*
+                 * No saved shipping record yet.
+                 * Check whether the bidder has actually
+                 * won a closed auction before showing
+                 * the address form. The tracker itself
+                 * stays unconfirmed (grey) until the
+                 * server actually returns a shipping
+                 * status.
+                 */
+
+                let winningBid =
+                    null;
+
+
+                try {
+
+                    const bidsData =
+                        await apiFetch(
+                            "/api/bids/user/" +
+                            encodeURIComponent(
+                                user.id
+                            )
+                        );
+
+
+                    const bids =
+                        Array.isArray(bidsData)
+                            ? bidsData
+                            : (
+                                bidsData?.bids ||
+                                []
+                            );
+
+
+                    winningBid =
+                        bids.find(
+                            function (bid) {
+
+                                return (
+                                    Number(
+                                        bid.is_winner
+                                    ) === 1 ||
+                                    bid.is_winner === true
+                                );
+
+                            }
+                        ) ||
+                        null;
+
+                }
+
+                catch (bidsError) {
+
+                    console.log(
+                        "Unable to check winning bids:",
+                        bidsError
+                    );
+
+                }
+
+
+                if (winningBid) {
+
+                    /*
+                     * The bidder has won, but has not
+                     * saved shipping details yet, and
+                     * no status has been confirmed by
+                     * the server yet — so the tracker
+                     * stays unconfirmed (grey) until
+                     * they save their address and the
+                     * backend confirms the order.
+                     */
+
+                    showWinnerView();
+
+
+                    setValue(
+                        "shipName",
+                        user.name ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipEmail",
+                        user.email ||
+                        ""
+                    );
+
+
+                    setValue(
+                        "shipCountry",
+                        "India"
+                    );
+
+
+updateTracking(
+    {
+        shipping_status: "",
+
+        artwork_name:
+            winningBid.artwork_title ||
+            winningBid.artwork_name ||
+            winningBid.artworkName ||
+            "Winning Artwork",
+
+        winning_bid:
+            winningBid.bid_amount || 0
+    }
+);
+                    showMessage(
+                        "You won this auction! Enter your shipping details below.",
+                        "success"
+                    );
+
+                    await loadPaymentForBid(winningBid);
+
+                }
+
+                else {
+
+                    /*
+                     * No shipping record and no
+                     * winning bid — nothing to ship yet.
+                     */
+
+                    showNoWinView();
+
+                }
+
+            }
+
+
+            catch (
+                error
+            ) {
+
+
+                console.log(
+                    "Shipping details load:",
+                    error
+                );
+
+
+                showNoWinView();
+
+            }
+
+        }
+
+
+
+        /* =============================================
+           SAVE SHIPPING DETAILS
+        ============================================== */
+
+        form.addEventListener(
+            "submit",
+            async function (
+                event
+            ) {
+
+
+                event.preventDefault();
+
+
+
+                /* =====================================
+                   COLLECT FORM DATA
+                ===================================== */
+
+                const payload = {
+
+                    bidder_id:
+                        Number(
+                            user.id
+                        ),
+
+                    bid_id:
+                        Number(
+                            document.getElementById("shippingBidId").value || 0
+                        ),
+
+                    full_name:
+                        document
+                            .getElementById(
+                                "shipName"
+                            )
+                            .value
+                            .trim(),
+
+                    phone:
+                        document
+                            .getElementById(
+                                "shipPhone"
+                            )
+                            .value
+                            .trim(),
+
+                    email:
+                        document
+                            .getElementById(
+                                "shipEmail"
+                            )
+                            .value
+                            .trim(),
+
+                    address:
+                        document
+                            .getElementById(
+                                "shipAddress"
+                            )
+                            .value
+                            .trim(),
+
+                    city:
+                        document
+                            .getElementById(
+                                "shipCity"
+                            )
+                            .value
+                            .trim(),
+
+                    state:
+                        document
+                            .getElementById(
+                                "shipState"
+                            )
+                            .value
+                            .trim(),
+
+                    pincode:
+                        document
+                            .getElementById(
+                                "shipPincode"
+                            )
+                            .value
+                            .trim(),
+
+                    country:
+                        document
+                            .getElementById(
+                                "shipCountry"
+                            )
+                            .value
+                            .trim()
+
+                };
+
+
+
+                /* =====================================
+                   VALIDATION
+                ===================================== */
+
+                if (
+                    !payload.full_name ||
+                    !payload.phone ||
+                    !payload.email ||
+                    !payload.address ||
+                    !payload.city ||
+                    !payload.state ||
+                    !payload.pincode ||
+                    !payload.country
+                ) {
+
+                    showMessage(
+                        "Please fill in all shipping fields.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* =====================================
+                   PHONE VALIDATION
+                ===================================== */
+
+                if (
+                    !/^[0-9+\-\s()]{7,20}$/
+                    .test(
+                        payload.phone
+                    )
+                ) {
+
+                    showMessage(
+                        "Please enter a valid phone number.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* =====================================
+                   EMAIL VALIDATION
+                ===================================== */
+
+                if (
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                    .test(
+                        payload.email
+                    )
+                ) {
+
+                    showMessage(
+                        "Please enter a valid email address.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* =====================================
+                   DISABLE BUTTON
+                ===================================== */
+
+                saveButton.disabled =
+                    true;
+
+
+                showMessage(
+                    "Saving shipping details...",
+                    "info"
+                );
+
+
+
+                try {
+
+
+                    await apiFetch(
+                        "/api/shipping",
+                        {
+                            method: "POST",
+                            body: payload
+                        }
+                    );
+
+
+                    showMessage(
+                        "Shipping details saved successfully.",
+                        "success"
+                    );
+
+
+                    /*
+                     * Refresh tracking information
+                     * after saving.
+                     */
+
+                    await loadShippingDetails();
+
+                }
+
+
+                catch (
+                    error
+                ) {
+
+
+                    console.error(
+                        "Shipping save error:",
+                        error
+                    );
+
+
+                    showMessage(
+                        error.message ||
+                        "Could not save shipping details.",
+                        "error"
+                    );
+
+                }
+
+
+                finally {
+
+                    saveButton.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+
+
+       document.getElementById("recordPaymentBtn")?.addEventListener(
+    "click",
+    async function () {
+
+        const section =
+            document.getElementById("paymentSection");
+
+        const bidId =
+            Number(section?.dataset.bidId || 0);
+
+        const method =
+            document.getElementById("paymentMethod")?.value || "";
+
+        const paymentMessage =
+            document.getElementById("paymentMessage");
+
+        if (!bidId) {
+            paymentMessage.textContent =
+                "Winning bid information is missing.";
+            paymentMessage.style.color = "#b00020";
+            return;
+        }
+
+        if (!method) {
+            paymentMessage.textContent =
+                "Please select a payment method.";
+            paymentMessage.style.color = "#b00020";
+            return;
+        }
+
+        this.disabled = true;
+
+        paymentMessage.textContent =
+            "Recording payment...";
+        paymentMessage.style.color = "#56625D";
+
+        try {
+
+            const data = await apiFetch(
+                "/api/payment",
+                {
+                    method: "POST",
+                    body: {
+                        bidder_id: Number(user.id),
+                        bid_id: bidId,
+                        payment_method: method
+                    }
+                }
+            );
+
+            const payment = data?.payment || {};
+
+            document.getElementById(
+                "paymentReference"
+            ).textContent =
+                payment.transaction_reference || "—";
+
+            document.getElementById(
+                "paymentStatus"
+            ).textContent =
+                payment.payment_status || "Paid";
+
+            document.getElementById(
+                "paymentDate"
+            ).textContent =
+                formatDateTime(payment.paid_at);
+
+            document.getElementById(
+                "paymentTransactionDetails"
+            ).style.display = "block";
+
+            document.getElementById(
+                "paymentMethod"
+            ).disabled = true;
+
+            this.disabled = true;
+
+            this.textContent =
+                "Payment Recorded";
+
+            paymentMessage.textContent =
+                data.message ||
+                "Payment transaction recorded successfully.";
+
+            paymentMessage.style.color = "#2e7d32";
+
+        } catch (error) {
+
+            console.error(
+                "Payment error:",
+                error
+            );
+
+            this.disabled = false;
+
+            paymentMessage.textContent =
+                error.message ||
+                "Unable to record payment.";
+
+            paymentMessage.style.color = "#b00020";
+        }
+    }
+);
+
+        /* =============================================
+           INITIAL PAGE LOAD
+        ============================================== */
+
+        await loadShippingDetails();
+
+    }
+
+);
+
+</script>
+
+
+
+<!-- =====================================================
+     POLICY MODAL
+===================================================== -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true"
+>
+
+
+    <div
+        class="policy-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="policyModalTitle"
+    >
+
+
+        <div class="policy-modal-header">
+
+            <h2 id="policyModalTitle"></h2>
+
+
+            <button
+                type="button"
+                class="policy-modal-close"
+                id="policyModalClose"
+                aria-label="Close"
+            >
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="policyModalContent"
+            class="policy-modal-content"
+        >
+
+            <p>
+                Loading...
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

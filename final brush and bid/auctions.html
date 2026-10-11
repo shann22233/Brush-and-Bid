@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="bidder admin"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Auctions - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="gallery.html">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="auctions.html"
+                class="active">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <!-- Role-specific menu -->
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName">
+
+                User Name
+
+            </h3>
+
+
+            <p id="profileRole">
+
+                Bidder
+
+            </p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</header>
+
+<!-- =================================
+     AUCTION HERO
+================================= -->
+
+<section class="auction-hero">
+
+ 
+<h2>
+
+    Auction of the Week
+
+</h2>
+
+
+<p>
+
+    Every week, BRUSH and BID features one
+    special artwork for an exclusive
+    24-hour online auction.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     AUCTION INFORMATION
+================================= -->
+
+<section class="auction-information">
+
+ 
+<div class="auction-introduction">
+
+
+    <p class="gallery-small-title">
+
+        This week's featured artwork
+
+    </p>
+
+
+    <h2>
+
+        One Artwork. One Day. One Winner.
+
+    </h2>
+
+
+    <p>
+
+        A new artwork is selected every week.
+        The auction opens on the scheduled
+        auction day and remains active for
+        only 24 hours. Bidders can place and
+        increase their bids during the
+        auction period.
+
+    </p>
+
+
+</div>
+
+
+
+<!-- =================================
+     WEEKLY AUCTION CARD
+================================= -->
+
+<div
+    class="weekly-auction-card"
+    id="weeklyAuctionCard">
+
+
+    <!-- IMAGE -->
+
+    <div class="weekly-auction-image">
+
+
+        <img
+            id="auctionArtworkImage"
+            src="https://satgurus.com/cdn/shop/articles/indian-art_paintings.jpg?v=1712575516"
+            alt="Featured Artwork">
+
+
+    </div>
+
+
+
+    <!-- INFORMATION -->
+
+    <div class="weekly-auction-info">
+
+
+        <p class="auction-label">
+
+            Weekly feature
+
+        </p>
+
+
+        <h2 id="auctionArtworkName">
+
+            Loading Artwork...
+
+        </h2>
+
+
+        <p class="auction-artist">
+
+            Created by
+
+            <strong id="auctionArtistName">
+
+                Loading...
+
+            </strong>
+
+        </p>
+
+
+        <p
+            class="auction-description"
+            id="auctionDescription">
+
+            Loading artwork description...
+
+        </p>
+
+
+
+        <!-- =================================
+             AUCTION DETAILS
+        ================================= -->
+
+        <div class="auction-details">
+
+
+            <div class="auction-detail-box">
+
+
+                <span>
+
+                    Starting Bid
+
+                </span>
+
+
+                <strong id="startingBid">
+
+                    ₹0
+
+                </strong>
+
+
+            </div>
+
+
+
+            <div class="auction-detail-box">
+
+
+                <span>
+
+                    Current Bid
+
+                </span>
+
+
+                <strong id="currentBid">
+
+                    ₹0
+
+                </strong>
+
+
+            </div>
+
+
+
+            <div class="auction-detail-box">
+
+
+                <span>
+
+                    Auction Day
+
+                </span>
+
+
+                <strong id="auctionDay">
+
+                    --
+
+                </strong>
+
+
+            </div>
+
+
+
+            <div class="auction-detail-box">
+
+
+                <span>
+
+                    Auction Duration
+
+                </span>
+
+
+                <strong>
+
+                    24 Hours
+
+                </strong>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             STATUS
+        ================================= -->
+
+        <div class="auction-status">
+
+
+            <span class="status-dot"></span>
+
+
+            <strong id="auctionStatus">
+
+                Loading...
+
+            </strong>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             COUNTDOWN
+        ================================= -->
+
+        <div class="auction-countdown">
+
+
+            <p>
+
+                Time Remaining
+
+            </p>
+
+
+            <h3 id="countdown">
+
+                --:--:--
+
+            </h3>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             PLACE BID
+        ================================= -->
+
+        <a
+            class="auction-bid-btn"
+            id="placeBidButton"
+            data-show-for="bidder"
+            href="index.html?login=true">
+
+            Go to Place Bid →
+
+        </a>
+
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     AUCTION RULES
+================================= -->
+
+<section class="auction-rules">
+
+ 
+<h2>
+
+    How the Weekly Auction Works
+
+</h2>
+
+
+<div class="auction-rules-grid">
+
+
+    <div class="auction-rule">
+
+
+        <h3>
+
+            1. One Artwork Every Week
+
+        </h3>
+
+
+        <p>
+
+            Only one selected artwork is featured
+            for auction during each weekly
+            auction cycle.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="auction-rule">
+
+
+        <h3>
+
+            2. Auction Opens on a Fixed Day
+
+        </h3>
+
+
+        <p>
+
+            The artwork becomes available for
+            bidding only on the scheduled
+            auction day.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="auction-rule">
+
+
+        <h3>
+
+            3. Bidding Is Open for 24 Hours
+
+        </h3>
+
+
+        <p>
+
+            Bidders can place new bids or
+            increase their existing bids during
+            the 24-hour auction period.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="auction-rule">
+
+
+        <h3>
+
+            4. Highest Bid Wins
+
+        </h3>
+
+
+        <p>
+
+            When the 24-hour auction ends,
+            the highest valid bid becomes the
+            winning bid.
+
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     AUCTION SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        let countdownInterval = null;
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const image =
+            document.getElementById(
+                "auctionArtworkImage"
+            );
+
+
+        const artworkName =
+            document.getElementById(
+                "auctionArtworkName"
+            );
+
+
+        const artistName =
+            document.getElementById(
+                "auctionArtistName"
+            );
+
+
+        const description =
+            document.getElementById(
+                "auctionDescription"
+            );
+
+
+        const startingBid =
+            document.getElementById(
+                "startingBid"
+            );
+
+
+        const currentBid =
+            document.getElementById(
+                "currentBid"
+            );
+
+
+        const auctionDay =
+            document.getElementById(
+                "auctionDay"
+            );
+
+
+        const auctionStatus =
+            document.getElementById(
+                "auctionStatus"
+            );
+
+
+        const countdown =
+            document.getElementById(
+                "countdown"
+            );
+
+
+        const placeBidButton =
+            document.getElementById(
+                "placeBidButton"
+            );
+
+
+
+        /* =================================
+           CURRENCY FORMAT
+        ================================= */
+
+        function formatCurrency(
+            amount
+        ) {
+
+            const value =
+                Number(amount || 0);
+
+
+            return "₹" +
+                value.toLocaleString(
+                    "en-IN"
+                );
+
+        }
+
+
+
+        /* =================================
+           LOAD CURRENT AUCTION
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    "/api/auction/current"
+                );
+
+
+            const auction =
+                response?.auction ||
+                null;
+
+            if (
+                !auction ||
+                !auction.auction_id
+            ) {
+
+                showNoAuction();
+
+                return;
+
+            }
+
+            let artwork = null;
+
+try {
+
+    const artworkResponse =
+        await apiFetch(
+            "/api/artworks"
+        );
+
+    const artworks =
+        Array.isArray(
+            artworkResponse?.artworks
+        )
+            ? artworkResponse.artworks
+            : [];
+
+    artwork =
+        artworks.find(
+            item =>
+                Number(item.auction_id) ===
+                Number(auction.auction_id)
+        ) || null;
+
+} catch (error) {
+
+    console.error(
+        "Unable to load auction artwork:",
+        error
+    );
+
+}
+
+            /* =================================
+               ARTWORK NAME
+            ================================= */
+
+            if (!artwork) {
+                showNoAuction();
+                return;
+            }
+
+            artworkName.textContent =
+                artwork.title ||
+                auction.artwork_name ||
+                "Weekly Featured Artwork";
+
+
+
+            /* =================================
+               ARTIST
+            ================================= */
+
+            artistName.textContent =
+                artwork.artist_name ||
+                artwork.artistName ||
+                auction.artist_name ||
+                "Unknown Artist";
+
+
+
+            /* =================================
+               DESCRIPTION
+            ================================= */
+
+            description.textContent =
+                artwork.description ||
+                "No description available.";
+
+
+
+            /* =================================
+               IMAGE
+            ================================= */
+
+            if (
+                artwork.image_url ||
+                artwork.image
+            ) {
+
+                image.src =
+                    artwork.image_url ||
+                    artwork.image;
+
+            }
+
+
+            image.alt =
+                artwork.title ||
+                "Featured Artwork";
+
+
+
+            /* =================================
+               STARTING BID
+            ================================= */
+
+            startingBid.textContent =
+                formatCurrency(
+                    artwork.starting_price ||
+                    auction.starting_bid
+                );
+
+
+
+            /* =================================
+               CURRENT BID
+            ================================= */
+
+            currentBid.textContent =
+                formatCurrency(
+                    artwork.current_bid ||
+                    auction.current_bid ||
+                    artwork.starting_price ||
+                    auction.starting_bid
+                );
+
+
+
+            /* =================================
+               AUCTION DAY
+            ================================= */
+
+            const startDate =
+                auction.start_date ||
+                auction.startDate;
+
+
+            if (startDate) {
+
+
+                const date =
+                    new Date(
+                        startDate
+                    );
+
+
+                if (
+                    !isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    auctionDay.textContent =
+                        date.toLocaleDateString(
+                            "en-IN",
+                            {
+                                weekday: "long"
+                            }
+                        );
+
+                }
+
+            }
+
+
+
+            /* =================================
+               STATUS
+            ================================= */
+
+            const status =
+                String(
+                    auction.status ||
+                    "Scheduled"
+                );
+
+
+            auctionStatus.textContent =
+                status;
+
+
+
+            /* =================================
+               BID BUTTON
+            ================================= */
+
+            if (
+                artwork.artwork_id
+            ) {
+
+                placeBidButton.href =
+                    "placebid.html?artworkId=" +
+                    encodeURIComponent(
+                        artwork.artwork_id
+                    );
+
+            }
+
+
+
+            /* =================================
+               AUCTION END
+            ================================= */
+
+            const endValue =
+                auction.end_time ||
+                auction.end_datetime ||
+                auction.endDateTime ||
+                (auction.end_date && auction.end_time_only
+                    ? `${auction.end_date}T${auction.end_time_only}`
+                    : null);
+
+            const endDateTime =
+                endValue ? new Date(endValue) : null;
+
+
+
+            /* =================================
+               COUNTDOWN
+            ================================= */
+
+            function updateCountdown() {
+
+
+                if (
+                    !endDateTime ||
+                    isNaN(
+                        endDateTime.getTime()
+                    )
+                ) {
+
+                    countdown.textContent =
+                        "--:--:--";
+
+                    return;
+
+                }
+
+
+                const now =
+                    new Date();
+
+
+                let remaining =
+                    Math.floor(
+                        (
+                            endDateTime -
+                            now
+                        ) / 1000
+                    );
+
+
+                if (
+                    remaining <= 0
+                ) {
+
+                    remaining = 0;
+
+                    countdown.textContent =
+                        "00:00:00";
+
+
+                    auctionStatus.textContent =
+                        "Closed";
+
+
+                    if (placeBidButton) {
+
+                        placeBidButton.style.pointerEvents =
+                            "none";
+
+                        placeBidButton.style.opacity =
+                            "0.5";
+
+                        placeBidButton.textContent =
+                            "Auction Closed";
+
+                    }
+
+
+                    if (
+                        countdownInterval
+                    ) {
+
+                        clearInterval(
+                            countdownInterval
+                        );
+
+                    }
+
+
+                    return;
+
+                }
+
+
+                const hours =
+                    Math.floor(
+                        remaining / 3600
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        (
+                            remaining % 3600
+                        ) / 60
+                    );
+
+
+                const seconds =
+                    remaining % 60;
+
+
+                countdown.textContent =
+
+                    String(hours)
+                        .padStart(2, "0")
+                    + ":" +
+
+                    String(minutes)
+                        .padStart(2, "0")
+                    + ":" +
+
+                    String(seconds)
+                        .padStart(2, "0");
+
+            }
+
+
+            updateCountdown();
+
+
+            countdownInterval =
+                setInterval(
+                    updateCountdown,
+                    1000
+                );
+
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Auction loading error:",
+                error
+            );
+
+
+            showNoAuction();
+
+        }
+
+
+
+        /* =================================
+           NO AUCTION
+        ================================= */
+
+        function showNoAuction() {
+
+
+            /*
+             * No live/scheduled auction was found,
+             * so show the same sample artwork used
+             * elsewhere on the site as a placeholder
+             * preview instead of an empty state.
+             */
+
+            image.src =
+                "https://satgurus.com/cdn/shop/articles/indian-art_paintings.jpg?v=1712575516";
+
+
+            image.alt =
+                "Sample Artwork";
+
+
+            artworkName.textContent =
+                "Sample Artwork";
+
+
+            artistName.textContent =
+                "BRUSH and BID";
+
+
+            description.textContent =
+                "This artist hasn't uploaded any approved artworks yet. This is a placeholder preview.";
+
+
+            startingBid.textContent =
+                "₹18,000";
+
+
+            currentBid.textContent =
+                "₹18,000";
+
+
+            auctionDay.textContent =
+                "--";
+
+
+            auctionStatus.textContent =
+                "No Auction";
+
+
+            countdown.textContent =
+                "--:--:--";
+
+
+            placeBidButton.href =
+                "index.html";
+
+
+            placeBidButton.textContent =
+                "Return Home →";
+
+        }
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+
+            Loading...
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>

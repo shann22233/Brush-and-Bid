@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<!-- Admins only: redirects everyone else to admin login -->
+<script src="admin-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Manage Users | BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     ADMIN PROFILE
+================================= -->
+
+<div class="header-right">
+
+    <button
+        id="loginBtn"
+        class="login-top-btn"
+        onclick="window.location.href='adminlogin.html'">
+
+        Admin Login
+
+    </button>
+
+
+    <div
+        id="profileArea"
+        class="profile-area"
+        style="display:none;">
+
+        <div
+            id="profileIcon"
+            class="profile-icon profile-initial"
+            onclick="toggleProfileMenu()">
+
+            A
+
+        </div>
+
+
+        <div
+            id="profileMenu"
+            class="profile-dropdown">
+
+            <h3 id="profileName">
+                Administrator
+            </h3>
+
+            <p id="profileRole">
+                Admin
+            </p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+
+            <a href="admindashboard.html">
+                Dashboard
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PAGE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<p class="gallery-small-title">
+    Administration
+</p>
+
+
+<h2>
+    Manage Users
+</h2>
+
+
+<p>
+
+    View and manage the registered
+    Bidder and Artist accounts.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     USER MANAGEMENT
+================================= -->
+
+<section class="admin-users-section">
+
+ 
+<div class="admin-section-title">
+
+    <h2>
+        User Management
+    </h2>
+
+
+    <p>
+
+        Search users, filter accounts by role or status,
+        change account status, and remove accounts when
+        necessary.
+
+    </p>
+
+</div>
+
+
+
+<!-- =================================
+     SUMMARY CARDS
+================================= -->
+
+<div class="admin-summary-grid">
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Total Users
+        </span>
+
+        <h3 id="totalUsers">
+            0
+        </h3>
+
+        <p>
+            Registered accounts
+        </p>
+
+    </div>
+
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Total Bidders
+        </span>
+
+        <h3 id="totalBidders">
+            0
+        </h3>
+
+        <p>
+            Registered bidders
+        </p>
+
+    </div>
+
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Total Artists
+        </span>
+
+        <h3 id="totalArtists">
+            0
+        </h3>
+
+        <p>
+            Registered artists
+        </p>
+
+    </div>
+
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Active Users
+        </span>
+
+        <h3 id="activeUsers">
+            0
+        </h3>
+
+        <p>
+            Currently active
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================
+     SEARCH / FILTER
+================================= -->
+
+<div class="admin-filter-container">
+
+
+    <input
+        type="text"
+        id="userSearch"
+        placeholder="Search by name or email"
+        autocomplete="off">
+
+
+    <select id="roleFilter">
+
+        <option value="All">
+            All Roles
+        </option>
+
+        <option value="Bidder">
+            Bidder
+        </option>
+
+        <option value="Artist">
+            Artist
+        </option>
+
+        <option value="Admin">
+            Admin
+        </option>
+
+    </select>
+
+
+    <select id="statusFilter">
+
+        <option value="All">
+            All Status
+        </option>
+
+        <option value="Active">
+            Active
+        </option>
+
+        <option value="Inactive">
+            Inactive
+        </option>
+
+    </select>
+
+</div>
+
+
+
+<!-- =================================
+     MESSAGE
+================================= -->
+
+<div
+    id="userMessage"
+    style="
+        display:none;
+        max-width:1200px;
+        margin:0 auto 20px;
+        padding:12px 16px;
+        border-radius:6px;
+        text-align:center;
+    ">
+</div>
+
+
+
+<!-- =================================
+     USER TABLE
+================================= -->
+
+<div class="admin-table-container">
+
+    <table class="admin-user-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    User
+                </th>
+
+                <th>
+                    Email
+                </th>
+
+                <th>
+                    Role
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+                <th>
+                    Joined
+                </th>
+
+                <th>
+                    Actions
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="userTableBody">
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    style="text-align:center;">
+
+                    Loading users...
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+<!-- =================================
+     EMPTY MESSAGE
+================================= -->
+
+<div
+    class="admin-empty-message"
+    id="noUsersMessage"
+    style="display:none;">
+
+    <h3>
+        No Users Found
+    </h3>
+
+    <p>
+
+        No accounts match the selected
+        search or filter.
+
+    </p>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     PAGE JAVASCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           ADMIN ACCESS CHECK
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        if (
+            !user.loggedIn ||
+            user.role !== "Admin"
+        ) {
+
+            window.location.href =
+                "adminlogin.html";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const tableBody =
+            document.getElementById(
+                "userTableBody"
+            );
+
+
+        const noUsersMessage =
+            document.getElementById(
+                "noUsersMessage"
+            );
+
+
+        const searchInput =
+            document.getElementById(
+                "userSearch"
+            );
+
+
+        const roleFilter =
+            document.getElementById(
+                "roleFilter"
+            );
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        const message =
+            document.getElementById(
+                "userMessage"
+            );
+
+
+
+        let users = [];
+
+
+
+        /* =================================
+           MESSAGE
+        ================================= */
+
+        function showMessage(
+            text,
+            type = "success"
+        ) {
+
+            message.textContent = text;
+
+            message.style.display = "block";
+
+
+            if (type === "success") {
+
+                message.style.background =
+                    "#e8f5e9";
+
+                message.style.color =
+                    "#2e7d32";
+
+            } else {
+
+                message.style.background =
+                    "#ffebee";
+
+                message.style.color =
+                    "#c62828";
+
+            }
+
+
+            setTimeout(
+                function () {
+
+                    message.style.display =
+                        "none";
+
+                },
+                3500
+            );
+
+        }
+
+
+
+        /* =================================
+           ESCAPE HTML
+        ================================= */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* =================================
+           NORMALIZE ROLE
+        ================================= */
+
+        function normalizeRole(role) {
+
+            const value =
+                String(role || "")
+                    .trim()
+                    .toLowerCase();
+
+
+            if (value === "bidder") {
+                return "Bidder";
+            }
+
+
+            if (value === "artist") {
+                return "Artist";
+            }
+
+
+            if (value === "admin") {
+                return "Admin";
+            }
+
+
+            return role || "";
+
+        }
+
+
+
+        /* =================================
+           NORMALIZE STATUS
+        ================================= */
+
+        function normalizeStatus(status) {
+
+            const value =
+                String(status || "")
+                    .trim()
+                    .toLowerCase();
+
+
+            if (value === "active") {
+                return "Active";
+            }
+
+
+            if (value === "inactive") {
+                return "Inactive";
+            }
+
+
+            return status || "Active";
+
+        }
+
+
+
+        /* =================================
+           FORMAT DATE
+        ================================= */
+
+        function formatDate(value) {
+
+            if (!value) {
+                return "-";
+            }
+
+
+            const date =
+                new Date(value);
+
+
+            if (Number.isNaN(
+                date.getTime()
+            )) {
+
+                return escapeHTML(
+                    String(value)
+                );
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    timeZone: "Asia/Kolkata"
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           UPDATE SUMMARY
+        ================================= */
+
+        function updateSummary() {
+
+            const total =
+                users.length;
+
+
+            const bidders =
+                users.filter(
+                    function (item) {
+
+                        return normalizeRole(
+                            item.role
+                        ) === "Bidder";
+
+                    }
+                ).length;
+
+
+            const artists =
+                users.filter(
+                    function (item) {
+
+                        return normalizeRole(
+                            item.role
+                        ) === "Artist";
+
+                    }
+                ).length;
+
+
+            const active =
+                users.filter(
+                    function (item) {
+
+                        return normalizeStatus(
+                            item.status
+                        ) === "Active";
+
+                    }
+                ).length;
+
+
+            document.getElementById(
+                "totalUsers"
+            ).textContent = total;
+
+
+            document.getElementById(
+                "totalBidders"
+            ).textContent = bidders;
+
+
+            document.getElementById(
+                "totalArtists"
+            ).textContent = artists;
+
+
+            document.getElementById(
+                "activeUsers"
+            ).textContent = active;
+
+        }
+
+
+
+        /* =================================
+           DISPLAY USERS
+        ================================= */
+
+        function displayUsers() {
+
+            const searchText =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const selectedRole =
+                roleFilter.value;
+
+
+            const selectedStatus =
+                statusFilter.value;
+
+
+
+            const filteredUsers =
+                users.filter(
+                    function (item) {
+
+                        const name =
+                            String(
+                                item.full_name ||
+                                item.name ||
+                                ""
+                            );
+
+
+                        const email =
+                            String(
+                                item.email ||
+                                ""
+                            );
+
+
+                        const role =
+                            normalizeRole(
+                                item.role
+                            );
+
+
+                        const status =
+                            normalizeStatus(
+                                item.status
+                            );
+
+
+                        const matchesSearch =
+                            !searchText ||
+                            name
+                                .toLowerCase()
+                                .includes(searchText) ||
+                            email
+                                .toLowerCase()
+                                .includes(searchText);
+
+
+                        const matchesRole =
+                            selectedRole === "All" ||
+                            role === selectedRole;
+
+
+                        const matchesStatus =
+                            selectedStatus === "All" ||
+                            status === selectedStatus;
+
+
+                        return (
+                            matchesSearch &&
+                            matchesRole &&
+                            matchesStatus
+                        );
+
+                    }
+                );
+
+
+
+            tableBody.innerHTML = "";
+
+
+
+            if (!filteredUsers.length) {
+
+                noUsersMessage.style.display =
+                    "block";
+
+                updateSummary();
+
+                return;
+
+            }
+
+
+            noUsersMessage.style.display =
+                "none";
+
+
+
+            filteredUsers.forEach(
+                function (item) {
+
+
+                    const id =
+                        item.user_id ??
+                        item.id;
+
+
+                    const name =
+                        item.full_name ||
+                        item.name ||
+                        "Unnamed User";
+
+
+                    const email =
+                        item.email ||
+                        "-";
+
+
+                    const role =
+                        normalizeRole(
+                            item.role
+                        );
+
+
+                    const status =
+                        normalizeStatus(
+                            item.status
+                        );
+
+
+                    const joined =
+                        item.joined_date ||
+                        item.created_at ||
+                        item.createdAt ||
+                        null;
+
+
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+
+                    row.innerHTML = `
+
+                        <td>
+
+                            <strong>
+                                ${escapeHTML(name)}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+                            ${escapeHTML(email)}
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="user-role">
+
+                                ${escapeHTML(role)}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="user-status ${
+                                    status
+                                        .toLowerCase()
+                                }">
+
+                                ${escapeHTML(status)}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${formatDate(joined)}
+
+                        </td>
+
+
+                        <td>
+
+                            ${
+                                role === "Admin"
+                                    ? `
+                                        <span
+                                            style="
+                                                font-size:13px;
+                                                color:#777;
+                                            ">
+
+                                            Protected
+
+                                        </span>
+                                      `
+                                    : `
+                                        <button
+                                            type="button"
+                                            class="admin-action-btn edit-user-btn"
+                                            data-action="status"
+                                            data-user-id="${escapeHTML(id)}">
+
+                                            ${
+                                                status === "Active"
+                                                    ? "Deactivate"
+                                                    : "Activate"
+                                            }
+
+                                        </button>
+
+
+                                        <button
+                                            type="button"
+                                            class="admin-action-btn delete-user-btn"
+                                            data-action="delete"
+                                            data-user-id="${escapeHTML(id)}">
+
+                                            Delete
+
+                                        </button>
+                                      `
+                            }
+
+                        </td>
+
+                    `;
+
+
+                    tableBody.appendChild(row);
+
+                }
+            );
+
+
+            updateSummary();
+
+        }
+
+
+
+        /* =================================
+           LOAD USERS
+        ================================= */
+
+        async function loadUsers() {
+
+            try {
+
+                tableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            style="text-align:center;">
+
+                            Loading users...
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+
+                /*
+                 * The final server.js will provide
+                 * this admin-only endpoint.
+                 */
+
+                const response =
+                    await apiFetch(
+                        "/api/admin/users"
+                    );
+
+
+                users =
+                    Array.isArray(response)
+                        ? response
+                        : (
+                            Array.isArray(
+                                response?.users
+                            )
+                                ? response.users
+                                : []
+                        );
+
+
+                displayUsers();
+
+
+            } catch (error) {
+
+                console.error(
+                    "MANAGE USERS ERROR:",
+                    error
+                );
+
+
+                tableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            style="
+                                text-align:center;
+                                color:#b00020;
+                            ">
+
+                            Unable to load users.
+
+                            <br>
+
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           CHANGE USER STATUS
+        ================================= */
+
+        async function changeUserStatus(
+            userId
+        ) {
+
+            const targetUser =
+                users.find(
+                    function (item) {
+
+                        return String(
+                            item.user_id ??
+                            item.id
+                        ) === String(userId);
+
+                    }
+                );
+
+
+            if (!targetUser) {
+                return;
+            }
+
+
+            const currentStatus =
+                normalizeStatus(
+                    targetUser.status
+                );
+
+
+            const newStatus =
+                currentStatus === "Active"
+                    ? "Inactive"
+                    : "Active";
+
+
+            const confirmation =
+                confirm(
+                    `Change this user's status to ${newStatus}?`
+                );
+
+
+            if (!confirmation) {
+                return;
+            }
+
+
+            try {
+
+                await apiFetch(
+                    `/api/admin/users/${encodeURIComponent(
+                        userId
+                    )}/status`,
+                    {
+                        method: "PUT",
+
+                        body: {
+                            status: newStatus
+                        }
+                    }
+                );
+
+
+                targetUser.status =
+                    newStatus;
+
+
+                displayUsers();
+
+
+                showMessage(
+                    `User status changed to ${newStatus}.`
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "CHANGE STATUS ERROR:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to update user status.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================
+           DELETE USER
+        ================================= */
+
+        async function deleteUser(
+            userId
+        ) {
+
+            const targetUser =
+                users.find(
+                    function (item) {
+
+                        return String(
+                            item.user_id ??
+                            item.id
+                        ) === String(userId);
+
+                    }
+                );
+
+
+            if (!targetUser) {
+                return;
+            }
+
+
+            const name =
+                targetUser.full_name ||
+                targetUser.name ||
+                "this user";
+
+
+            const confirmation =
+                confirm(
+                    `Are you sure you want to delete ${name}? This action cannot be undone.`
+                );
+
+
+            if (!confirmation) {
+                return;
+            }
+
+
+            try {
+
+                await apiFetch(
+                    `/api/admin/users/${encodeURIComponent(
+                        userId
+                    )}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+                users =
+                    users.filter(
+                        function (item) {
+
+                            return String(
+                                item.user_id ??
+                                item.id
+                            ) !== String(userId);
+
+                        }
+                    );
+
+
+                displayUsers();
+
+
+                showMessage(
+                    "User deleted successfully."
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "DELETE USER ERROR:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to delete user.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================
+           TABLE ACTIONS
+        ================================= */
+
+        tableBody.addEventListener(
+            "click",
+            async function (event) {
+
+                const button =
+                    event.target.closest(
+                        "button[data-action]"
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                const userId =
+                    button.dataset.userId;
+
+
+                const action =
+                    button.dataset.action;
+
+
+                if (action === "status") {
+
+                    await changeUserStatus(
+                        userId
+                    );
+
+                }
+
+
+                if (action === "delete") {
+
+                    await deleteUser(
+                        userId
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================
+           FILTER EVENTS
+        ================================= */
+
+        searchInput.addEventListener(
+            "input",
+            displayUsers
+        );
+
+
+        roleFilter.addEventListener(
+            "change",
+            displayUsers
+        );
+
+
+        statusFilter.addEventListener(
+            "change",
+            displayUsers
+        );
+
+
+
+        /* =================================
+           INITIAL LOAD
+        ================================= */
+
+        await loadUsers();
+
+    });
+
+</script>
+
+</body>
+
+</html>

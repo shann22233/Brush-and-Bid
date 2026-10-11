@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="bidder"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Place Bid - BRUSH and BID
+</title>
+
+<link
+    href="style.css"
+    rel="stylesheet">
+
+
+<style>
+
+    .bid-page-wrapper {
+        padding: 45px 7%;
+        background: #F3F4EF;
+    }
+
+
+    .bid-page-intro {
+        max-width: 850px;
+        margin: 0 auto 35px;
+        text-align: center;
+    }
+
+
+    .bid-page-intro h2 {
+        color: #17201E;
+        margin-bottom: 15px;
+    }
+
+
+    .bid-page-intro p {
+        color: #56625D;
+        line-height: 1.7;
+    }
+
+
+    .place-bid-container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 30px;
+        max-width: 1250px;
+        margin: auto;
+    }
+
+
+    .bid-artwork-card,
+    .bid-history-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        overflow: hidden;
+    }
+
+
+    .bid-artwork-image {
+        width: 100%;
+        height: 350px;
+        background: #eee;
+    }
+
+
+    .bid-artwork-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .bid-artwork-info {
+        padding: 28px;
+    }
+
+
+    .bid-artwork-info h2 {
+        color: #17201E;
+        margin-bottom: 12px;
+    }
+
+
+    .artist {
+        color: #56625D;
+        margin-bottom: 20px;
+    }
+
+
+    .art-description {
+        color: #56625D;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+
+    .bid-price-box {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 14px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+
+    .bid-price-box span {
+        color: #56625D;
+    }
+
+
+    .bid-price-box strong {
+        color: #17201E;
+        text-align: right;
+    }
+
+
+    .bid-form {
+        margin-top: 25px;
+    }
+
+
+    .bid-form label {
+        display: block;
+        color: #17201E;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+
+    .bid-form input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 15px;
+        border: 1px solid #D9DDD3;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+
+    .bid-form input:focus {
+        outline: none;
+        border-color: #8C6A1C;
+    }
+
+
+    .auction-bid-btn {
+        width: 100%;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        background: #8C6A1C;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+
+    .auction-bid-btn:hover {
+        background: #6F5313;
+    }
+
+
+    .auction-bid-btn:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+    }
+
+
+    #bidMessage {
+        margin-top: 12px;
+        min-height: 22px;
+        font-weight: 600;
+    }
+
+
+    .bid-history-card {
+        padding: 28px;
+    }
+
+
+    .bid-history-card h2 {
+        color: #17201E;
+        margin-bottom: 10px;
+    }
+
+
+    .bid-history-card > p {
+        color: #56625D;
+        line-height: 1.6;
+    }
+
+
+    .bid-table-container {
+        overflow-x: auto;
+        margin-top: 25px;
+    }
+
+
+    #bidTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+
+    #bidTable th,
+    #bidTable td {
+        padding: 13px 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+
+    #bidTable th {
+        background: #F3F4EF;
+        color: #17201E;
+    }
+
+
+    #bidTable td {
+        color: #56625D;
+    }
+
+
+    .bid-auction-info {
+        margin-top: 25px;
+        padding: 18px;
+        border-radius: 10px;
+        background: #F3F4EF;
+    }
+
+
+    .bid-auction-info p {
+        color: #56625D;
+        margin: 9px 0;
+    }
+
+
+    .bid-auction-info span {
+        color: #17201E;
+        font-weight: 600;
+    }
+
+
+    .bid-error {
+        color: #b71c1c;
+    }
+
+
+    .bid-success {
+        color: #2e7d32;
+    }
+
+
+    .bid-warning {
+        color: #e65100;
+    }
+
+
+    .bid-loading {
+        color: #56625D;
+    }
+
+
+    @media (max-width: 850px) {
+
+        .place-bid-container {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .bid-page-wrapper {
+            padding: 35px 5%;
+        }
+
+
+        .bid-artwork-image {
+            height: 280px;
+        }
+
+
+        .bid-price-box {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+
+        .bid-price-box strong {
+            text-align: left;
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+            <p id="profileRole"></p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PAGE
+================================= -->
+
+<section class="gallery-header">
+
+ 
+<h2>
+    Place Your Bid
+</h2>
+
+
+<p>
+
+    Enter an amount greater than the
+    current highest bid to participate in
+    the auction.
+
+</p>
+ 
+
+</section>
+
+<section class="bid-page-wrapper">
+
+ 
+<div class="bid-page-intro">
+
+
+    <p class="gallery-small-title">
+        Weekly auction
+    </p>
+
+
+    <h2>
+        Bid on This Artwork
+    </h2>
+
+
+    <p>
+
+        Every valid bid is recorded in the
+        database. The highest valid bid when
+        the auction closes becomes the
+        winning bid.
+
+    </p>
+
+
+</div>
+
+
+
+<div class="place-bid-container">
+
+
+    <!-- =================================
+         ARTWORK
+    ================================= -->
+
+    <div class="bid-artwork-card">
+
+
+        <div class="bid-artwork-image">
+
+
+            <img
+                id="artworkImage"
+                src=""
+                alt="Artwork">
+
+
+        </div>
+
+
+        <div class="bid-artwork-info">
+
+
+            <h2 id="artworkTitle">
+                Loading artwork...
+            </h2>
+
+
+            <p class="artist">
+
+                Created by
+
+                <strong id="artworkArtist">
+                    —
+                </strong>
+
+            </p>
+
+
+            <p
+                class="art-description"
+                id="artworkDescription">
+
+                Loading artwork details...
+
+            </p>
+
+
+
+            <div class="bid-price-box">
+
+                <span>
+                    Starting Bid
+                </span>
+
+                <strong id="startingBid">
+                    —
+                </strong>
+
+            </div>
+
+
+
+            <div class="bid-price-box">
+
+                <span>
+                    Current Highest Bid
+                </span>
+
+                <strong id="currentBid">
+                    —
+                </strong>
+
+            </div>
+
+
+
+            <div class="bid-price-box">
+
+                <span>
+                    Highest Bidder
+                </span>
+
+                <strong id="currentBidder">
+                    —
+                </strong>
+
+            </div>
+
+
+
+            <div class="bid-price-box">
+
+                <span>
+                    Auction Status
+                </span>
+
+                <strong id="auctionStatus">
+                    Checking...
+                </strong>
+
+            </div>
+
+
+
+            <div class="bid-price-box">
+
+                <span>
+                    Time Remaining
+                </span>
+
+                <strong id="countdownTimer">
+                    —
+                </strong>
+
+            </div>
+
+
+
+            <!-- =================================
+                 BID FORM
+            ================================= -->
+
+            <div class="bid-form">
+
+
+                <label for="bidAmount">
+
+                    Enter Your Bid Amount
+
+                </label>
+
+
+                <input
+                    id="bidAmount"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="Enter a higher bid">
+
+
+                <button
+                    class="auction-bid-btn"
+                    id="placeBidButton"
+                    type="button">
+
+                    Place / Increase Bid
+
+                </button>
+
+
+                <p id="bidMessage"></p>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================
+         BID HISTORY
+    ================================= -->
+
+    <div class="bid-history-card">
+
+
+        <h2>
+            Live Bid History
+        </h2>
+
+
+        <p>
+
+            The latest bids are retrieved
+            directly from the auction database.
+
+        </p>
+
+
+        <div class="bid-table-container">
+
+
+            <table id="bidTable">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Bidder Name
+                        </th>
+
+                        <th>
+                            Bid Amount
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="bidTableBody">
+
+
+                    <tr>
+
+                        <td colspan="2">
+                            Loading bids...
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+        <div class="bid-auction-info">
+
+
+            <p>
+
+                <strong>
+                    Auction Duration:
+                </strong>
+
+                24 Hours
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Status:
+                </strong>
+
+                <span id="auctionInfoStatus">
+                    Checking...
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Highest Bidder:
+                </strong>
+
+                <span id="winnerName">
+                    —
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Highest Bid:
+                </strong>
+
+                <span id="winnerAmount">
+                    —
+                </span>
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           USER
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        const resolvedId =
+            await ensureUserId();
+
+
+        if (resolvedId) {
+
+            user.id =
+                resolvedId;
+
+        }
+
+
+        if (
+            !user.loggedIn ||
+            String(user.role).toLowerCase() !==
+            "bidder"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           URL
+        ================================= */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        let artworkId =
+            params.get("artworkId") ||
+            params.get("id");
+
+
+
+        let artwork = null;
+        let auction = null;
+        let countdownInterval = null;
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const image =
+            document.getElementById(
+                "artworkImage"
+            );
+
+        const title =
+            document.getElementById(
+                "artworkTitle"
+            );
+
+        const artist =
+            document.getElementById(
+                "artworkArtist"
+            );
+
+        const description =
+            document.getElementById(
+                "artworkDescription"
+            );
+
+        const startingBid =
+            document.getElementById(
+                "startingBid"
+            );
+
+        const currentBid =
+            document.getElementById(
+                "currentBid"
+            );
+
+        const currentBidder =
+            document.getElementById(
+                "currentBidder"
+            );
+
+        const auctionStatus =
+            document.getElementById(
+                "auctionStatus"
+            );
+
+        const countdown =
+            document.getElementById(
+                "countdownTimer"
+            );
+
+        const auctionInfoStatus =
+            document.getElementById(
+                "auctionInfoStatus"
+            );
+
+        const winnerName =
+            document.getElementById(
+                "winnerName"
+            );
+
+        const winnerAmount =
+            document.getElementById(
+                "winnerAmount"
+            );
+
+        const bidAmount =
+            document.getElementById(
+                "bidAmount"
+            );
+
+        const bidButton =
+            document.getElementById(
+                "placeBidButton"
+            );
+
+        const bidMessage =
+            document.getElementById(
+                "bidMessage"
+            );
+
+        const bidTableBody =
+            document.getElementById(
+                "bidTableBody"
+            );
+
+        const artworkSelector =
+            document.getElementById("artworkSelector");
+
+
+
+        /* =================================
+           HELPERS
+        ================================= */
+
+        function money(
+            value
+        ) {
+
+            return "₹" +
+                Number(
+                    value || 0
+                ).toLocaleString(
+                    "en-IN"
+                );
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ?? ""
+            )
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+        }
+
+
+        function setMessage(
+            text,
+            type
+        ) {
+
+            bidMessage.textContent =
+                text;
+
+            bidMessage.className =
+                type
+                    ? "bid-" + type
+                    : "";
+
+        }
+
+
+
+
+async function loadAvailableArtworks() {
+
+    const data =
+        await apiFetch("/api/artworks");
+
+    const artworks =
+        (data?.artworks || []).filter(function (item) {
+
+            return (
+                String(item.status || "").toLowerCase() === "approved" &&
+                String(item.auction_status || "").toLowerCase() === "active"
+            );
+
+        });
+
+
+    /*
+     * If a specific artwork was opened from
+     * View Full Details, DO NOT replace it
+     * with another active artwork.
+     */
+
+    if (artworkId) {
+
+        if (artworkSelector) {
+
+            artworkSelector.innerHTML =
+                '<option value="' +
+                artworkId +
+                '">Selected Artwork</option>';
+
+            artworkSelector.value =
+                String(artworkId);
+
+        }
+
+        return;
+
+    }
+
+
+    /*
+     * If Place Bid was opened directly from
+     * the navigation menu, select the first
+     * active artwork.
+     */
+
+    if (!artworks.length) {
+
+        if (artworkSelector) {
+
+            artworkSelector.innerHTML =
+                '<option value="">No active auction artwork available for bidding</option>';
+
+        }
+
+        throw new Error(
+            "No approved artwork is currently available for bidding."
+        );
+
+    }
+
+
+    artworkId =
+        artworks[0].artwork_id;
+
+
+    if (artworkSelector) {
+
+        artworkSelector.innerHTML = "";
+
+        artworks.forEach(function (item) {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                item.artwork_id;
+
+            option.textContent =
+                `${item.title} — ${
+                    item.artist_name || "Artist"
+                }`;
+
+            artworkSelector.appendChild(
+                option
+            );
+
+        });
+
+        artworkSelector.value =
+            String(artworkId);
+
+    }
+
+}
+        async function selectArtwork(id) {
+            artworkId = id;
+            if (artworkSelector) artworkSelector.value = String(id);
+            artwork = null;
+            auction = null;
+            await loadArtwork();
+            await loadAuction();
+        }
+
+        /* =================================
+           LOAD ARTWORK
+        ================================= */
+
+        async function loadArtwork() {
+
+
+            if (!artworkId) {
+
+                throw new Error(
+                    "No artwork was selected."
+                );
+
+            }
+
+
+            const data =
+                await apiFetch(
+                    `/api/artworks/${encodeURIComponent(
+                        artworkId
+                    )}`
+                );
+
+
+            artwork =
+                data?.artwork ||
+                data;
+
+
+            if (!artwork) {
+
+                throw new Error(
+                    "Artwork not found."
+                );
+
+            }
+
+
+            renderArtwork();
+
+}
+
+        /* =================================
+           RENDER ARTWORK
+        ================================= */
+
+        function renderArtwork() {
+
+
+            const artworkName =
+                artwork.title ||
+                "Untitled Artwork";
+
+
+const imageSource =
+    artwork.image_url ||
+    artwork.image ||
+    "";
+
+if (imageSource) {
+    image.src = imageSource;
+    image.alt = artworkName;
+} else {
+    image.removeAttribute("src");
+    image.alt = artworkName;
+}
+
+            title.textContent =
+                artworkName;
+
+
+            artist.textContent =
+                artwork.artist_name ||
+                artwork.artistName ||
+                "Unknown Artist";
+
+
+            description.textContent =
+                artwork.description ||
+                "No description available.";
+
+
+            startingBid.textContent =
+                money(
+                    artwork.starting_price
+                );
+
+
+            currentBid.textContent =
+                money(
+                    artwork.current_bid ||
+                    artwork.starting_price
+                );
+
+        }
+
+
+
+        /* =================================
+           LOAD CURRENT AUCTION
+        ================================= */
+
+async function loadAuction() {
+
+    /*
+     * The artwork API already returns the
+     * auction belonging to this artwork.
+     */
+
+    auction =
+        artwork?.auction ||
+        null;
+
+
+    const bidForm =
+        document.querySelector(".bid-form");
+
+
+    const auctionId =
+        Number(
+            auction?.auction_id ||
+            0
+        );
+
+
+    const status =
+        String(
+            auction?.status ||
+            ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    /*
+     * Artwork is not selected for any auction
+     */
+
+    if (!auction || auctionId <= 0) {
+
+        auctionStatus.textContent =
+            "Not for auction currently";
+
+        auctionInfoStatus.textContent =
+            "Not for auction currently";
+
+        countdown.textContent =
+            "—";
+
+        if (bidForm) {
+            bidForm.style.display =
+                "none";
+        }
+
+        bidButton.disabled =
+            true;
+
+        bidAmount.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    /*
+     * Auction exists but is not active
+     */
+
+    if (status !== "active") {
+
+        renderAuction();
+
+        if (bidForm) {
+            bidForm.style.display =
+                "none";
+        }
+
+        bidButton.disabled =
+            true;
+
+        bidAmount.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    /*
+     * Active auction
+     */
+
+    if (bidForm) {
+        bidForm.style.display =
+            "block";
+    }
+
+    bidButton.disabled =
+        false;
+
+    bidAmount.disabled =
+        false;
+
+
+    renderAuction();
+
+    await loadBidHistory();
+
+    startCountdown();
+
+}
+
+
+        /* =================================
+           RENDER AUCTION
+        ================================= */
+
+        function renderAuction() {
+
+
+            const highest =
+                Number(
+                    auction.current_bid ??
+                    auction.highest_bid ??
+                    artwork.current_bid ??
+                    artwork.starting_price ??
+                    0
+                );
+
+
+            currentBid.textContent =
+                money(highest);
+
+
+            currentBidder.textContent =
+                auction.highest_bidder ||
+                auction.current_bidder ||
+                auction.currentBidder ||
+                "—";
+
+
+            const status =
+                auction.status ||
+                "Live";
+
+
+            auctionStatus.textContent =
+                status;
+
+
+            auctionInfoStatus.textContent =
+                status;
+
+
+            winnerName.textContent =
+                auction.highest_bidder ||
+                auction.current_bidder ||
+                "—";
+
+
+            winnerAmount.textContent =
+                money(highest);
+
+
+
+            /* =================================
+               BUTTON STATE
+            ================================= */
+
+            const normalizedStatus =
+                String(
+                    status
+                )
+                .toLowerCase()
+                .trim();
+
+
+            if (
+                normalizedStatus !==
+                    "live" &&
+                normalizedStatus !==
+                    "active" &&
+                normalizedStatus !==
+                    "scheduled"
+            ) {
+
+                bidButton.disabled =
+                    true;
+
+                bidAmount.disabled =
+                    true;
+
+                setMessage(
+                    "Bidding is currently closed.",
+                    "warning"
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================
+           LOAD BID HISTORY
+        ================================= */
+
+        async function loadBidHistory() {
+
+
+            const data =
+                await apiFetch(
+                    `/api/bids/artwork/${encodeURIComponent(
+                        artworkId
+                    )}`
+                );
+
+
+            const bids =
+                Array.isArray(data)
+                    ? data
+                    : (
+                        data?.bids ||
+                        []
+                    );
+
+
+            if (
+                bids.length === 0
+            ) {
+
+                bidTableBody.innerHTML = `
+
+                    <tr>
+
+                        <td colspan="2">
+
+                            No bids yet
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+
+                return;
+
+            }
+
+
+            bidTableBody.innerHTML =
+                bids.map(
+                    function (bid) {
+
+                        const bidder =
+                            bid.bidder_name ||
+                            bid.bidderName ||
+                            "Bidder";
+
+
+                        const amount =
+                            bid.bid_amount ??
+                            bid.bidAmount ??
+                            0;
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHTML(
+                                        bidder
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${money(
+                                        amount
+                                    )}
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                ).join("");
+
+
+            const highestBid =
+                bids.reduce(
+                    function (
+                        highest,
+                        bid
+                    ) {
+
+                        return Math.max(
+                            highest,
+                            Number(
+                                bid.bid_amount ??
+                                bid.bidAmount ??
+                                0
+                            )
+                        );
+
+                    },
+                    Number(
+                        artwork.current_bid ||
+                        artwork.starting_price ||
+                        0
+                    )
+                );
+
+
+            currentBid.textContent =
+                money(highestBid);
+
+
+            winnerAmount.textContent =
+                money(highestBid);
+
+
+            if (
+                bids[0]
+            ) {
+
+                const highestBidder =
+                    bids[0].bidder_name ||
+                    bids[0].bidderName ||
+                    "—";
+
+
+                currentBidder.textContent =
+                    highestBidder;
+
+
+                winnerName.textContent =
+                    highestBidder;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           COUNTDOWN
+        ================================= */
+
+        function startCountdown() {
+
+
+            if (
+                countdownInterval
+            ) {
+
+                clearInterval(
+                    countdownInterval
+                );
+
+            }
+
+
+            const endValue =
+                auction?.end_time ||
+                auction?.end_datetime ||
+                auction?.endDateTime ||
+                (
+                    auction?.end_date &&
+                    auction?.end_time_only
+                        ? `${auction.end_date}T${auction.end_time_only}`
+                        : null
+                );
+
+
+            if (!endValue) {
+
+                countdown.textContent =
+                    "—";
+
+                return;
+
+            }
+
+
+            const endTime =
+                new Date(
+                    endValue
+                ).getTime();
+
+
+            if (
+                Number.isNaN(
+                    endTime
+                )
+            ) {
+
+                countdown.textContent =
+                    "—";
+
+                return;
+
+            }
+
+
+            function updateCountdown() {
+
+
+                const remaining =
+                    endTime -
+                    Date.now();
+
+
+                if (
+                    remaining <= 0
+                ) {
+
+                    countdown.textContent =
+                        "Auction Ended";
+
+
+                    bidButton.disabled =
+                        true;
+
+
+                    bidAmount.disabled =
+                        true;
+
+
+                    clearInterval(
+                        countdownInterval
+                    );
+
+
+                    return;
+
+                }
+
+
+                const totalSeconds =
+                    Math.floor(
+                        remaining / 1000
+                    );
+
+
+                const hours =
+                    Math.floor(
+                        totalSeconds / 3600
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        (totalSeconds % 3600) /
+                        60
+                    );
+
+
+                const seconds =
+                    totalSeconds % 60;
+
+
+                countdown.textContent =
+                    `${String(hours).padStart(2,"0")}h ` +
+                    `${String(minutes).padStart(2,"0")}m ` +
+                    `${String(seconds).padStart(2,"0")}s`;
+
+            }
+
+
+            updateCountdown();
+
+
+            countdownInterval =
+                setInterval(
+                    updateCountdown,
+                    1000
+                );
+
+        }
+
+
+
+        /* =================================
+           PLACE BID
+        ================================= */
+
+        async function submitBid() {
+
+
+            if (
+                !auction ||
+                !artwork
+            ) {
+
+                setMessage(
+                    "Auction information is unavailable.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const amount =
+                Number(
+                    bidAmount.value
+                );
+
+
+            const minimum =
+                Math.max(
+                    Number(
+                        artwork.starting_price ||
+                        0
+                    ),
+                    Number(
+                        auction.current_bid ||
+                        artwork.current_bid ||
+                        0
+                    )
+                );
+
+
+            if (
+                !Number.isFinite(
+                    amount
+                ) ||
+                amount <= 0
+            ) {
+
+                setMessage(
+                    "Please enter a valid bid amount.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (
+                amount <= minimum
+            ) {
+
+                setMessage(
+                    `Your bid must be greater than ${money(minimum)}.`,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const auctionId =
+                auction.auction_id ||
+                auction.id;
+
+
+            const selectedArtworkId =
+                artwork.artwork_id ||
+                artwork.id;
+
+
+            if (
+                !auctionId ||
+                !selectedArtworkId ||
+                !user.id
+            ) {
+
+                setMessage(
+                    "Required bidding information is missing.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            bidButton.disabled =
+                true;
+
+
+            setMessage(
+                "Submitting your bid...",
+                ""
+            );
+
+
+            try {
+
+
+                await apiFetch(
+                    "/api/bids",
+                    {
+
+                        method: "POST",
+
+                        body: {
+
+                            auction_id:
+                                Number(
+                                    auctionId
+                                ),
+
+                            artwork_id:
+                                Number(
+                                    selectedArtworkId
+                                ),
+
+                            bidder_id:
+                                Number(
+                                    user.id
+                                ),
+
+                            bid_amount:
+                                amount
+
+                        }
+
+                    }
+                );
+
+
+                setMessage(
+                    "Bid placed successfully!",
+                    "success"
+                );
+
+
+                bidAmount.value =
+                    "";
+
+
+                /* Refresh database data */
+
+                await loadAuctionData();
+
+
+            }
+
+            catch (
+                error
+            ) {
+
+                console.error(
+                    "Place bid error:",
+                    error
+                );
+
+
+                setMessage(
+                    error.message ||
+                    "Unable to place bid.",
+                    "error"
+                );
+
+            }
+
+
+            finally {
+
+                bidButton.disabled =
+                    false;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           REFRESH
+        ================================= */
+
+        async function loadAuctionData() {
+
+            try {
+
+                await loadAuction();
+
+            }
+
+            catch (
+                error
+            ) {
+
+                console.error(
+                    error
+                );
+
+
+                setMessage(
+                    error.message ||
+                    "Unable to load auction.",
+                    "error"
+                );
+
+
+                bidButton.disabled =
+                    true;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           BUTTON EVENT
+        ================================= */
+
+        bidButton.addEventListener(
+            "click",
+            submitBid
+        );
+
+        if (artworkSelector) {
+            artworkSelector.addEventListener("change", async function () {
+                try {
+                    setMessage("Loading selected artwork...", "loading");
+                    await selectArtwork(this.value);
+                    setMessage("", "");
+                } catch (error) {
+                    setMessage(error.message || "Unable to load artwork.", "error");
+                    bidButton.disabled = true;
+                }
+            });
+        }
+
+
+
+        /* =================================
+           ENTER KEY
+        ================================= */
+
+        bidAmount.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    submitBid();
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================
+           INITIAL LOAD
+        ================================= */
+
+try {
+
+    await loadAvailableArtworks();
+
+    await loadArtwork();
+
+    await loadAuction();
+
+}
+        catch (
+            error
+        ) {
+
+            console.error(
+                error
+            );
+
+
+            title.textContent =
+                "Unable to Load Artwork";
+
+
+            setMessage(
+                error.message ||
+                "Please try again later.",
+                "error"
+            );
+
+
+            bidButton.disabled =
+                true;
+
+        }
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div
+        class="policy-modal-header">
+
+
+        <h2
+            id="policyModalTitle">
+        </h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+            Loading...
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

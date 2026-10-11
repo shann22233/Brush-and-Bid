@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="artist"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Artist Profile - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="gallery.html">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+
+            <p id="profileRole"></p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PROFILE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2>
+
+    My Artist Profile
+
+</h2>
+
+
+<p>
+
+    Manage your personal details, artistic
+    information, and professional artist profile.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     ARTIST PROFILE
+================================= -->
+
+<section class="artist-profile-section">
+
+ 
+<div class="artist-profile-title">
+
+
+    <p class="gallery-small-title">
+
+        Artist account
+
+    </p>
+
+
+    <h2>
+
+        Artist Profile
+
+    </h2>
+
+
+    <p>
+
+        Keep your artist profile updated so that
+        bidders and art lovers can learn more about
+        you and your creative work.
+
+    </p>
+
+
+</div>
+
+
+
+<div class="artist-profile-container">
+
+
+    <!-- =================================
+         PROFILE SUMMARY
+    ================================= -->
+
+    <div class="artist-profile-summary">
+
+
+        <div
+            class="artist-profile-avatar"
+            id="artistAvatarBox">
+
+            <span id="artistInitial">
+
+                A
+
+            </span>
+
+        </div>
+
+
+        <h2 id="artistDisplayName">
+
+            Artist Name
+
+        </h2>
+
+
+        <p>
+
+            Registered Artist
+
+        </p>
+
+
+        <div class="artist-account-status">
+
+            Account Status:
+
+            <strong id="artistAccountStatus">
+
+                Active
+
+            </strong>
+
+        </div>
+
+
+        <div class="artist-summary-info">
+
+
+            <p>
+
+                <strong>
+
+                    Role:
+
+                </strong>
+
+                Artist
+
+            </p>
+
+
+            <p>
+
+                <strong>
+
+                    Member Since:
+
+                </strong>
+
+                <span id="memberSince">
+
+                    --
+
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+
+                    Account Type:
+
+                </strong>
+
+                Creative Artist
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         PROFILE FORM
+    ================================= -->
+
+    <div class="artist-profile-form-container">
+
+
+        <h2>
+
+            Artist Information
+
+        </h2>
+
+
+        <form
+            id="artistProfileForm">
+
+
+            <!-- PROFILE PHOTO -->
+
+            <div class="artist-input-group full-width">
+
+
+                <label for="artistProfilePhoto">
+
+                    Profile Photo
+
+                </label>
+
+
+                <input
+                    id="artistProfilePhoto"
+                    name="profile_image_file"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif">
+
+
+                <small
+                    style="
+                        display:block;
+                        margin-top:7px;
+                        color:#56625D;
+                    ">
+
+                    JPG, PNG, WEBP or GIF. Maximum size: 2 MB.
+                    This photo appears on your artist profile
+                    and on your gallery card.
+
+                </small>
+
+
+                <p
+                    id="artistPhotoMessage"
+                    style="
+                        margin-top:8px;
+                        font-weight:600;
+                        min-height:20px;
+                    ">
+                </p>
+
+
+            </div>
+
+
+            <!-- FULL NAME -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistName">
+
+                    Full Name
+
+                </label>
+
+
+                <input
+                    id="artistName"
+                    name="full_name"
+                    placeholder="Enter your full name"
+                    required
+                    type="text">
+
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistEmail">
+
+                    Email Address
+
+                </label>
+
+
+                <input
+                    id="artistEmail"
+                    name="email"
+                    placeholder="Enter your email address"
+                    required
+                    type="email">
+
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistPhone">
+
+                    Phone Number
+
+                </label>
+
+
+                <input
+                    id="artistPhone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    required
+                    type="tel">
+
+
+            </div>
+
+
+
+            <!-- SPECIALIZATION -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistSpecialization">
+
+                    Art Specialization
+
+                </label>
+
+
+                <select
+                    id="artistSpecialization"
+                    name="specialization"
+                    required>
+
+
+                    <option value="">
+
+                        Select Specialization
+
+                    </option>
+
+
+                    <option value="Abstract Art">
+
+                        Abstract Art
+
+                    </option>
+
+
+                    <option value="Landscape Art">
+
+                        Landscape Art
+
+                    </option>
+
+
+                    <option value="Portrait Art">
+
+                        Portrait Art
+
+                    </option>
+
+
+                    <option value="Modern Art">
+
+                        Modern Art
+
+                    </option>
+
+
+                    <option value="Digital Art">
+
+                        Digital Art
+
+                    </option>
+
+
+                    <option value="Nature Art">
+
+                        Nature Art
+
+                    </option>
+
+
+                    <option value="Mixed Media">
+
+                        Mixed Media
+
+                    </option>
+
+
+                    <option value="Other">
+
+                        Other
+
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- EXPERIENCE -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistExperience">
+
+                    Years of Experience
+
+                </label>
+
+
+                <input
+                    id="artistExperience"
+                    name="experience_years"
+                    min="0"
+                    placeholder="Enter years of experience"
+                    required
+                    type="number">
+
+
+            </div>
+
+
+
+            <!-- CITY -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistCity">
+
+                    City
+
+                </label>
+
+
+                <input
+                    id="artistCity"
+                    name="city"
+                    placeholder="Enter your city"
+                    type="text">
+
+
+            </div>
+
+
+
+            <!-- STATE -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistState">
+
+                    State
+
+                </label>
+
+
+                <input
+                    id="artistState"
+                    name="state"
+                    placeholder="Enter your state"
+                    type="text">
+
+
+            </div>
+
+
+
+            <!-- COUNTRY -->
+
+            <div class="artist-input-group">
+
+
+                <label for="artistCountry">
+
+                    Country
+
+                </label>
+
+
+                <input
+                    id="artistCountry"
+                    name="country"
+                    type="text"
+                    value="India">
+
+
+            </div>
+
+
+
+            <!-- PORTFOLIO -->
+
+            <div class="artist-input-group full-width">
+
+
+                <label for="artistPortfolio">
+
+                    Portfolio or Social Media Link
+
+                </label>
+
+
+                <input
+                    id="artistPortfolio"
+                    name="portfolio_link"
+                    placeholder="Enter your portfolio or social media link"
+                    type="url">
+
+
+            </div>
+
+
+
+            <!-- BIO -->
+
+            <div class="artist-input-group full-width">
+
+
+                <label for="artistBio">
+
+                    Artist Biography
+
+                </label>
+
+
+                <textarea
+                    id="artistBio"
+                    name="bio"
+                    placeholder="Write a short introduction about yourself, your artistic journey, and your creative style"
+                    required></textarea>
+
+
+            </div>
+
+
+
+            <!-- SAVE -->
+
+            <button
+                class="artist-save-btn"
+                type="submit">
+
+                Save Artist Profile
+
+            </button>
+
+
+            <!-- MESSAGE -->
+
+            <p
+                id="artistProfileMessage"
+                role="status">
+
+            </p>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     ARTIST PROFILE SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           GET CURRENT USER
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        const resolvedId =
+            await ensureUserId();
+
+
+        if (
+            resolvedId
+        ) {
+
+            user.id =
+                resolvedId;
+
+        }
+
+
+
+        /* =================================
+           ARTIST ONLY
+        ================================= */
+
+        if (
+            !user.loggedIn ||
+            String(user.role).toLowerCase() !==
+            "artist"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const form =
+            document.getElementById(
+                "artistProfileForm"
+            );
+
+
+        const message =
+            document.getElementById(
+                "artistProfileMessage"
+            );
+
+
+        const displayName =
+            document.getElementById(
+                "artistDisplayName"
+            );
+
+
+        const avatarBox =
+            document.getElementById(
+                "artistAvatarBox"
+            );
+
+
+        const photoInput =
+            document.getElementById(
+                "artistProfilePhoto"
+            );
+
+
+        const photoMessage =
+            document.getElementById(
+                "artistPhotoMessage"
+            );
+
+
+        const accountStatus =
+            document.getElementById(
+                "artistAccountStatus"
+            );
+
+
+        const memberSince =
+            document.getElementById(
+                "memberSince"
+            );
+
+
+        /*
+         * Holds the profile photo as a base64
+         * data URL once the artist selects a new
+         * one, or once a saved photo is loaded
+         * from the server. Sent back to the
+         * server unchanged unless replaced.
+         */
+
+        let profileImageBase64 =
+            "";
+
+
+
+        /* =================================
+           MESSAGE
+        ================================= */
+
+        function showMessage(
+            text,
+            isError = false
+        ) {
+
+            if (!message) {
+
+                return;
+
+            }
+
+
+            message.textContent =
+                text;
+
+
+            message.style.color =
+                isError
+                    ? "#8C6A1C"
+                    : "#0F2E2A";
+
+        }
+
+
+
+        /* =================================
+           SET FIELD
+        ================================= */
+
+        function setField(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (element) {
+
+                element.value =
+                    value ?? "";
+
+            }
+
+        }
+
+
+
+        /* =================================
+           UPDATE SUMMARY
+        ================================= */
+
+        function updateSummary(
+            name
+        ) {
+
+            const safeName =
+                name ||
+                "Artist Name";
+
+
+            displayName.textContent =
+                safeName;
+
+
+            renderAvatar(
+                safeName
+            );
+
+        }
+
+
+
+        /* =================================
+           RENDER AVATAR
+           Shows the saved/selected profile
+           photo when available, otherwise
+           falls back to the first letter
+           of the artist's name.
+        ================================= */
+
+        function renderAvatar(
+            name
+        ) {
+
+            const safeName =
+                name ||
+                "Artist Name";
+
+
+            if (
+                profileImageBase64
+            ) {
+
+                avatarBox.innerHTML = `
+                    <img
+                        src="${profileImageBase64}"
+                        alt="${safeName}"
+                        style="
+                            width:100%;
+                            height:100%;
+                            object-fit:cover;
+                            border-radius:50%;
+                        "
+                    >
+                `;
+
+            }
+
+            else {
+
+                avatarBox.innerHTML =
+                    `<span id="artistInitial">${
+                        safeName
+                            .trim()
+                            .charAt(0)
+                            .toUpperCase() ||
+                        "A"
+                    }</span>`;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           CHECK USER ID
+        ================================= */
+
+        if (!user.id) {
+
+            showMessage(
+                "Your user ID could not be found. Please log in again.",
+                true
+            );
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           LOAD PROFILE
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    `/api/artist-profile/${encodeURIComponent(
+                        user.id
+                    )}`
+                );
+
+
+            const profile =
+                response?.profile ||
+                response?.artistProfile ||
+                response ||
+                {};
+
+
+            /* =================================
+               BASIC USER INFORMATION
+            ================================= */
+
+            const fullName =
+                profile.full_name ||
+                profile.fullName ||
+                user.name ||
+                "";
+
+
+            const email =
+                profile.email ||
+                user.email ||
+                "";
+
+
+            profileImageBase64 =
+                profile.profile_image ||
+                profile.profileImage ||
+                "";
+
+
+            updateSummary(
+                fullName
+            );
+
+
+            setField(
+                "artistName",
+                fullName
+            );
+
+
+            setField(
+                "artistEmail",
+                email
+            );
+
+
+            setField(
+                "artistPhone",
+                profile.phone
+            );
+
+
+            setField(
+                "artistSpecialization",
+                profile.specialization
+            );
+
+
+            setField(
+                "artistExperience",
+                profile.experience_years ??
+                profile.experienceYears ??
+                0
+            );
+
+
+            setField(
+                "artistCity",
+                profile.city
+            );
+
+
+            setField(
+                "artistState",
+                profile.state
+            );
+
+
+            setField(
+                "artistCountry",
+                profile.country ||
+                "India"
+            );
+
+
+            setField(
+                "artistPortfolio",
+                profile.portfolio_link ||
+                profile.portfolioLink
+            );
+
+
+            setField(
+                "artistBio",
+                profile.bio
+            );
+
+
+
+            /* =================================
+               ACCOUNT STATUS
+            ================================= */
+
+            if (
+                profile.status
+            ) {
+
+                accountStatus.textContent =
+                    profile.status;
+
+            }
+
+
+
+            /* =================================
+               MEMBER SINCE
+            ================================= */
+
+            const joinedDate =
+                profile.joined_date ||
+                profile.joinedDate ||
+                profile.created_at ||
+                profile.createdAt;
+
+
+            if (
+                joinedDate
+            ) {
+
+                const date =
+                    new Date(
+                        joinedDate
+                    );
+
+
+                if (
+                    !isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    memberSince.textContent =
+                        date.getFullYear();
+
+                }
+
+            }
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Artist profile load error:",
+                error
+            );
+
+
+            /*
+             * A profile may not exist yet.
+             * We still allow the artist to
+             * create one.
+             */
+
+            updateSummary(
+                user.name ||
+                "Artist Name"
+            );
+
+
+            setField(
+                "artistName",
+                user.name
+            );
+
+
+            setField(
+                "artistEmail",
+                user.email
+            );
+
+
+            setField(
+                "artistCountry",
+                "India"
+            );
+
+
+            showMessage(
+                "No saved artist profile was found. You can create your profile below."
+            );
+
+        }
+
+
+
+        /* =================================
+           PROFILE PHOTO SELECTION
+        ================================= */
+
+        if (photoInput) {
+
+            photoInput.addEventListener(
+                "change",
+                function () {
+
+                    const file =
+                        photoInput.files?.[0];
+
+
+                    if (!file) {
+
+                        return;
+
+                    }
+
+
+                    const allowedTypes = [
+
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp",
+                        "image/gif"
+
+                    ];
+
+
+                    if (
+                        !allowedTypes.includes(
+                            file.type
+                        )
+                    ) {
+
+                        photoInput.value =
+                            "";
+
+                        photoMessage.textContent =
+                            "Please select a JPG, PNG, WEBP or GIF image.";
+
+                        photoMessage.style.color =
+                            "#8C6A1C";
+
+                        return;
+
+                    }
+
+
+                    const maxSize =
+                        2 * 1024 * 1024;
+
+
+                    if (
+                        file.size >
+                        maxSize
+                    ) {
+
+                        photoInput.value =
+                            "";
+
+                        photoMessage.textContent =
+                            "Image size must be 2 MB or less.";
+
+                        photoMessage.style.color =
+                            "#8C6A1C";
+
+                        return;
+
+                    }
+
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload =
+                        function () {
+
+                            profileImageBase64 =
+                                reader.result;
+
+
+                            renderAvatar(
+                                document
+                                    .getElementById(
+                                        "artistName"
+                                    )
+                                    .value ||
+                                "Artist Name"
+                            );
+
+
+                            photoMessage.textContent =
+                                "Photo selected. Click \"Save Artist Profile\" to keep it.";
+
+                            photoMessage.style.color =
+                                "#0F2E2A";
+
+                        };
+
+
+                    reader.onerror =
+                        function () {
+
+                            photoMessage.textContent =
+                                "Unable to read the selected image.";
+
+                            photoMessage.style.color =
+                                "#8C6A1C";
+
+                        };
+
+
+                    reader.readAsDataURL(
+                        file
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           SAVE PROFILE
+        ================================= */
+
+        if (form) {
+
+
+            form.addEventListener(
+                "submit",
+                async function (event) {
+
+
+                    event.preventDefault();
+
+
+                    showMessage(
+                        "Saving profile..."
+                    );
+
+
+
+                    const payload = {
+
+                        user_id:
+                            Number(user.id),
+
+                        full_name:
+                            document
+                                .getElementById(
+                                    "artistName"
+                                )
+                                .value
+                                .trim(),
+
+                        email:
+                            document
+                                .getElementById(
+                                    "artistEmail"
+                                )
+                                .value
+                                .trim(),
+
+                        phone:
+                            document
+                                .getElementById(
+                                    "artistPhone"
+                                )
+                                .value
+                                .trim(),
+
+                        specialization:
+                            document
+                                .getElementById(
+                                    "artistSpecialization"
+                                )
+                                .value,
+
+                        experience_years:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "artistExperience"
+                                    )
+                                    .value ||
+                                0
+                            ),
+
+                        city:
+                            document
+                                .getElementById(
+                                    "artistCity"
+                                )
+                                .value
+                                .trim(),
+
+                        state:
+                            document
+                                .getElementById(
+                                    "artistState"
+                                )
+                                .value
+                                .trim(),
+
+                        country:
+                            document
+                                .getElementById(
+                                    "artistCountry"
+                                )
+                                .value
+                                .trim() ||
+                            "India",
+
+                        portfolio_link:
+                            document
+                                .getElementById(
+                                    "artistPortfolio"
+                                )
+                                .value
+                                .trim(),
+
+                        bio:
+                            document
+                                .getElementById(
+                                    "artistBio"
+                                )
+                                .value
+                                .trim(),
+
+                        profile_image:
+                            profileImageBase64 ||
+                            null
+
+                    };
+
+
+
+                    /* =================================
+                       VALIDATION
+                    ================================= */
+
+                    if (
+                        !payload.full_name ||
+                        !payload.email ||
+                        !payload.phone ||
+                        !payload.specialization ||
+                        !payload.bio
+                    ) {
+
+                        showMessage(
+                            "Please fill in all required fields.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    try {
+
+
+                        await apiFetch(
+                            "/api/artist-profile",
+                            {
+                                method: "POST",
+                                body: payload
+                            }
+                        );
+
+
+                        /* =================================
+                           UPDATE SESSION DISPLAY
+                        ================================= */
+
+                        localStorage.setItem(
+                            "userName",
+                            payload.full_name
+                        );
+
+
+                        localStorage.setItem(
+                            "userEmail",
+                            payload.email
+                        );
+
+
+                        updateSummary(
+                            payload.full_name
+                        );
+
+
+                        showMessage(
+                            "Artist profile saved successfully."
+                        );
+
+                    }
+
+                    catch (error) {
+
+
+                        console.error(
+                            "Artist profile save error:",
+                            error
+                        );
+
+
+                        showMessage(
+                            "Unable to save profile: " +
+                            error.message,
+                            true
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+
+            Loading...
+
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

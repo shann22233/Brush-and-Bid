@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="bidder"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    View Artworks - BRUSH and BID
+</title>
+
+<link
+    href="style.css"
+    rel="stylesheet"
+>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+
+<!-- =================================
+     LOGO
+================================= -->
+
+<div class="logo">
+
+<h1>
+    🎨 BRUSH and BID
+</h1>
+
+</div>
+
+
+<!-- =================================
+     NAVIGATION
+================================= -->
+
+<nav>
+
+<ul id="navbar">
+
+
+<!-- HOME -->
+
+<li>
+
+<a href="index.html">
+
+    Home
+
+</a>
+
+</li>
+
+
+<!-- ABOUT -->
+
+<li>
+
+<a href="about.html">
+
+    About
+
+</a>
+
+</li>
+
+
+<!-- GALLERY -->
+
+<li>
+
+<a href="gallery.html">
+
+    Gallery
+
+</a>
+
+</li>
+
+
+<!-- AUCTIONS -->
+
+<li>
+
+<a href="auctions.html">
+
+    Auctions
+
+</a>
+
+</li>
+
+
+<!-- =================================
+     BIDDER ROLE MENU
+     script.js will create this
+================================= -->
+
+<li id="roleMenu"></li>
+
+
+</ul>
+
+</nav>
+
+
+
+<!-- =================================
+     HEADER RIGHT SIDE
+================================= -->
+
+<div class="header-right">
+
+
+<!-- =================================
+     LOGIN BUTTON
+================================= -->
+
+<button
+    class="login-top-btn"
+    id="loginBtn"
+    onclick="window.location.href='index.html?login=true'"
+>
+
+    Login
+
+</button>
+
+
+
+<!-- =================================
+     PROFILE AREA
+
+     IMPORTANT:
+     This is a DIV, NOT an IMG.
+
+     Therefore script.js can display
+     the first letter of the email.
+
+     Example:
+
+     joantt3012@gmail.com → J
+
+================================= -->
+
+<div
+    class="profile-area"
+    id="profileArea"
+    style="display:none;"
+>
+
+
+<!-- =================================
+     PROFILE INITIAL
+================================= -->
+
+<div
+    class="profile-icon profile-initial"
+    id="profileIcon"
+    onclick="toggleProfileMenu()"
+>
+
+    U
+
+</div>
+
+
+
+<!-- =================================
+     PROFILE DROPDOWN
+================================= -->
+
+<div
+    class="profile-dropdown"
+    id="profileMenu"
+>
+
+
+<!-- USER NAME -->
+
+<h3 id="profileName">
+
+</h3>
+
+
+<!-- USER ROLE -->
+
+<p id="profileRole">
+
+</p>
+
+
+<!-- USER EMAIL -->
+
+<small id="profileEmail">
+
+</small>
+
+
+<hr>
+
+
+<!-- PROFILE PAGE -->
+
+<a
+    id="profilePage"
+    href="#"
+>
+
+    My Profile
+
+</a>
+
+
+<!-- LOGOUT -->
+
+<button
+    onclick="logoutUser()"
+>
+
+    Logout
+
+</button>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<!-- =================================
+     PAGE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+
+<h2>
+
+    Available Artworks
+
+</h2>
+
+
+<p>
+
+    Explore the artworks available for auction.
+    Click on an artwork to view its complete details
+    before placing a bid.
+
+</p>
+
+
+</section>
+
+
+
+<!-- =================================
+     ARTWORK SECTION
+================================= -->
+
+<section class="gallery-section">
+
+
+<!-- =================================
+     SECTION TITLE
+================================= -->
+
+<div class="gallery-title">
+
+
+<p class="gallery-small-title">
+
+    Available for bidding
+
+</p>
+
+
+<h2>
+
+    View Artworks
+
+</h2>
+
+
+<p>
+
+    Explore the artworks currently available on
+    BRUSH and BID.
+
+    Click <strong>View Full Details</strong>
+    to see the selected artwork's image,
+    artist information,
+    description,
+    artwork type,
+    size,
+    starting price,
+    and current highest bid.
+
+</p>
+
+
+</div>
+
+
+
+<!-- =================================
+     ARTWORK GRID
+
+     JavaScript will load approved
+     artworks from MySQL through:
+
+     GET /api/artworks
+================================= -->
+
+<div class="gallery-grid">
+
+</div>
+
+
+</section>
+
+
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+
+</footer>
+
+
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =================================
+     BIDDER VIEW ARTWORKS JAVASCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+
+        /* =========================================
+           GET ARTWORK GRID
+        ========================================= */
+
+        const grid =
+            document.querySelector(
+                ".gallery-grid"
+            );
+
+
+        if (!grid) {
+
+            return;
+
+        }
+
+
+
+        /* =========================================
+           LOAD APPROVED ARTWORKS
+           
+           Data comes from:
+           
+           GET /api/artworks
+        ========================================= */
+
+        try {
+
+
+            const data =
+                await apiFetch(
+                    "/api/artworks"
+                );
+
+
+
+            /* =====================================
+               SUPPORT BOTH RESPONSE FORMATS
+            ===================================== */
+
+            let artworks =
+                Array.isArray(data)
+                    ? data
+                    : (
+                        data?.artworks ||
+                        []
+                    );
+
+
+
+            /* =====================================
+               SHOW ONLY APPROVED ARTWORKS
+            ===================================== */
+
+            artworks =
+                artworks.filter(
+                    artwork => {
+
+                        const status =
+                            artwork.status ||
+                            artwork.adminStatus ||
+                            "Approved";
+
+                        return (
+                            String(status)
+                            .toLowerCase() ===
+                            "approved"
+                        );
+
+                    }
+                );
+
+
+
+            /* =====================================
+               CLEAR EXISTING CONTENT
+            ===================================== */
+
+            grid.innerHTML = "";
+
+
+
+            /* =====================================
+               NO ARTWORKS
+            ===================================== */
+
+            if (
+                artworks.length === 0
+            ) {
+
+                grid.innerHTML = `
+
+                    <p>
+                        No approved artworks
+                        are available yet.
+                    </p>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            /* =====================================
+               DISPLAY EACH ARTWORK
+
+               PLACEHOLDER_IMG is now a real image
+               URL used directly as the default
+               artwork photo whenever an artwork has
+               no image_url, or its image fails to load.
+            ===================================== */
+
+            const PLACEHOLDER_IMG =
+                "https://satgurus.com/cdn/shop/articles/indian-art_paintings.jpg?v=1712575516";
+
+
+            artworks.forEach(
+                artwork => {
+
+
+                    /* =============================
+                       ARTWORK ID
+                    ============================= */
+
+                    const artworkId =
+                        artwork.artwork_id ??
+                        artwork.id;
+
+
+
+                    /* =============================
+                       ARTWORK NAME
+                    ============================= */
+
+                    const artworkName =
+                    artwork.title ||
+                    "Untitled Artwork";
+
+
+
+                    /* =============================
+                       ARTIST NAME
+
+                       The backend returns:
+
+                       u.full_name AS artist
+
+                       So use artwork.artist too.
+                    ============================= */
+
+                    const artistName =
+                        artwork.artist_name ||
+                        artwork.artistName ||
+                        artwork.artist ||
+                        "Artist";
+
+
+
+                    /* =============================
+                       DESCRIPTION
+                    ============================= */
+
+                    const description =
+                        artwork.description ||
+                        "No description available.";
+
+
+
+                    /* =============================
+                       IMAGE
+                    ============================= */
+
+                    const image =
+                        artwork.image_url ||
+                        artwork.image ||
+                        PLACEHOLDER_IMG;
+
+
+
+                    /* =============================
+                       CURRENT BID
+                    ============================= */
+
+const currentBid =
+    Number(
+        artwork.current_bid ??
+        artwork.currentBid ??
+        artwork.starting_price ??
+        0
+    );
+/* =============================
+   AUCTION STATUS
+============================= */
+
+const auctionId =
+    Number(
+        artwork.auction_id || 0
+    );
+
+const auctionStatus =
+    String(
+        artwork.auction_status || ""
+    )
+        .trim()
+        .toLowerCase();
+
+const isScheduled =
+    auctionId > 0 &&
+    auctionStatus === "scheduled";
+
+const isActive =
+    auctionId > 0 &&
+    auctionStatus === "active";
+
+                    /* =============================
+                       CREATE ARTWORK CARD
+                    ============================= */
+
+                    grid.insertAdjacentHTML(
+                        "beforeend",
+                        `
+
+<article class="gallery-card">
+
+
+    <!-- =============================
+         ARTWORK IMAGE
+    ============================== -->
+
+    <div class="gallery-image">
+
+        <img
+            src="${escapeHTML(image)}"
+            alt="${escapeHTML(artworkName)}"
+            onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';"
+        >
+
+    </div>
+
+
+
+    <!-- =============================
+         ARTWORK INFORMATION
+    ============================== -->
+
+    <div class="gallery-info">
+
+
+        <!-- ARTWORK NAME -->
+
+        <h3>
+
+            ${escapeHTML(artworkName)}
+
+        </h3>
+
+
+
+        <!-- ARTIST -->
+
+        <p class="artist">
+
+            Created by
+
+            <strong>
+
+                ${escapeHTML(artistName)}
+
+            </strong>
+
+        </p>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <p class="art-description">
+
+            ${escapeHTML(description)}
+
+        </p>
+
+
+
+        <!-- CURRENT BID -->
+
+        <div class="price-row">
+
+            <div>
+
+                <span>
+                    Current Bid
+                </span>
+
+                <strong>
+
+                    ₹${currentBid.toLocaleString("en-IN")}
+
+                </strong>
+
+            </div>
+
+        </div>
+<!-- AUCTION STATUS -->
+
+<div class="auction-status">
+
+    ${
+        isActive
+            ? `
+                <p>
+                    <strong>Auction:</strong>
+                    Live Auction
+                </p>
+              `
+            : isScheduled
+                ? `
+                    <p>
+                        <strong>Auction:</strong>
+                        Scheduled
+                    </p>
+                  `
+                : `
+                    <p>
+                        <strong>Auction:</strong>
+                        Not for auction currently
+                    </p>
+                  `
+    }
+
+</div>
+
+
+        <!-- VIEW DETAILS -->
+
+        <a
+            class="details-btn"
+            href="artwork-details.html?id=${encodeURIComponent(artworkId)}"
+        >
+
+            View Full Details →
+
+        </a>
+
+
+    </div>
+
+
+</article>
+
+                        `
+                    );
+
+                }
+            );
+
+
+        }
+
+
+        /* =========================================
+           API ERROR
+        ========================================= */
+
+        catch (error) {
+
+
+            console.error(
+                "Unable to load artworks:",
+                error
+            );
+
+
+            grid.innerHTML = `
+
+                <p>
+
+                    Unable to load artworks:
+                    ${escapeHTML(error.message)}
+
+                </p>
+
+            `;
+
+        }
+
+    }
+);
+
+
+
+/* =============================================
+   HTML ESCAPE FUNCTION
+
+   Prevents artwork text from breaking
+   the HTML if special characters are used.
+============================================= */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+</script>
+
+
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true"
+>
+
+
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle"
+>
+
+
+<div class="policy-modal-header">
+
+
+<h2 id="policyModalTitle">
+
+</h2>
+
+
+<button
+    type="button"
+    class="policy-modal-close"
+    id="policyModalClose"
+    aria-label="Close"
+>
+
+    &times;
+
+</button>
+
+
+</div>
+
+
+<div
+    id="policyModalContent"
+    class="policy-modal-content"
+>
+
+
+<p>
+
+    Loading...
+
+</p>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+</body>
+
+</html>

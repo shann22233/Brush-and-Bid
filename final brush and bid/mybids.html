@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="bidder"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    My Bids - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+
+<style>
+
+    .my-bids-section {
+        padding: 50px 8%;
+        background: #F3F4EF;
+    }
+
+
+    .my-bids-title {
+        text-align: center;
+        max-width: 850px;
+        margin: 0 auto 40px;
+    }
+
+
+    .my-bids-title h2 {
+        color: #17201E;
+        margin-bottom: 15px;
+    }
+
+
+    .my-bids-title p {
+        color: #56625D;
+        line-height: 1.7;
+    }
+
+
+    .my-bids-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(280px, 1fr)
+        );
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+
+    .my-bid-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+
+    .my-bid-image {
+        width: 100%;
+        height: 240px;
+        background: #eee;
+    }
+
+
+    .my-bid-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .my-bid-info {
+        padding: 25px;
+    }
+
+
+    .my-bid-info h3 {
+        color: #17201E;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+
+    .my-bid-info p {
+        color: #56625D;
+        margin: 8px 0 3px;
+    }
+
+
+    .my-bid-price,
+    .current-bid-price {
+        display: block;
+        font-size: 21px;
+        color: #8C6A1C;
+        margin-bottom: 10px;
+    }
+
+
+    .bid-status {
+        padding: 12px;
+        border-radius: 8px;
+        margin: 18px 0;
+        font-weight: bold;
+        text-align: center;
+    }
+
+
+    .bid-status.highest {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+
+    .bid-status.outbid {
+        background: #fff3e0;
+        color: #e65100;
+    }
+
+
+    .bid-status.won {
+        background: #e8f5e9;
+        color: #1b5e20;
+    }
+
+
+    .bid-status.lost {
+        background: #ffebee;
+        color: #b71c1c;
+    }
+
+
+    .bid-status.closed {
+        background: #eeeeee;
+        color: #555;
+    }
+
+
+    .bid-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+
+    .details-btn,
+    .shipping-btn {
+        display: inline-block;
+        padding: 11px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+
+    .details-btn {
+        background: #D4AF5A;
+        color: white;
+    }
+
+
+    .details-btn:hover {
+        background: #8C6A1C;
+    }
+
+
+    .shipping-btn {
+        background: #0F2E2A;
+        color: white;
+    }
+
+
+    .shipping-btn:hover {
+        background: #0F2E2A;
+    }
+
+
+    .empty-bids {
+        grid-column: 1 / -1;
+        text-align: center;
+        background: white;
+        padding: 50px 25px;
+        border-radius: 16px;
+    }
+
+
+    .empty-bids h3 {
+        color: #17201E;
+        margin-bottom: 15px;
+    }
+
+
+    .empty-bids p {
+        color: #56625D;
+        margin-bottom: 25px;
+    }
+
+
+    .bids-loading {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px;
+        color: #56625D;
+    }
+
+
+    .shipping-link-section {
+        text-align: center;
+        padding: 50px 20px;
+        background: white;
+    }
+
+
+    .shipping-link-section h2 {
+        color: #17201E;
+        margin-bottom: 15px;
+    }
+
+
+    .shipping-link-section p {
+        color: #56625D;
+        margin-bottom: 25px;
+    }
+
+
+    @media(max-width: 600px) {
+
+        .my-bids-section {
+            padding: 40px 5%;
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="gallery.html">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+
+            <p id="profileRole"></p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2>
+
+    My Bids
+
+</h2>
+
+
+<p>
+
+    View the artworks you have bid on,
+    track your current bidding position,
+    and manage winning auctions.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     MY BIDS
+================================= -->
+
+<section class="my-bids-section">
+
+ 
+<div class="my-bids-title">
+
+
+    <p class="gallery-small-title">
+
+        Your bidding activity
+
+    </p>
+
+
+    <h2>
+
+        Artworks You Have Bid On
+
+    </h2>
+
+
+    <p>
+
+        Your bidding history is connected to
+        your BRUSH and BID account. You can
+        see your latest bid, the current highest
+        bid, and the status of each auction.
+
+    </p>
+
+
+</div>
+
+
+
+<!-- =================================
+     BIDS GRID
+================================= -->
+
+<div
+    class="my-bids-grid"
+    id="myBidsGrid">
+
+
+    <div class="bids-loading">
+
+        Loading your bids...
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     SHIPPING
+================================= -->
+
+<section class="shipping-link-section">
+
+ 
+<h2>
+
+    Shipping Details
+
+</h2>
+
+
+<p>
+
+    If you win an auction, you can view or
+    update your delivery information here.
+
+</p>
+
+
+<a
+    class="shipping-btn"
+    href="shippingdetails.html">
+
+    View Shipping Details
+
+</a>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     MY BIDS SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           CURRENT USER
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        const resolvedId =
+            await ensureUserId();
+
+
+        if (
+            resolvedId
+        ) {
+
+            user.id =
+                resolvedId;
+
+        }
+
+
+
+        /* =================================
+           BIDDER ONLY
+        ================================= */
+
+        if (
+            !user.loggedIn ||
+            String(user.role).toLowerCase() !==
+            "bidder"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           GRID
+        ================================= */
+
+        const grid =
+            document.getElementById(
+                "myBidsGrid"
+            );
+
+
+        if (!grid) {
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           HELPERS
+        ================================= */
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ?? ""
+            )
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+        }
+
+
+
+        function formatCurrency(
+            value
+        ) {
+
+            return Number(
+                value || 0
+            ).toLocaleString(
+                "en-IN"
+            );
+
+        }
+
+
+
+        function normalizeStatus(
+            value
+        ) {
+
+            return String(
+                value ||
+                ""
+            )
+            .toLowerCase()
+            .trim();
+
+        }
+
+
+
+        /* =================================
+           LOAD BIDS
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    `/api/bids/user/${encodeURIComponent(
+                        user.id
+                    )}`
+                );
+
+
+            const bids =
+                Array.isArray(response)
+                    ? response
+                    : (
+                        response?.bids ||
+                        []
+                    );
+
+
+
+            /* =================================
+               NO BIDS
+            ================================= */
+
+            if (
+                bids.length === 0
+            ) {
+
+
+                grid.innerHTML = `
+
+                    <div class="empty-bids">
+
+                        <h3>
+
+                            No Bids Yet
+
+                        </h3>
+
+
+                        <p>
+
+                            You have not placed any
+                            bids yet. Explore the gallery
+                            and join an auction.
+
+                        </p>
+
+
+                        <a
+                            href="auctions.html"
+                            class="details-btn">
+
+                            Explore Auctions →
+
+                        </a>
+
+                    </div>
+
+                `;
+
+
+                return;
+
+            }
+
+
+
+            /* =================================
+               DISPLAY BIDS
+            ================================= */
+
+            grid.innerHTML =
+                "";
+
+
+            bids.forEach(
+                function (bid) {
+
+
+                    const artwork =
+                        bid.artwork ||
+                        {};
+
+
+                    const artworkId =
+                        bid.artwork_id ||
+                        bid.artworkId ||
+                        artwork.artwork_id ||
+                        artwork.id;
+
+
+                    const artworkName =
+                        bid.artwork_name ||
+                        bid.artworkName ||
+                        artwork.title ||
+                        "Untitled Artwork";
+
+
+                    const image =
+                        bid.artwork_image ||
+                        bid.artworkImage ||
+                        bid.image_url ||
+                        bid.image ||
+                        artwork.image_url ||
+                        artwork.image ||
+                        "";
+
+
+                    const artistName =
+                        bid.artist_name ||
+                        bid.artistName ||
+                        artwork.artist_name ||
+                        artwork.artistName ||
+                        "Unknown Artist";
+
+
+                    const myBid =
+                        Number(
+                            bid.bid_amount ||
+                            bid.bidAmount ||
+                            0
+                        );
+
+
+                    const currentBid =
+                        Number(
+                            bid.current_bid ||
+                            bid.currentBid ||
+                            myBid
+                        );
+
+
+                    const auctionStatus =
+                        normalizeStatus(
+                            bid.auction_status ||
+                            bid.auctionStatus ||
+                            bid.status
+                        );
+
+
+                    const isClosed =
+                        auctionStatus ===
+                            "closed" ||
+                        auctionStatus ===
+                            "completed";
+
+
+                    const isWinner =
+                        Boolean(
+                            bid.is_winner ??
+                            bid.isWinner ??
+                            false
+                        );
+
+
+                    let statusText =
+                        "";
+
+
+                    let statusClass =
+                        "";
+
+
+                    let actionHTML =
+                        "";
+
+
+
+                    /* =================================
+                       DETERMINE STATUS
+                    ================================= */
+
+                    if (
+                        isWinner
+                    ) {
+
+
+                        statusText =
+                            "You Won This Auction";
+
+
+                        statusClass =
+                            "won";
+
+
+                        actionHTML = `
+
+                            <a
+                                href="shippingdetails.html?bid_id=${encodeURIComponent(bid.bid_id || bid.bidId || "")}"
+                                class="shipping-btn">
+
+                                Shipping Details
+
+                            </a>
+
+                        `;
+
+                    }
+
+
+                    else if (
+                        isClosed
+                    ) {
+
+
+                        statusText =
+                            "Auction Closed";
+
+
+                        statusClass =
+                            "closed";
+
+                    }
+
+
+                    else if (
+                        myBid >=
+                        currentBid
+                    ) {
+
+
+                        statusText =
+                            "You Are the Highest Bidder";
+
+
+                        statusClass =
+                            "highest";
+
+                    }
+
+
+                    else {
+
+
+                        statusText =
+                            "You Have Been Outbid";
+
+
+                        statusClass =
+                            "outbid";
+
+                    }
+
+
+
+                    /* =================================
+                       CARD
+                    ================================= */
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    card.className =
+                        "my-bid-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="my-bid-image">
+
+
+                            ${
+                                image
+                                    ? `
+                                        <img
+                                            src="${escapeHTML(
+                                                image
+                                            )}"
+                                            alt="${escapeHTML(
+                                                artworkName
+                                            )}"
+                                            onerror="
+                                                this.style.display='none'
+                                            "
+                                        >
+                                      `
+                                    : `
+                                        <div
+                                            style="
+                                                height:100%;
+                                                display:flex;
+                                                align-items:center;
+                                                justify-content:center;
+                                                color:#777;
+                                            "
+                                        >
+                                            No Image
+                                        </div>
+                                      `
+                            }
+
+
+                        </div>
+
+
+
+                        <div class="my-bid-info">
+
+
+                            <h3>
+
+                                ${escapeHTML(
+                                    artworkName
+                                )}
+
+                            </h3>
+
+
+                            <p>
+
+                                Artist
+
+                            </p>
+
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    artistName
+                                )}
+
+                            </strong>
+
+
+                            <p>
+
+                                Your Latest Bid
+
+                            </p>
+
+
+                            <strong
+                                class="my-bid-price">
+
+                                ₹${formatCurrency(
+                                    myBid
+                                )}
+
+                            </strong>
+
+
+                            <p>
+
+                                Current Highest Bid
+
+                            </p>
+
+
+                            <strong
+                                class="current-bid-price">
+
+                                ₹${formatCurrency(
+                                    currentBid
+                                )}
+
+                            </strong>
+
+
+                            <div
+                                class="bid-status ${statusClass}">
+
+                                ${statusText}
+
+                            </div>
+
+
+                            <div class="bid-actions">
+
+
+                                ${
+                                    artworkId
+                                        ? `
+                                            <a
+                                                href="artwork-details.html?id=${encodeURIComponent(
+                                                    artworkId
+                                                )}"
+                                                class="details-btn">
+
+                                                View Artwork →
+
+                                            </a>
+                                          `
+                                        : ""
+                                }
+
+
+                                ${actionHTML}
+
+
+                            </div>
+
+
+                        </div>
+
+                    `;
+
+
+                    grid.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "My bids error:",
+                error
+            );
+
+
+            grid.innerHTML = `
+
+                <div class="empty-bids">
+
+                    <h3>
+
+                        Unable to Load Bids
+
+                    </h3>
+
+
+                    <p>
+
+                        ${escapeHTML(
+                            error.message ||
+                            "Please try again later."
+                        )}
+
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+
+            Loading...
+
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    About - BRUSH and BID
+</title>
+
+<link
+    href="style.css"
+    rel="stylesheet">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <!-- HOME -->
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <!-- ABOUT -->
+
+        <li>
+
+            <a
+                class="active"
+                href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <!-- GALLERY -->
+
+        <li>
+
+            <a href="gallery.html">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <!-- AUCTIONS -->
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <!-- ROLE MENU -->
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     HEADER RIGHT
+================================= -->
+
+<div class="header-right">
+
+
+    <!-- LOGIN -->
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <!-- PROFILE -->
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName">
+
+                User Name
+
+            </h3>
+
+
+            <p id="profileRole">
+
+                Bidder
+
+            </p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     ABOUT HERO SECTION
+================================= -->
+
+<section class="about-hero">
+
+ 
+<h2>
+    Where Creativity Meets Opportunity
+</h2>
+
+
+<p>
+
+    BRUSH and BID is an online art auction platform that connects
+    talented artists, passionate art lovers, and enthusiastic
+    collectors through a creative and engaging digital experience.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     ABOUT CONTENT
+================================= -->
+
+<section class="about-content">
+
+ 
+<!-- ABOUT TEXT -->
+
+<div class="about-text">
+
+
+    <h2>
+        Welcome to BRUSH and BID
+    </h2>
+
+
+    <p>
+
+        BRUSH and BID is a creative online platform designed to
+        bring artists and art enthusiasts together. Our platform
+        provides artists with an opportunity to display their
+        original artworks and reach a wider audience.
+
+    </p>
+
+
+    <p>
+
+        Art lovers and bidders can explore a diverse collection of
+        paintings, illustrations, drawings, and other creative
+        masterpieces. Users can participate in online auctions,
+        place bids, and discover unique artworks created by both
+        emerging and established artists.
+
+    </p>
+
+
+    <p>
+
+        Our goal is to make the process of discovering, showcasing,
+        buying, and selling art simple, engaging, and accessible.
+        BRUSH and BID creates a welcoming digital space where
+        creativity is appreciated and artistic talent is celebrated.
+
+    </p>
+
+
+</div>
+
+
+<!-- ART INFORMATION -->
+
+<div class="about-image">
+
+
+    <h3>
+        Discover. Create. Bid.
+    </h3>
+
+
+    <p>
+
+        Explore inspiring artworks and connect with
+        a growing community of artists and collectors.
+
+    </p>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     MISSION SECTION
+================================= -->
+
+<section class="mission">
+
+ 
+<h2>
+    Our Mission
+</h2>
+
+
+<p>
+
+    Our mission is to support talented artists by providing a
+    creative online space where they can showcase their work,
+    share their artistic ideas, and connect with people who
+    appreciate and collect art.
+
+</p>
+
+
+<p>
+
+    We aim to create an enjoyable and transparent auction
+    experience where bidders can discover exceptional artworks,
+    participate confidently, and support artists through every bid.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     INFORMATION CARDS
+================================= -->
+
+<section class="about-cards">
+
+ 
+<!-- VISION CARD -->
+
+<div class="about-card">
+
+
+    <h3>
+        Our Vision
+    </h3>
+
+
+    <p>
+
+        To build a vibrant online art community where artists,
+        bidders, collectors, and art lovers can connect, share
+        creativity, and discover inspiring artworks.
+
+    </p>
+
+
+</div>
+
+
+
+<!-- BIDDING CARD -->
+
+<div class="about-card">
+
+
+    <h3>
+        Easy Bidding
+    </h3>
+
+
+    <p>
+
+        Our platform provides a simple and convenient way for
+        users to explore auctions, place bids, track their
+        participation, and compete for their favourite artworks.
+
+    </p>
+
+
+</div>
+
+
+
+<!-- ARTIST SUPPORT CARD -->
+
+<div class="about-card">
+
+
+    <h3>
+        Supporting Artists
+    </h3>
+
+
+    <p>
+
+        Artists can upload and showcase their creative work,
+        increase their visibility, and connect with art lovers
+        and potential buyers from different places.
+
+    </p>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     WHY CHOOSE US SECTION
+================================= -->
+
+<section class="why-choose">
+
+ 
+<h2>
+    Why Choose BRUSH and BID?
+</h2>
+
+
+<div class="choose-content">
+
+
+    <!-- UNIQUE ART -->
+
+    <div class="choose-item">
+
+
+        <h3>
+            Discover Unique Art
+        </h3>
+
+
+        <p>
+
+            Explore creative artworks in different styles,
+            themes, and artistic expressions.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- CREATIVITY -->
+
+    <div class="choose-item">
+
+
+        <h3>
+            Connect Through Creativity
+        </h3>
+
+
+        <p>
+
+            Bring artists, art lovers, bidders, and collectors
+            together on one creative platform.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- AUCTIONS -->
+
+    <div class="choose-item">
+
+
+        <h3>
+            Enjoy Exciting Auctions
+        </h3>
+
+
+        <p>
+
+            Participate in engaging online auctions and get the
+            opportunity to own meaningful and original artworks.
+
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     CONTACT US
+================================= -->
+
+<section style="padding:50px 7%;text-align:center;">
+    <p class="gallery-small-title">CONTACT US</p>
+    <h2>Get in Touch</h2>
+    <p>Phone: +91 XXXXX XXXXX</p>
+    <p>Email: contact@brushandbid.com</p>
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div
+        class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+            Loading...
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

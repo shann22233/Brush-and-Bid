@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<!-- Admins only: redirects everyone else to admin login -->
+<script src="admin-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Manage Artworks - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+<style>
+
+    .artwork-admin-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease;
+    }
+
+    .artwork-admin-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .artwork-admin-image {
+        width: 100%;
+        height: 230px;
+        background: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .artwork-admin-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .artwork-no-image {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .artwork-admin-content {
+        padding: 20px;
+    }
+
+    .artwork-admin-content h3 {
+        margin-bottom: 10px;
+    }
+
+    .artwork-admin-content p {
+        margin: 7px 0;
+    }
+
+    .artwork-status {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-approved {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-rejected {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .artwork-admin-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .artwork-admin-actions button {
+        border: none;
+        padding: 9px 13px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .approve-artwork {
+        background: #2e7d32;
+        color: white;
+    }
+
+    .reject-artwork {
+        background: #c62828;
+        color: white;
+    }
+
+    .delete-artwork {
+        background: #555;
+        color: white;
+    }
+
+    .view-artwork {
+        background: #333;
+        color: white;
+    }
+
+    .artwork-admin-actions button:hover {
+        opacity: 0.85;
+    }
+
+    .auction-badge {
+        display: inline-block;
+        margin-top: 5px;
+        padding: 4px 9px;
+        background: #eee;
+        border-radius: 15px;
+        font-size: 11px;
+    }
+
+    .admin-artwork-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        max-width: 1200px;
+        margin: 30px auto;
+    }
+
+    .admin-artwork-filter-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .admin-artwork-filter-container input,
+    .admin-artwork-filter-container select {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .admin-artwork-filter-container input {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .artwork-description {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .admin-message {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 12px 16px;
+        border-radius: 6px;
+        text-align: center;
+        display: none;
+    }
+
+    @media (max-width: 900px) {
+
+        .admin-artwork-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 600px) {
+
+        .admin-artwork-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+    <button
+        id="loginBtn"
+        class="login-top-btn"
+        onclick="window.location.href='adminlogin.html'">
+
+        Admin Login
+
+    </button>
+
+
+    <div
+        id="profileArea"
+        class="profile-area"
+        style="display:none;">
+
+        <div
+            id="profileIcon"
+            class="profile-icon profile-initial"
+            onclick="toggleProfileMenu()">
+
+            A
+
+        </div>
+
+
+        <div
+            id="profileMenu"
+            class="profile-dropdown">
+
+            <h3 id="profileName">
+                Administrator
+            </h3>
+
+            <p id="profileRole">
+                Admin
+            </p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+
+            <a href="admindashboard.html">
+                Dashboard
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<p class="gallery-small-title">
+    Administration
+</p>
+
+
+<h2>
+    Manage Artworks
+</h2>
+
+
+<p>
+
+    Review artworks uploaded by artists,
+    approve or reject submissions, and manage
+    artwork availability for auctions.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     ARTWORK MANAGEMENT
+================================= -->
+
+<section class="admin-users-section">
+
+ 
+<div class="admin-section-title">
+
+    <h2>
+        Artwork Management
+    </h2>
+
+
+    <p>
+
+        Only approved artworks can be displayed
+        to bidders and selected for auctions.
+
+    </p>
+
+</div>
+
+
+
+<!-- =================================
+     SUMMARY CARDS
+================================= -->
+
+<div class="admin-summary-grid">
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Total Artworks
+        </span>
+
+
+        <h3 id="totalArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Uploaded artworks
+        </p>
+
+    </div>
+
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Pending
+        </span>
+
+
+        <h3 id="pendingArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Awaiting review
+        </p>
+
+    </div>
+
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Approved
+        </span>
+
+
+        <h3 id="approvedArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Available artworks
+        </p>
+
+    </div>
+
+
+
+    <div class="admin-summary-card">
+
+        <span>
+            Rejected
+        </span>
+
+
+        <h3 id="rejectedArtworks">
+            0
+        </h3>
+
+
+        <p>
+            Rejected submissions
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================
+     MESSAGE
+================================= -->
+
+<div
+    id="adminMessage"
+    class="admin-message">
+</div>
+
+
+
+<!-- =================================
+     SEARCH & FILTER
+================================= -->
+
+<div class="admin-artwork-filter-container">
+
+
+    <input
+        type="text"
+        id="artworkSearch"
+        placeholder="Search by artwork name, artist or category">
+
+
+    <select id="statusFilter">
+
+        <option value="All">
+            All Status
+        </option>
+
+        <option value="Pending">
+            Pending
+        </option>
+
+        <option value="Approved">
+            Approved
+        </option>
+
+        <option value="Rejected">
+            Rejected
+        </option>
+
+    </select>
+
+
+    <select id="categoryFilter">
+
+        <option value="All">
+            All Categories
+        </option>
+
+    </select>
+
+
+</div>
+
+
+
+<!-- =================================
+     ARTWORK GRID
+================================= -->
+
+<div
+    id="artworkGrid"
+    class="admin-artwork-grid">
+
+    <p
+        style="
+            text-align:center;
+            width:100%;
+        ">
+
+        Loading artworks...
+
+    </p>
+
+</div>
+
+
+
+<!-- =================================
+     EMPTY STATE
+================================= -->
+
+<div
+    id="emptyMessage"
+    class="admin-empty-message"
+    style="display:none;">
+
+    <h3>
+        No Artworks Found
+    </h3>
+
+
+    <p>
+        There are no artworks matching the
+        selected search or filter.
+    </p>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           ADMIN ACCESS
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        if (
+            !user.loggedIn ||
+            user.role !== "Admin"
+        ) {
+
+            window.location.href =
+                "adminlogin.html";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const artworkGrid =
+            document.getElementById(
+                "artworkGrid"
+            );
+
+
+        const emptyMessage =
+            document.getElementById(
+                "emptyMessage"
+            );
+
+
+        const searchInput =
+            document.getElementById(
+                "artworkSearch"
+            );
+
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        const categoryFilter =
+            document.getElementById(
+                "categoryFilter"
+            );
+
+
+        const totalArtworks =
+            document.getElementById(
+                "totalArtworks"
+            );
+
+
+        const pendingArtworks =
+            document.getElementById(
+                "pendingArtworks"
+            );
+
+
+        const approvedArtworks =
+            document.getElementById(
+                "approvedArtworks"
+            );
+
+
+        const rejectedArtworks =
+            document.getElementById(
+                "rejectedArtworks"
+            );
+
+
+        const adminMessage =
+            document.getElementById(
+                "adminMessage"
+            );
+
+
+        let artworks = [];
+
+
+
+        /* =================================
+           ESCAPE HTML
+        ================================= */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* =================================
+           CURRENCY
+        ================================= */
+
+        function formatCurrency(value) {
+
+            return "₹" +
+                Number(value || 0)
+                    .toLocaleString("en-IN");
+
+        }
+
+
+
+        /* =================================
+           STATUS NORMALIZATION
+        ================================= */
+
+        function getStatus(artwork) {
+
+            const status =
+                artwork.status ??
+                artwork.adminStatus ??
+                artwork.status ??
+                "Pending";
+
+
+            const normalized =
+                String(status).toLowerCase();
+
+
+            if (normalized === "approved") {
+                return "Approved";
+            }
+
+
+            if (normalized === "rejected") {
+                return "Rejected";
+            }
+
+
+            return "Pending";
+
+        }
+
+
+
+        /* =================================
+           MESSAGE
+        ================================= */
+
+        function showMessage(
+            text,
+            type = "success"
+        ) {
+
+            adminMessage.textContent =
+                text;
+
+            adminMessage.style.display =
+                "block";
+
+
+            if (type === "success") {
+
+                adminMessage.style.background =
+                    "#e8f5e9";
+
+                adminMessage.style.color =
+                    "#2e7d32";
+
+            } else {
+
+                adminMessage.style.background =
+                    "#ffebee";
+
+                adminMessage.style.color =
+                    "#c62828";
+
+            }
+
+
+            setTimeout(
+                function () {
+
+                    adminMessage.style.display =
+                        "none";
+
+                },
+                4000
+            );
+
+        }
+
+
+
+        /* =================================
+           BUILD CATEGORY FILTER
+        ================================= */
+
+        function buildCategoryFilter() {
+
+            const categories =
+                [
+                    ...new Set(
+                        artworks
+                            .map(
+                                artwork =>
+                                    artwork.category
+                            )
+                            .filter(Boolean)
+                    )
+                ]
+                .sort();
+
+
+            categoryFilter.innerHTML = `
+
+                <option value="All">
+                    All Categories
+                </option>
+
+            `;
+
+
+            categories.forEach(
+                function (category) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        category;
+
+
+                    option.textContent =
+                        category;
+
+
+                    categoryFilter.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           UPDATE SUMMARY
+        ================================= */
+
+        function updateSummary() {
+
+            let pending = 0;
+            let approved = 0;
+            let rejected = 0;
+
+
+            artworks.forEach(
+                function (artwork) {
+
+                    const status =
+                        getStatus(artwork);
+
+
+                    if (status === "Pending") {
+                        pending++;
+                    }
+
+
+                    if (status === "Approved") {
+                        approved++;
+                    }
+
+
+                    if (status === "Rejected") {
+                        rejected++;
+                    }
+
+                }
+            );
+
+
+            totalArtworks.textContent =
+                artworks.length;
+
+
+            pendingArtworks.textContent =
+                pending;
+
+
+            approvedArtworks.textContent =
+                approved;
+
+
+            rejectedArtworks.textContent =
+                rejected;
+
+        }
+
+
+
+        /* =================================
+           RENDER ARTWORKS
+        ================================= */
+
+        function renderArtworks() {
+
+            const searchText =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const selectedStatus =
+                statusFilter.value;
+
+
+            const selectedCategory =
+                categoryFilter.value;
+
+
+            const filtered =
+                artworks.filter(
+                    function (artwork) {
+
+                        const name =
+                            String(
+                                artwork.title || ""
+                            ).toLowerCase();
+
+
+                        const artist =
+                            String(
+                                artwork.artist_name ||
+                                artwork.artistName ||
+                                artwork.full_name ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const category =
+                            String(
+                                artwork.category ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const matchesSearch =
+                            !searchText ||
+                            name.includes(searchText) ||
+                            artist.includes(searchText) ||
+                            category.includes(searchText);
+
+
+                        const status =
+                            getStatus(artwork);
+
+
+                        const matchesStatus =
+                            selectedStatus === "All" ||
+                            status === selectedStatus;
+
+
+                        const matchesCategory =
+                            selectedCategory === "All" ||
+                            String(
+                                artwork.category || ""
+                            ) === selectedCategory;
+
+
+                        return (
+                            matchesSearch &&
+                            matchesStatus &&
+                            matchesCategory
+                        );
+
+                    }
+                );
+
+
+            artworkGrid.innerHTML = "";
+
+
+            if (!filtered.length) {
+
+                emptyMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            emptyMessage.style.display =
+                "none";
+
+
+            filtered.forEach(
+                function (artwork) {
+
+                    const id =
+                        artwork.artwork_id ??
+                        artwork.id;
+
+
+                    const name =
+                        artwork.title ||
+                        "Untitled Artwork";
+
+
+                    const artist =
+                        artwork.artist_name ||
+                        artwork.artistName ||
+                        artwork.full_name ||
+                        "Unknown Artist";
+
+
+                    const category =
+                        artwork.category ||
+                        "Uncategorized";
+
+
+                    const description =
+                        artwork.description ||
+                        "No description available.";
+
+
+                    const startingBid =
+                        artwork.starting_price ??
+                        artwork.startingBid ??
+                        0;
+
+
+                    const currentBid =
+                        artwork.current_bid ??
+                        artwork.currentBid ??
+                        startingBid;
+
+
+                    const image =
+                        artwork.image_url ||
+                        artwork.image ||
+                        "";
+
+
+                    const status =
+                        getStatus(artwork);
+
+
+                    const selectedForAuction =
+                        artwork.selected_for_auction ??
+                        artwork.selectedForAuction ??
+                        false;
+
+
+                    const auctionStatus =
+                        artwork.auction_status ||
+                        artwork.auctionStatus ||
+                        "";
+
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    card.className =
+                        "artwork-admin-card";
+
+
+                    let statusClass =
+                        "status-pending";
+
+
+                    if (
+                        status === "Approved"
+                    ) {
+
+                        statusClass =
+                            "status-approved";
+
+                    }
+
+
+                    if (
+                        status === "Rejected"
+                    ) {
+
+                        statusClass =
+                            "status-rejected";
+
+                    }
+
+
+                    card.innerHTML = `
+
+                        <div
+                            class="artwork-admin-image">
+
+                            ${
+                                image
+                                    ? `
+                                        <img
+                                            src="${escapeHTML(image)}"
+                                            alt="${escapeHTML(name)}"
+                                            loading="lazy">
+                                      `
+                                    : `
+                                        <span
+                                            class="artwork-no-image">
+
+                                            No Image Available
+
+                                        </span>
+                                      `
+                            }
+
+                        </div>
+
+
+                        <div
+                            class="artwork-admin-content">
+
+
+                            <h3>
+                                ${escapeHTML(name)}
+                            </h3>
+
+
+                            <p>
+
+                                <strong>
+                                    Artist:
+                                </strong>
+
+                                ${escapeHTML(artist)}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Category:
+                                </strong>
+
+                                ${escapeHTML(category)}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Starting Bid:
+                                </strong>
+
+                                ${formatCurrency(
+                                    startingBid
+                                )}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Current Bid:
+                                </strong>
+
+                                ${formatCurrency(
+                                    currentBid
+                                )}
+
+                            </p>
+
+
+                            <p
+                                class="artwork-description">
+
+                                ${escapeHTML(
+                                    description.length > 100
+                                        ? description.substring(0, 100) + "..."
+                                        : description
+                                )}
+
+                            </p>
+
+
+                            <span
+                                class="artwork-status ${statusClass}">
+
+                                ${status}
+
+                            </span>
+
+
+                            ${
+                                selectedForAuction
+                                    ? `
+                                        <span
+                                            class="auction-badge">
+
+                                            Selected for Auction
+
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+
+                            ${
+                                auctionStatus
+                                    ? `
+                                        <span
+                                            class="auction-badge">
+
+                                            Auction:
+                                            ${escapeHTML(
+                                                auctionStatus
+                                            )}
+
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+
+                            <div
+                                class="artwork-admin-actions">
+
+
+                                <button
+                                    type="button"
+                                    class="view-artwork"
+                                    data-action="view"
+                                    data-id="${escapeHTML(id)}">
+
+                                    View
+
+                                </button>
+
+
+                                ${
+                                    status !== "Approved"
+                                        ? `
+                                            <button
+                                                type="button"
+                                                class="approve-artwork"
+                                                data-action="approve"
+                                                data-id="${escapeHTML(id)}">
+
+                                                Approve
+
+                                            </button>
+                                          `
+                                        : ""
+                                }
+
+
+                                ${
+                                    status !== "Rejected"
+                                        ? `
+                                            <button
+                                                type="button"
+                                                class="reject-artwork"
+                                                data-action="reject"
+                                                data-id="${escapeHTML(id)}">
+
+                                                Reject
+
+                                            </button>
+                                          `
+                                        : ""
+                                }
+
+
+                                <button
+                                    type="button"
+                                    class="delete-artwork"
+                                    data-action="delete"
+                                    data-id="${escapeHTML(id)}">
+
+                                    Delete
+
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    artworkGrid.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           LOAD ARTWORKS
+        ================================= */
+
+        async function loadArtworks() {
+
+            artworkGrid.innerHTML = `
+
+                <p
+                    style="
+                        text-align:center;
+                        width:100%;
+                    ">
+
+                    Loading artworks...
+
+                </p>
+
+            `;
+
+
+            try {
+
+                const response =
+                    await apiFetch(
+                        "/api/admin/artworks"
+                    );
+
+
+                artworks =
+                    Array.isArray(response)
+                        ? response
+                        : (
+                            Array.isArray(
+                                response?.artworks
+                            )
+                                ? response.artworks
+                                : []
+                        );
+
+
+                updateSummary();
+
+                buildCategoryFilter();
+
+                renderArtworks();
+
+
+            } catch (error) {
+
+                console.error(
+                    "LOAD ARTWORKS ERROR:",
+                    error
+                );
+
+
+                artworkGrid.innerHTML = `
+
+                    <p
+                        style="
+                            color:#b00020;
+                            text-align:center;
+                            width:100%;
+                        ">
+
+                        Unable to load artworks.
+
+                        <br>
+
+                        ${escapeHTML(
+                            error.message
+                        )}
+
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           ARTWORK ACTION
+        ================================= */
+
+        async function artworkAction(
+            action,
+            artworkId
+        ) {
+
+            if (!artworkId) {
+
+                showMessage(
+                    "Artwork ID is missing.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (
+                action === "delete"
+            ) {
+
+                const confirmed =
+                    confirm(
+                        "Are you sure you want to permanently delete this artwork?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+            }
+
+
+            if (
+                action === "reject"
+            ) {
+
+                const confirmed =
+                    confirm(
+                        "Are you sure you want to reject this artwork?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+            }
+
+
+            try {
+
+                let response;
+
+
+                if (
+                    action === "approve"
+                ) {
+
+                    response =
+                        await apiFetch(
+                            `/api/admin/artworks/${encodeURIComponent(
+                                artworkId
+                            )}/approve`,
+                            {
+                                method: "PUT"
+                            }
+                        );
+
+                }
+
+
+                else if (
+                    action === "reject"
+                ) {
+
+                    response =
+                        await apiFetch(
+                            `/api/admin/artworks/${encodeURIComponent(
+                                artworkId
+                            )}/reject`,
+                            {
+                                method: "PUT"
+                            }
+                        );
+
+                }
+
+
+                else if (
+                    action === "delete"
+                ) {
+
+                    response =
+                        await apiFetch(
+                            `/api/admin/artworks/${encodeURIComponent(
+                                artworkId
+                            )}`,
+                            {
+                                method: "DELETE"
+                            }
+                        );
+
+                }
+
+
+                if (
+                    response?.message
+                ) {
+
+                    showMessage(
+                        response.message
+                    );
+
+                } else {
+
+                    showMessage(
+                        "Artwork updated successfully."
+                    );
+
+                }
+
+
+                await loadArtworks();
+
+
+            } catch (error) {
+
+                console.error(
+                    "ARTWORK ACTION ERROR:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to update artwork.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================
+           BUTTON EVENTS
+        ================================= */
+
+        artworkGrid.addEventListener(
+            "click",
+            function (event) {
+
+                const button =
+                    event.target.closest(
+                        "button"
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                const action =
+                    button.dataset.action;
+
+
+                const artworkId =
+                    button.dataset.id;
+
+
+                if (
+                    action === "view"
+                ) {
+
+                    window.location.href =
+                        `artwork-details.html?id=${encodeURIComponent(
+                            artworkId
+                        )}`;
+
+                    return;
+
+                }
+
+
+                artworkAction(
+                    action,
+                    artworkId
+                );
+
+            }
+        );
+
+
+
+        /* =================================
+           FILTER EVENTS
+        ================================= */
+
+        searchInput.addEventListener(
+            "input",
+            renderArtworks
+        );
+
+
+        statusFilter.addEventListener(
+            "change",
+            renderArtworks
+        );
+
+
+        categoryFilter.addEventListener(
+            "change",
+            renderArtworks
+        );
+
+
+
+        /* =================================
+           INITIAL LOAD
+        ================================= */
+
+        await loadArtworks();
+
+    });
+
+</script>
+
+</body>
+
+</html>

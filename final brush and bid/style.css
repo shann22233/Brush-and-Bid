@@ -1,0 +1,7271 @@
+/*==================================================
+BRUSH AND BID
+COMPLETE STYLESHEET — "BUTTER & GREEN" THEME
+===================================================*/
+
+/*=========================
+GOOGLE FONTS
+==========================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..600&family=Instrument+Sans:wght@400..700&display=swap');
+
+/*=========================
+COLOR TOKENS
+"BUTTER & GREEN" THEME
+==========================*/
+
+:root{
+
+/* deep green — headers, footer, strong text */
+--espresso:#013E37;
+
+/* dusty rose mid tone — hover states, secondary strong text */
+--mocha:#B76E79;
+
+/* dusty pink — primary accent, buttons, links */
+--caramel:#C06B76;
+
+/* deeper dusty pink — hover state for accent elements */
+--caramel-dark:#C06B76;
+
+/* soft blush pink — extra accent */
+--blush:#F3C6CB;
+
+/* butter yellow — page background */
+--latte:#FFEFB3;
+
+/* pale butter cream — card backgrounds */
+--cream:#FFF9E3;
+
+/* muted mauve — secondary / paragraph text */
+--taupe:#8C6B70;
+
+/* hairline / border tint */
+--border-tint:#F0D8C0;
+
+/* extra tokens for cards / buttons */
+--butter:#FFEFB3;
+--butter-light:#FDF3C7;
+--dusty-pink:#D98A93;
+--dusty-pink-dark:#C06B76;
+--dusty-pink-light:#F3C6CB;
+
+/*=========================
+RESET
+==========================*/
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'DM Sans',sans-serif;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+background:var(--butter);
+
+color:var(--espresso);
+
+line-height:1.6;
+
+}
+
+/*=========================
+LINKS
+==========================*/
+
+a{
+
+text-decoration:none;
+
+color:inherit;
+
+}
+
+ul{
+
+list-style:none;
+
+}
+
+h1,h2,h3,h4,h5,h6{
+
+font-family:'Playfair Display',serif;
+
+font-weight:700;
+
+}
+
+/*=========================
+HEADER
+==========================*/
+
+header{
+
+width:100%;
+
+background:var(--espresso);
+
+color:#fff;
+
+padding:15px 7%;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+box-shadow:0 4px 15px rgba(1,62,55,.35);
+
+}
+
+header h1{
+
+font-size:30px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+color:var(--blush);
+
+}
+
+/*=========================
+NAVIGATION
+==========================*/
+
+nav ul{
+
+display:flex;
+
+align-items:center;
+
+gap:25px;
+
+}
+
+nav ul li{
+
+position:relative;
+
+}
+
+nav ul li a{
+
+color:#fff;
+
+font-weight:500;
+
+transition:.3s;
+
+}
+
+nav ul li a:hover{
+
+color:var(--blush);
+
+}
+
+.active{
+
+color:var(--blush);
+
+}
+
+/*=========================
+AUCTIONS PAGE NAV
+(Auctions centered, Home/About/Gallery
+pushed to the right, next to the
+login/profile controls)
+==========================*/
+
+.auction-page-nav{
+
+display:flex;
+
+align-items:center;
+
+flex:1;
+
+justify-content:center;
+
+position:relative;
+
+}
+
+.auction-page-nav .nav-center-group{
+
+display:flex;
+
+}
+
+.auction-page-nav .nav-right-links{
+
+display:flex;
+
+align-items:center;
+
+gap:25px;
+
+list-style:none;
+
+position:absolute;
+
+right:0;
+
+}
+
+/*=========================
+TODAY'S DAILY AUCTION GRID
+(max 2 artworks live per day)
+==========================*/
+
+.daily-auction-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit, minmax(420px, 1fr));
+
+gap:30px;
+
+margin-top:20px;
+
+}
+
+.daily-auction-grid .weekly-auction-card{
+
+margin:0;
+
+}
+
+/*=========================
+DROPDOWN
+==========================*/
+
+.dropdown-content{
+
+display:none;
+
+position:absolute;
+
+top:40px;
+
+left:0;
+
+width:220px;
+
+background:var(--cream);
+
+border-radius:14px;
+
+overflow:hidden;
+
+box-shadow:0 10px 25px rgba(1,62,55,.25);
+
+border:1px solid var(--border-tint);
+
+max-height:320px;
+
+overflow-y:auto;
+
+}
+
+.dropdown-content li{
+
+width:100%;
+
+}
+
+.dropdown-content li a{
+
+display:block;
+
+padding:12px 20px;
+
+color:var(--mocha);
+
+}
+
+.dropdown-content li a:hover{
+
+background:var(--latte);
+
+color:var(--caramel-dark);
+
+}
+
+/* ==========================================
+ROLE DROPDOWN
+========================================== */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown > a {
+    display: block;
+    cursor: pointer;
+}
+
+/* Hidden by default */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 38px;
+    left: 0;
+
+    width: 230px;
+
+    background: var(--cream);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(1,62,55,.25);
+
+    border: 1px solid var(--border-tint);
+
+    z-index: 10000;
+}
+
+/* Dropdown options */
+.dropdown-content li {
+    width: 100%;
+}
+
+.dropdown-content li a {
+    display: block;
+
+    padding: 13px 20px;
+
+    color: var(--mocha);
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.dropdown-content li a:hover {
+    background: var(--latte);
+
+    color: var(--caramel-dark);
+}
+
+/* ADMIN DROPDOWN */
+
+.admin-dropdown-content {
+    min-width: 230px;
+}
+
+/* Keep dropdown above everything */
+
+.admin-dropdown {
+    position: relative;
+    z-index: 10001;
+}
+
+/*=========================
+PROFILE ICON
+==========================*/
+
+.profile-area{
+
+position:relative;
+
+margin-left:10px;
+
+display:flex;
+
+align-items:center;
+
+}
+
+
+.profile-icon{
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+cursor:pointer;
+
+border:2px solid var(--caramel);
+
+background:var(--cream);
+
+}
+
+
+.profile-icon:hover{
+
+border-color:var(--caramel-dark, var(--caramel));
+
+}
+
+
+/* The dropdown is HIDDEN by default and only appears
+   when the profile icon is clicked (see toggleProfileMenu). */
+
+.profile-menu,
+.profile-dropdown{
+
+display:none;
+
+position:absolute;
+
+right:0;
+
+top:55px;
+
+width:260px;
+
+background:var(--cream);
+
+border-radius:16px;
+
+overflow:hidden;
+
+box-shadow:0 15px 35px rgba(1,62,55,.3);
+
+max-height:320px;
+
+overflow-y:auto;
+
+z-index:999;
+
+padding:20px;
+
+}
+
+.profile-dropdown h3{
+
+margin-bottom:4px;
+
+color:var(--espresso);
+
+}
+
+.profile-dropdown p,
+.profile-dropdown small{
+
+display:block;
+
+color:var(--taupe);
+
+margin-bottom:4px;
+
+}
+
+.profile-dropdown hr{
+
+margin:12px 0;
+
+border:none;
+
+border-top:1px solid var(--border-tint);
+
+}
+
+.profile-dropdown a{
+
+display:block;
+
+padding:10px 0;
+
+color:var(--mocha);
+
+font-weight:600;
+
+}
+
+.profile-dropdown button{
+
+width:100%;
+
+margin-top:8px;
+
+padding:10px;
+
+border:none;
+
+border-radius:8px;
+
+background:var(--caramel);
+
+color:#fff;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+.profile-dropdown button:hover{
+
+background:var(--caramel-dark, var(--caramel));
+
+}
+
+.profile-header{
+
+padding:20px;
+
+background:var(--caramel);
+
+color:#fff;
+
+}
+
+.profile-header h3{
+
+margin-bottom:5px;
+
+}
+
+.profile-menu a{
+
+display:block;
+
+padding:14px 20px;
+
+color:var(--mocha);
+
+border-bottom:1px solid var(--border-tint);
+
+}
+
+.profile-menu a:hover{
+
+background:var(--latte);
+
+}
+
+.logout-btn{
+
+color:#B5533C;
+
+font-weight:600;
+
+}
+
+/*=========================
+HERO SECTION
+==========================*/
+
+.hero{
+
+width:100%;
+
+min-height:90vh;
+
+background:url("images/hero.jpg") center/cover;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+text-align:center;
+
+color:#221e1e;
+
+position:relative;
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:linear-gradient(180deg, #FFEFB3,#FFEFB3);
+
+}
+
+.hero-content{
+
+position:relative;
+
+z-index:5;
+
+width:85%;
+
+max-width:900px;
+
+}
+
+.hero-content h1{
+
+font-size:58px;
+
+margin-bottom:20px;
+
+}
+
+.hero-content p{
+
+font-size:20px;
+
+margin-bottom:30px;
+
+}
+
+.hero-btn{
+
+display:inline-block;
+
+padding:15px 35px;
+
+background:var(--caramel);
+
+color:#fff;
+
+border-radius:30px;
+
+transition:.3s;
+
+font-weight:600;
+
+}
+
+.hero-btn:hover{
+
+background:var(--espresso);
+
+}
+
+/*=========================
+COMMON SECTION
+==========================*/
+
+section{
+
+padding:80px 7%;
+
+}
+
+.section-title{
+
+text-align:center;
+
+margin-bottom:50px;
+
+}
+
+.section-title h2{
+
+font-size:40px;
+
+margin-bottom:10px;
+
+color:var(--espresso);
+
+}
+
+.section-title p{
+
+color:var(--taupe);
+
+}
+
+/*==================================================
+GALLERY SECTION
+==================================================*/
+
+.gallery-title{
+
+text-align:center;
+
+margin-bottom:60px;
+
+}
+
+.gallery-small-title{
+
+color:var(--caramel-dark);
+
+font-size:15px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
+
+margin-bottom:10px;
+
+}
+
+.gallery-title h2{
+
+font-size:40px;
+
+margin-bottom:15px;
+
+color:var(--espresso);
+
+}
+
+.gallery-title p{
+
+width:80%;
+
+max-width:850px;
+
+margin:auto;
+
+color:var(--taupe);
+
+line-height:1.8;
+
+}
+
+/*==================================================
+GALLERY GRID
+==================================================*/
+
+.gallery-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+gap:35px;
+
+}
+
+/*==================================================
+GALLERY CARD
+==================================================*/
+
+.gallery-card{
+
+background:var(--cream);
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 10px 30px rgba(1,62,55,.12);
+
+border:1px solid var(--border-tint);
+
+transition:.35s;
+
+}
+
+.gallery-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 20px 40px rgba(1,62,55,.22);
+
+}
+
+.gallery-image{
+
+width:100%;
+
+height:320px;
+
+overflow:hidden;
+
+}
+
+.gallery-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+transition:.4s;
+
+}
+
+.gallery-card:hover img{
+
+transform:scale(1.08);
+
+}
+
+.gallery-info{
+
+padding:25px;
+
+}
+
+.gallery-info h3{
+
+font-size:24px;
+
+margin-bottom:10px;
+
+color:var(--espresso);
+
+}
+
+.artist{
+
+color:var(--caramel-dark);
+
+font-size:15px;
+
+margin-bottom:15px;
+
+font-weight:600;
+
+}
+
+.art-description{
+
+color:var(--taupe);
+
+font-size:15px;
+
+line-height:1.7;
+
+margin-bottom:25px;
+
+}
+
+/*==================================================
+PRICE ROW
+==================================================*/
+
+.price-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
+.price-row span{
+
+display:block;
+
+font-size:13px;
+
+color:var(--taupe);
+
+}
+
+.price-row strong{
+
+color:var(--espresso);
+
+font-size:18px;
+
+}
+
+/*==================================================
+BUTTONS
+==================================================*/
+
+.details-btn{
+
+display:inline-block;
+
+background:var(--caramel);
+
+color:#fff;
+
+padding:12px 28px;
+
+border-radius:30px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.details-btn:hover{
+
+background:var(--espresso);
+
+}
+
+.auction-bid-btn{
+
+width:100%;
+
+border:none;
+
+cursor:pointer;
+
+padding:15px;
+
+border-radius:12px;
+
+background:var(--caramel);
+
+color:#fff;
+
+font-size:17px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.auction-bid-btn:hover{
+
+background:var(--espresso);
+
+}
+
+/*==================================================
+ARTWORK DETAILS PAGE
+==================================================*/
+
+.portrait-back-button{
+
+display:inline-block;
+
+margin-bottom:35px;
+
+background:var(--caramel);
+
+color:#fff;
+
+padding:12px 25px;
+
+border-radius:25px;
+
+font-weight:600;
+
+}
+
+.portrait-back-button:hover{
+
+background:var(--espresso);
+
+}
+
+.portrait-details-card{
+
+background:var(--cream);
+
+border-radius:20px;
+
+padding:45px;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.portrait-artwork-area{
+
+text-align:center;
+
+margin-bottom:35px;
+
+}
+
+.portrait-image-frame{
+
+width:350px;
+
+height:480px;
+
+margin:auto;
+
+border:8px solid var(--latte);
+
+border-radius:14px;
+
+overflow:hidden;
+
+}
+
+.portrait-image-frame img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.portrait-image-label{
+
+margin-top:15px;
+
+color:var(--taupe);
+
+font-size:15px;
+
+}
+
+.portrait-title-area{
+
+text-align:center;
+
+margin-bottom:35px;
+
+}
+
+.portrait-category{
+
+background:var(--caramel);
+
+color:#fff;
+
+padding:6px 16px;
+
+border-radius:20px;
+
+display:inline-block;
+
+margin-bottom:15px;
+
+font-size:14px;
+
+}
+
+.portrait-title-area h1{
+
+font-size:42px;
+
+margin-bottom:10px;
+
+color:var(--espresso);
+
+}
+
+.portrait-title-area p{
+
+color:var(--taupe);
+
+}
+
+/*==================================================
+BID SECTION
+==================================================*/
+
+.portrait-bid-area{
+
+display:flex;
+
+justify-content:center;
+
+gap:25px;
+
+flex-wrap:wrap;
+
+margin:40px 0;
+
+}
+
+.portrait-bid-box,
+.portrait-status-box{
+
+background:var(--latte);
+
+border:1px solid var(--border-tint);
+
+border-radius:14px;
+
+padding:25px;
+
+min-width:250px;
+
+text-align:center;
+
+}
+
+.portrait-bid-box span,
+.portrait-status-box span{
+
+display:block;
+
+color:var(--taupe);
+
+margin-bottom:10px;
+
+}
+
+.portrait-bid-box h2{
+
+color:var(--caramel-dark);
+
+font-size:32px;
+
+}
+
+.portrait-status-box strong{
+
+color:#5C7A3A;
+
+font-size:18px;
+
+}
+
+/*==================================================
+INFORMATION GRID
+==================================================*/
+
+.portrait-information-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin:45px 0;
+
+}
+
+.portrait-information-box{
+
+background:var(--latte);
+
+border:1px solid var(--border-tint);
+
+padding:20px;
+
+border-radius:14px;
+
+text-align:center;
+
+}
+
+.portrait-information-box span{
+
+display:block;
+
+color:var(--taupe);
+
+margin-bottom:10px;
+
+}
+
+.portrait-information-box strong{
+
+color:var(--espresso);
+
+font-size:17px;
+
+}
+
+.portrait-description-area{
+
+margin-top:35px;
+
+}
+
+.portrait-description-area h3{
+
+margin-bottom:15px;
+
+color:var(--espresso);
+
+}
+
+.portrait-description-area p{
+
+line-height:1.8;
+
+color:var(--taupe);
+
+}
+
+.portrait-place-bid{
+
+display:block;
+
+width:260px;
+
+margin:45px auto 15px;
+
+text-align:center;
+
+background:var(--caramel);
+
+color:#fff;
+
+padding:15px;
+
+border-radius:30px;
+
+font-size:18px;
+
+font-weight:600;
+
+}
+
+.portrait-place-bid:hover{
+
+background:var(--espresso);
+
+}
+
+.portrait-bid-message{
+
+text-align:center;
+
+color:var(--taupe);
+
+}
+
+/*==================================================
+PLACE BID PAGE
+==================================================*/
+
+.place-bid-title{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.place-bid-container{
+
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:20px;
+
+align-items:flex-start;
+
+}
+
+.bid-artwork-card{
+
+background:var(--cream);
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.bid-artwork-image{
+
+width:100%;
+
+height:420px;
+
+}
+
+.bid-artwork-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.bid-artwork-info{
+
+padding:30px;
+
+}
+
+.bid-artwork-info h2{
+
+font-size:34px;
+
+margin-bottom:10px;
+
+color:var(--espresso);
+
+}
+
+.bid-price-box{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin:18px 0;
+
+padding:18px;
+
+border-radius:12px;
+
+background:var(--latte);
+
+border:1px solid var(--border-tint);
+
+}
+
+.bid-price-box span{
+
+color:var(--taupe);
+
+}
+
+.bid-price-box strong{
+
+color:var(--caramel-dark);
+
+font-size:20px;
+
+}
+
+.bid-form{
+
+margin-top:30px;
+
+}
+
+.bid-form label{
+
+display:block;
+
+margin-bottom:10px;
+
+font-weight:600;
+
+color:var(--espresso);
+
+}
+
+.bid-form input{
+
+width:100%;
+
+padding:15px;
+
+border:1px solid var(--border-tint);
+
+border-radius:12px;
+
+margin-bottom:20px;
+
+font-size:16px;
+
+background:var(--cream);
+
+color:var(--espresso);
+
+}
+
+.bid-form input:focus{
+
+outline:none;
+
+border-color:var(--caramel);
+
+box-shadow:0 0 8px rgba(192,107,118,.35);
+
+}
+
+#bidMessage{
+
+margin-top:15px;
+
+font-weight:600;
+
+}
+
+/*==================================================
+BID HISTORY
+==================================================*/
+
+.bid-history-card{
+
+background:var(--cream);
+
+border-radius:18px;
+
+padding:30px;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.bid-history-card h2{
+
+margin-bottom:10px;
+
+color:var(--espresso);
+
+}
+
+.bid-table-container{
+
+overflow-x:auto;
+
+margin-top:25px;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+table thead{
+
+background:var(--espresso);
+
+color:#fff;
+
+}
+
+table th{
+
+padding:15px;
+
+text-align:left;
+
+}
+
+table td{
+
+padding:14px;
+
+border-bottom:1px solid var(--border-tint);
+
+color:var(--mocha);
+
+}
+
+table tbody tr:hover{
+
+background:var(--latte);
+
+}
+
+.bid-auction-info{
+
+margin-top:30px;
+
+padding:20px;
+
+background:var(--latte);
+
+border-radius:12px;
+
+}
+
+.bid-auction-info p{
+
+margin-bottom:10px;
+
+color:var(--mocha);
+
+}
+
+/*==================================================
+FORMS
+==================================================*/
+
+.form-container{
+
+max-width:550px;
+
+margin:60px auto;
+
+background:var(--cream);
+
+padding:40px;
+
+border-radius:18px;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.form-group{
+
+margin-bottom:20px;
+
+}
+
+.form-group label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-weight:600;
+
+color:var(--espresso);
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+width:100%;
+
+padding:14px;
+
+border:1px solid var(--border-tint);
+
+border-radius:12px;
+
+font-size:15px;
+
+background:#fff;
+
+color:var(--espresso);
+
+}
+
+.form-group textarea{
+
+resize:vertical;
+
+min-height:130px;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+outline:none;
+
+border-color:var(--caramel);
+
+box-shadow:0 0 8px rgba(192,107,118,.3);
+
+}
+
+/*==================================================
+SUCCESS / ERROR MESSAGE
+==================================================*/
+
+.success{
+
+color:#5C7A3A;
+
+font-weight:600;
+
+}
+
+.error{
+
+color:#B5533C;
+
+font-weight:600;
+
+}
+
+/*==================================================
+PROFILE PAGE
+==================================================*/
+
+.profile-card{
+
+max-width:750px;
+
+margin:auto;
+
+background:var(--cream);
+
+border-radius:20px;
+
+padding:45px;
+
+text-align:center;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.profile-avatar{
+
+width:130px;
+
+height:130px;
+
+border-radius:50%;
+
+background:var(--caramel);
+
+color:#fff;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:55px;
+
+font-weight:bold;
+
+margin:auto;
+
+margin-bottom:25px;
+
+border:4px solid var(--blush);
+
+}
+
+.profile-card h2{
+
+margin-bottom:10px;
+
+color:var(--espresso);
+
+}
+
+.profile-card p{
+
+color:var(--taupe);
+
+margin-bottom:15px;
+
+}
+
+.profile-details{
+
+margin-top:35px;
+
+text-align:left;
+
+}
+
+.profile-details div{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:15px;
+
+border-bottom:1px solid var(--border-tint);
+
+}
+
+/*==================================================
+MY BIDS PAGE
+==================================================*/
+
+.mybids-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+gap:30px;
+
+}
+
+.bid-card{
+
+background:var(--cream);
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.bid-card img{
+
+width:100%;
+
+height:240px;
+
+object-fit:cover;
+
+}
+
+.bid-card-content{
+
+padding:25px;
+
+}
+
+.bid-status{
+
+display:inline-block;
+
+padding:7px 18px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:600;
+
+margin-top:15px;
+
+}
+
+.status-winning{
+
+background:#E4EEDA;
+
+color:#4C6B33;
+
+}
+
+.status-outbid{
+
+background:#F6DDD4;
+
+color:#B5533C;
+
+}
+
+/*==================================================
+UPLOAD ARTWORK PAGE
+==================================================*/
+
+.upload-preview{
+
+width:100%;
+
+height:300px;
+
+border:2px dashed var(--caramel);
+
+border-radius:18px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+color:var(--taupe);
+
+margin-bottom:25px;
+
+overflow:hidden;
+
+background:var(--latte);
+
+}
+
+.upload-preview img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+/*==================================================
+ARTIST DASHBOARD
+==================================================*/
+
+.dashboard-container{
+
+display:grid;
+
+grid-template-columns:260px 1fr;
+
+min-height:100vh;
+
+}
+
+.sidebar{
+
+background:var(--espresso);
+
+color:#fff;
+
+padding:30px 20px;
+
+}
+
+.sidebar h2{
+
+text-align:center;
+
+margin-bottom:40px;
+
+color:var(--blush);
+
+}
+
+.sidebar ul{
+
+list-style:none;
+
+}
+
+.sidebar ul li{
+
+margin:15px 0;
+
+}
+
+.sidebar ul li a{
+
+display:block;
+
+padding:12px 18px;
+
+border-radius:10px;
+
+color:#fff;
+
+transition:.3s;
+
+}
+
+.sidebar ul li a:hover{
+
+background:var(--caramel);
+
+}
+
+.dashboard-content{
+
+padding:40px;
+
+background:var(--latte);
+
+}
+
+/*==================================================
+DASHBOARD CARDS
+==================================================*/
+
+.dashboard-cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:25px;
+
+margin-bottom:40px;
+
+}
+
+.dashboard-card{
+
+background:var(--cream);
+
+padding:30px;
+
+border-radius:18px;
+
+text-align:center;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+border:1px solid var(--border-tint);
+
+transition:.3s;
+
+}
+
+.dashboard-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.dashboard-card h2{
+
+font-size:40px;
+
+color:var(--caramel-dark);
+
+margin-bottom:10px;
+
+}
+
+.dashboard-card p{
+
+color:var(--taupe);
+
+font-size:15px;
+
+}
+
+/*==================================================
+ADMIN TABLES
+==================================================*/
+
+.admin-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:25px;
+
+background:var(--cream);
+
+border-radius:12px;
+
+overflow:hidden;
+
+box-shadow:0 10px 25px rgba(1,62,55,.12);
+
+}
+
+.admin-table th{
+
+background:var(--espresso);
+
+color:#fff;
+
+padding:16px;
+
+}
+
+.admin-table td{
+
+padding:15px;
+
+border-bottom:1px solid var(--border-tint);
+
+color:var(--mocha);
+
+}
+
+.admin-table tr:hover{
+
+background:var(--latte);
+
+}
+
+/*==================================================
+ACTION BUTTONS
+==================================================*/
+
+.edit-btn{
+
+background:#7C5C3E;
+
+color:#fff;
+
+border:none;
+
+padding:8px 18px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+margin-right:8px;
+
+}
+
+.delete-btn{
+
+background:#B5533C;
+
+color:#fff;
+
+border:none;
+
+padding:8px 18px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+.save-btn{
+
+background:#6B8E4E;
+
+color:#fff;
+
+border:none;
+
+padding:12px 25px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+/*==================================================
+REPORTS
+==================================================*/
+
+.report-box{
+
+background:var(--cream);
+
+padding:30px;
+
+border-radius:18px;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+margin-bottom:30px;
+
+border:1px solid var(--border-tint);
+
+}
+
+.report-box h2{
+
+margin-bottom:20px;
+
+color:var(--espresso);
+
+}
+
+.report-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+gap:25px;
+
+}
+
+.report-item{
+
+background:var(--latte);
+
+border-radius:12px;
+
+padding:25px;
+
+text-align:center;
+
+}
+
+.report-item h3{
+
+color:var(--caramel-dark);
+
+font-size:32px;
+
+}
+
+/*==================================================
+FOOTER
+==================================================*/
+
+footer{
+
+background:var(--espresso);
+
+color:#F3E1C7;
+
+text-align:center;
+
+padding:25px;
+
+margin-top:60px;
+
+}
+
+footer p{
+
+font-size:15px;
+
+}
+
+/*==================================================
+UTILITIES
+==================================================*/
+
+.text-center{
+
+text-align:center;
+
+}
+
+.mt-20{
+
+margin-top:20px;
+
+}
+
+.mt-30{
+
+margin-top:30px;
+
+}
+
+.mt-40{
+
+margin-top:40px;
+
+}
+
+.mb-20{
+
+margin-bottom:20px;
+
+}
+
+.mb-30{
+
+margin-bottom:30px;
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+.show{
+
+display:block;
+
+}
+
+/*==================================================
+ANIMATIONS
+==================================================*/
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(25px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+.fade-in{
+
+animation:fadeIn .6s ease;
+
+}
+
+/*==================================================
+RESPONSIVE DESIGN
+==================================================*/
+
+@media(max-width:992px){
+
+header{
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+nav ul{
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.place-bid-container{
+
+grid-template-columns:1fr;
+
+}
+
+.dashboard-container{
+
+grid-template-columns:1fr;
+
+}
+
+.sidebar{
+
+display:none;
+
+}
+
+.portrait-image-frame{
+
+width:280px;
+
+height:380px;
+
+}
+
+.hero-content h1{
+
+font-size:42px;
+
+}
+
+.section-title h2{
+
+font-size:32px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.gallery-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.dashboard-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.mybids-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.hero{
+
+min-height:70vh;
+
+}
+
+.hero-content h1{
+
+font-size:34px;
+
+}
+
+.hero-content p{
+
+font-size:17px;
+
+}
+
+.profile-menu{
+
+width:220px;
+
+}
+
+header{
+
+padding:15px;
+
+}
+
+section{
+
+padding:60px 20px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.hero-content h1{
+
+font-size:28px;
+
+}
+
+.hero-btn{
+
+width:100%;
+
+}
+
+.details-btn{
+
+width:100%;
+
+text-align:center;
+
+}
+
+.auction-bid-btn{
+
+width:100%;
+
+}
+
+.form-container{
+
+padding:25px;
+
+}
+
+.profile-card{
+
+padding:25px;
+
+}
+
+.portrait-image-frame{
+
+width:220px;
+
+height:300px;
+
+}
+
+}
+
+/*==================================================
+BUTTER & GREEN — SITE-WIDE SUPPLEMENT
+Cards, buttons and section backgrounds for
+pages/sections that need dedicated styling.
+==================================================*/
+
+/*-------- Generic hero-style intro sections --------*/
+
+.about-hero,
+.auction-hero,
+.gallery-hero,
+.admin-hero{
+
+background:linear-gradient(180deg, var(--dusty-pink) 0%, var(--dusty-pink-light) 100%);
+
+color:#fff;
+
+text-align:center;
+
+padding:70px 7% 60px;
+
+}
+
+.about-hero h2,
+.auction-hero h2,
+.gallery-hero h2,
+.admin-hero h2{
+
+font-size:38px;
+
+margin-bottom:15px;
+
+color:#fff;
+
+}
+
+.about-hero p,
+.auction-hero p,
+.gallery-hero p,
+.admin-hero p{
+
+max-width:750px;
+
+margin:auto;
+
+color:#fff9ec;
+
+font-size:17px;
+
+}
+
+/*-------- About page content --------*/
+
+.about-content{
+
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:35px;
+
+padding:70px 7%;
+
+}
+
+.about-text h2{
+
+color:var(--espresso);
+
+margin-bottom:20px;
+
+}
+
+.about-text p{
+
+color:var(--taupe);
+
+margin-bottom:18px;
+
+line-height:1.8;
+
+}
+
+.about-image{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:35px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+}
+
+.about-image h3{
+
+color:var(--dusty-pink-dark);
+
+margin-bottom:12px;
+
+}
+
+.mission{
+
+background:var(--butter-light);
+
+text-align:center;
+
+padding:60px 7%;
+
+}
+
+.mission h2{
+
+color:var(--espresso);
+
+margin-bottom:20px;
+
+}
+
+.mission p{
+
+max-width:800px;
+
+margin:0 auto 12px;
+
+color:var(--taupe);
+
+}
+
+.about-cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:30px;
+
+padding:70px 7%;
+
+}
+
+.about-card{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:35px 30px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+transition:.3s;
+
+}
+
+.about-card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 16px 32px rgba(1,62,55,.18);
+
+}
+
+.about-card h3{
+
+color:var(--dusty-pink-dark);
+
+margin-bottom:12px;
+
+}
+
+.about-card p{
+
+color:var(--taupe);
+
+}
+
+.why-choose{
+
+background:var(--dusty-pink-light);
+
+padding:70px 7%;
+
+text-align:center;
+
+}
+
+.why-choose h2{
+
+color:var(--espresso);
+
+margin-bottom:40px;
+
+}
+
+.choose-content{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:25px;
+
+}
+
+.choose-item{
+
+background:#fff;
+
+border-radius:16px;
+
+padding:30px;
+
+box-shadow:0 8px 20px rgba(1,62,55,.1);
+
+}
+
+.choose-item h3{
+
+color:var(--dusty-pink-dark);
+
+margin-bottom:10px;
+
+}
+
+.choose-item p{
+
+color:var(--taupe);
+
+}
+
+/*-------- Search / filter bar card --------*/
+
+.search-section{
+
+padding:30px 7% 10px;
+
+}
+
+.search-container{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:16px;
+
+padding:20px 25px;
+
+display:flex;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+box-shadow:0 8px 20px rgba(1,62,55,.08);
+
+}
+
+.search-container input,
+.search-container select{
+
+flex:1;
+
+min-width:200px;
+
+padding:12px 16px;
+
+border:1px solid var(--border-tint);
+
+border-radius:10px;
+
+background:#fff;
+
+color:var(--espresso);
+
+font-size:15px;
+
+}
+
+.search-container input:focus,
+.search-container select:focus{
+
+outline:none;
+
+border-color:var(--caramel);
+
+box-shadow:0 0 8px rgba(217,138,147,.35);
+
+}
+
+/*-------- Weekly auction card (auctions.html) --------*/
+
+.auction-information{
+
+padding:20px 7%;
+
+}
+
+.auction-introduction{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.auction-introduction h2{
+
+color:var(--espresso);
+
+margin-bottom:15px;
+
+}
+
+.auction-introduction p{
+
+max-width:800px;
+
+margin:auto;
+
+color:var(--taupe);
+
+}
+
+.weekly-auction-card{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:0;
+
+background:var(--cream);
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+border:1px solid var(--border-tint);
+
+}
+
+.weekly-auction-image{
+
+height:100%;
+
+min-height:340px;
+
+}
+
+.weekly-auction-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.weekly-auction-info{
+
+padding:40px;
+
+}
+
+.auction-label{
+
+display:inline-block;
+
+background:var(--caramel);
+
+color:#fff;
+
+padding:6px 16px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+margin-bottom:15px;
+
+}
+
+.weekly-auction-info h2{
+
+color:var(--espresso);
+
+margin-bottom:10px;
+
+font-size:30px;
+
+}
+
+.auction-artist{
+
+color:var(--dusty-pink-dark);
+
+font-weight:600;
+
+margin-bottom:15px;
+
+}
+
+.auction-description{
+
+color:var(--ink-muted);
+
+margin-bottom:25px;
+
+}
+
+.auction-details{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+margin-bottom:25px;
+
+}
+
+.auction-detail-box{
+
+background:var(--butter-light);
+
+border:1px solid var(--border-tint);
+
+border-radius:12px;
+
+padding:15px;
+
+text-align:center;
+
+}
+
+.auction-detail-box span{
+
+display:block;
+
+color:var(--taupe);
+
+font-size:13px;
+
+margin-bottom:6px;
+
+}
+
+.auction-detail-box strong{
+
+color:var(--espresso);
+
+font-size:18px;
+
+}
+
+.auction-status{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-bottom:20px;
+
+}
+
+.status-dot{
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+background:#6B8E4E;
+
+display:inline-block;
+
+}
+
+.auction-status strong{
+
+color:#4C6B33;
+
+}
+
+.auction-countdown{
+
+background:var(--dusty-pink-light);
+
+border-radius:12px;
+
+padding:18px;
+
+text-align:center;
+
+margin-bottom:25px;
+
+}
+
+.auction-countdown p{
+
+color:var(--espresso);
+
+margin-bottom:8px;
+
+}
+
+.auction-countdown h3{
+
+color:var(--dusty-pink-dark);
+
+font-size:28px;
+
+}
+
+.auction-bid-btn{
+
+display:block;
+
+text-align:center;
+
+text-decoration:none;
+
+}
+
+.auction-rules{
+
+padding:60px 7%;
+
+text-align:center;
+
+background:var(--butter-light);
+
+}
+
+.auction-rules h2{
+
+color:var(--espresso);
+
+margin-bottom:40px;
+
+}
+
+.auction-rules-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+gap:25px;
+
+}
+
+.auction-rule{
+
+background:#fff;
+
+border-radius:16px;
+
+padding:28px;
+
+box-shadow:0 8px 20px rgba(1,62,55,.1);
+
+text-align:left;
+
+}
+
+.auction-rule h3{
+
+color:var(--dusty-pink-dark);
+
+margin-bottom:10px;
+
+font-size:18px;
+
+}
+
+.auction-rule p{
+
+color:var(--taupe);
+
+}
+
+/*-------- Profile pages (bidder / artist) --------*/
+
+.bidder-profile-section,
+.artist-profile-section{
+
+padding:60px 7%;
+
+}
+
+.bidder-profile-title,
+.artist-profile-title{
+
+text-align:center;
+
+margin-bottom:45px;
+
+}
+
+.bidder-profile-title h2,
+.artist-profile-title h2{
+
+color:var(--espresso);
+
+margin-bottom:12px;
+
+}
+
+.bidder-profile-title p,
+.artist-profile-title p{
+
+max-width:750px;
+
+margin:auto;
+
+color:var(--taupe);
+
+}
+
+.bidder-profile-container,
+.artist-profile-container{
+
+display:grid;
+
+grid-template-columns:320px 1fr;
+
+gap:35px;
+
+align-items:start;
+
+}
+
+.bidder-profile-summary,
+.artist-profile-summary{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:35px 25px;
+
+text-align:center;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+}
+
+.profile-avatar,
+.artist-profile-avatar{
+
+width:110px;
+
+height:110px;
+
+border-radius:50%;
+
+background:var(--caramel);
+
+color:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:48px;
+
+margin:0 auto 20px;
+
+border:4px solid var(--blush);
+
+}
+
+.profile-account-status,
+.artist-account-status{
+
+background:var(--butter-light);
+
+border-radius:10px;
+
+padding:10px;
+
+margin:15px 0;
+
+color:var(--espresso);
+
+}
+
+.profile-summary-info,
+.artist-summary-info{
+
+text-align:left;
+
+margin-top:15px;
+
+}
+
+.profile-summary-info p,
+.artist-summary-info p{
+
+padding:8px 0;
+
+border-bottom:1px solid var(--border-tint);
+
+color:var(--taupe);
+
+}
+
+.bidder-profile-form-container,
+.artist-profile-form-container{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:35px;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+}
+
+.bidder-profile-form-container h2,
+.artist-profile-form-container h2{
+
+color:var(--espresso);
+
+margin-bottom:25px;
+
+}
+
+#bidderProfileForm,
+#artistProfileForm{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:20px;
+
+}
+
+.profile-input-group,
+.artist-input-group{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.full-width{
+
+grid-column:1 / -1;
+
+}
+
+.profile-input-group label,
+.artist-input-group label{
+
+margin-bottom:8px;
+
+font-weight:600;
+
+color:var(--espresso);
+
+}
+
+.profile-input-group input,
+.profile-input-group select,
+.artist-input-group input,
+.artist-input-group select,
+.artist-input-group textarea{
+
+padding:13px 15px;
+
+border:1px solid var(--border-tint);
+
+border-radius:10px;
+
+background:#fff;
+
+color:var(--espresso);
+
+font-size:15px;
+
+}
+
+.artist-input-group textarea{
+
+min-height:120px;
+
+resize:vertical;
+
+}
+
+.profile-input-group input:focus,
+.profile-input-group select:focus,
+.artist-input-group input:focus,
+.artist-input-group select:focus,
+.artist-input-group textarea:focus{
+
+outline:none;
+
+border-color:var(--caramel);
+
+box-shadow:0 0 8px rgba(217,138,147,.3);
+
+}
+
+.profile-save-btn,
+.artist-save-btn{
+
+grid-column:1 / -1;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:var(--caramel);
+
+color:#fff;
+
+font-weight:600;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.profile-save-btn:hover,
+.artist-save-btn:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+#profileMessage,
+#artistProfileMessage{
+
+grid-column:1 / -1;
+
+color:#4C6B33;
+
+font-weight:600;
+
+}
+
+/*-------- My Bids page --------*/
+
+.my-bids-section{
+
+padding:60px 7%;
+
+}
+
+.my-bids-title{
+
+text-align:center;
+
+margin-bottom:45px;
+
+}
+
+.my-bids-title h2{
+
+color:var(--espresso);
+
+margin-bottom:12px;
+
+}
+
+.my-bids-title p{
+
+max-width:750px;
+
+margin:auto;
+
+color:var(--taupe);
+
+}
+
+.my-bids-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+gap:30px;
+
+}
+
+.my-bid-card{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+transition:.3s;
+
+}
+
+.my-bid-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.my-bid-image{
+
+height:220px;
+
+}
+
+.my-bid-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.my-bid-info{
+
+padding:25px;
+
+}
+
+.my-bid-info h3{
+
+color:var(--espresso);
+
+margin-bottom:10px;
+
+}
+
+.my-bid-price,
+.current-bid-price{
+
+display:block;
+
+color:var(--dusty-pink-dark);
+
+font-size:20px;
+
+margin-bottom:10px;
+
+}
+
+.bid-status{
+
+display:inline-block;
+
+padding:8px 18px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:600;
+
+margin:12px 0;
+
+}
+
+.bid-status.lost{
+
+background:#F6DDD4;
+
+color:#B5533C;
+
+}
+
+.bid-status.winning{
+
+background:#E4EEDA;
+
+color:#4C6B33;
+
+}
+
+.shipping-link-section{
+
+text-align:center;
+
+padding:50px 7% 70px;
+
+}
+
+.shipping-link-section h2{
+
+color:var(--espresso);
+
+margin-bottom:12px;
+
+}
+
+.shipping-link-section p{
+
+color:var(--taupe);
+
+margin-bottom:20px;
+
+}
+
+.shipping-btn{
+
+display:inline-block;
+
+background:var(--caramel);
+
+color:#fff;
+
+padding:14px 30px;
+
+border-radius:30px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.shipping-btn:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+/*-------- Upload artwork page --------*/
+
+.upload-artwork-section{
+
+padding:60px 7%;
+
+}
+
+.upload-artwork-title{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.upload-artwork-title h2{
+
+color:var(--espresso);
+
+margin-bottom:12px;
+
+}
+
+.upload-artwork-title p{
+
+max-width:750px;
+
+margin:auto;
+
+color:var(--taupe);
+
+}
+
+.upload-form-container{
+
+max-width:900px;
+
+margin:auto;
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:40px;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+}
+
+#uploadArtworkForm{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:20px;
+
+}
+
+.upload-input-group{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.upload-input-group label{
+
+margin-bottom:8px;
+
+font-weight:600;
+
+color:var(--espresso);
+
+}
+
+.upload-input-group input,
+.upload-input-group select,
+.upload-input-group textarea{
+
+padding:13px 15px;
+
+border:1px solid var(--border-tint);
+
+border-radius:10px;
+
+background:#fff;
+
+color:var(--espresso);
+
+}
+
+.upload-input-group textarea{
+
+min-height:110px;
+
+resize:vertical;
+
+}
+
+.image-preview-container{
+
+grid-column:1 / -1;
+
+border:2px dashed var(--caramel);
+
+border-radius:16px;
+
+background:var(--butter-light);
+
+min-height:220px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+overflow:hidden;
+
+margin-bottom:10px;
+
+}
+
+.image-preview-container img{
+
+width:100%;
+
+max-height:320px;
+
+object-fit:cover;
+
+}
+
+.image-preview-container p{
+
+color:var(--taupe);
+
+}
+
+.upload-artwork-btn{
+
+grid-column:1 / -1;
+
+padding:16px;
+
+border:none;
+
+border-radius:12px;
+
+background:var(--caramel);
+
+color:#fff;
+
+font-weight:600;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.upload-artwork-btn:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+#uploadMessage{
+
+grid-column:1 / -1;
+
+color:#4C6B33;
+
+font-weight:600;
+
+}
+
+/*-------- Artist "view auctions" grid --------*/
+
+.view-auctions-section{
+
+padding:60px 7%;
+
+}
+
+.view-auctions-title{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.view-auctions-title h2{
+
+color:var(--espresso);
+
+margin-bottom:12px;
+
+}
+
+.view-auctions-title p{
+
+max-width:750px;
+
+margin:auto;
+
+color:var(--taupe);
+
+}
+
+.artist-auction-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+gap:30px;
+
+}
+
+.artist-auction-card{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+transition:.3s;
+
+}
+
+.artist-auction-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.artist-auction-image{
+
+height:220px;
+
+}
+
+.artist-auction-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.artist-auction-info{
+
+padding:22px;
+
+}
+
+.artist-auction-info h3{
+
+color:var(--espresso);
+
+margin-bottom:8px;
+
+}
+
+.artist-auction-category{
+
+color:var(--dusty-pink-dark);
+
+font-weight:600;
+
+margin-bottom:10px;
+
+}
+
+.artist-auction-description{
+
+color:var(--taupe);
+
+margin-bottom:16px;
+
+}
+
+.artist-auction-price-row{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-bottom:14px;
+
+}
+
+.artist-auction-price-row span{
+
+display:block;
+
+color:var(--taupe);
+
+font-size:13px;
+
+}
+
+.artist-auction-price-row strong{
+
+color:var(--espresso);
+
+}
+
+.artist-auction-status{
+
+color:var(--taupe);
+
+}
+
+.artist-auction-status strong{
+
+color:#4C6B33;
+
+}
+
+.no-artwork-message{
+
+text-align:center;
+
+background:var(--cream);
+
+border:1px dashed var(--border-tint);
+
+border-radius:18px;
+
+padding:50px;
+
+}
+
+.no-artwork-message h3{
+
+color:var(--espresso);
+
+margin-bottom:10px;
+
+}
+
+.no-artwork-message p{
+
+color:var(--taupe);
+
+margin-bottom:20px;
+
+}
+
+/*-------- Admin sections (users / auctions / reports) --------*/
+
+.admin-users-section,
+.manage-auctions-section,
+.reports-section{
+
+padding:60px 7%;
+
+}
+
+.admin-section-title{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.admin-section-title h2{
+
+color:var(--espresso);
+
+margin-bottom:12px;
+
+}
+
+.admin-section-title p{
+
+max-width:750px;
+
+margin:auto;
+
+color:var(--taupe);
+
+}
+
+.admin-summary-grid,
+.user-statistics{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+margin-bottom:40px;
+
+}
+
+.admin-summary-card,
+.user-stat-card{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:16px;
+
+padding:25px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+}
+
+.admin-summary-card span{
+
+display:block;
+
+color:var(--taupe);
+
+margin-bottom:8px;
+
+}
+
+.admin-summary-card h3{
+
+color:var(--dusty-pink-dark);
+
+font-size:30px;
+
+margin-bottom:6px;
+
+}
+
+.admin-filter-container{
+
+display:flex;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:16px;
+
+padding:20px;
+
+margin-bottom:30px;
+
+}
+
+.admin-filter-container input,
+.admin-filter-container select{
+
+flex:1;
+
+min-width:200px;
+
+padding:12px 15px;
+
+border:1px solid var(--border-tint);
+
+border-radius:10px;
+
+background:#fff;
+
+color:var(--espresso);
+
+}
+
+.admin-table-container{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:16px;
+
+overflow:hidden;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+margin-bottom:30px;
+
+}
+
+.admin-user-table{
+
+width:100%;
+
+}
+
+.admin-user-table thead{
+
+background:var(--espresso);
+
+color:#fff;
+
+}
+
+.admin-user-table th{
+
+padding:16px;
+
+text-align:left;
+
+}
+
+.admin-user-table td{
+
+padding:14px 16px;
+
+border-bottom:1px solid var(--border-tint);
+
+color:var(--mocha);
+
+}
+
+.admin-user-table tr:hover{
+
+background:var(--butter-light);
+
+}
+
+.admin-action-btn{
+
+padding:9px 18px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-weight:600;
+
+margin-right:8px;
+
+transition:.3s;
+
+}
+
+.edit-user-btn,
+.start-auction-btn{
+
+background:var(--caramel);
+
+color:#fff;
+
+}
+
+.edit-user-btn:hover,
+.start-auction-btn:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+.delete-user-btn,
+.close-auction-btn{
+
+background:#B5533C;
+
+color:#fff;
+
+}
+
+.delete-user-btn:hover,
+.close-auction-btn:hover{
+
+background:#943f2c;
+
+}
+
+.auction-control-buttons{
+
+display:flex;
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+.admin-empty-message{
+
+text-align:center;
+
+background:var(--cream);
+
+border:1px dashed var(--border-tint);
+
+border-radius:18px;
+
+padding:50px;
+
+margin-bottom:30px;
+
+}
+
+.admin-empty-message h3{
+
+color:var(--espresso);
+
+margin-bottom:10px;
+
+}
+
+.admin-empty-message p{
+
+color:var(--taupe);
+
+margin-bottom:20px;
+
+}
+
+.auction-admin-status-card{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:16px;
+
+padding:25px;
+
+margin-bottom:30px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+}
+
+.auction-admin-status-card span{
+
+display:block;
+
+color:var(--taupe);
+
+margin-bottom:8px;
+
+}
+
+.auction-admin-status-card h3{
+
+color:var(--dusty-pink-dark);
+
+}
+
+.selected-auction-artwork{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:0;
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+overflow:hidden;
+
+margin-bottom:30px;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+}
+
+.auction-schedule-container{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:35px;
+
+margin-bottom:30px;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+}
+
+.auction-schedule-container h2{
+
+color:var(--espresso);
+
+margin-bottom:10px;
+
+}
+
+.auction-schedule-container p{
+
+color:var(--taupe);
+
+margin-bottom:20px;
+
+}
+
+#auctionScheduleForm{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:20px;
+
+}
+
+.report-heading{
+
+color:var(--espresso);
+
+margin:40px 0 20px;
+
+font-size:26px;
+
+}
+
+.report-bid-summary{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:16px;
+
+padding:25px;
+
+margin-bottom:30px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+}
+
+.report-bid-summary span{
+
+display:block;
+
+color:var(--taupe);
+
+margin-bottom:8px;
+
+}
+
+.report-bid-summary h3{
+
+color:var(--dusty-pink-dark);
+
+}
+
+.report-auction-card{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+overflow:hidden;
+
+margin-bottom:30px;
+
+box-shadow:0 12px 30px rgba(1,62,55,.12);
+
+}
+
+.report-auction-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.report-auction-information{
+
+padding:30px;
+
+}
+
+.report-auction-information h2{
+
+color:var(--espresso);
+
+margin:10px 0;
+
+}
+
+.report-auction-information p{
+
+color:var(--taupe);
+
+margin-bottom:8px;
+
+}
+
+/*-------- Register page --------*/
+
+.register-page{
+
+padding:60px 7%;
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.register-box{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:20px;
+
+padding:45px;
+
+max-width:520px;
+
+width:100%;
+
+box-shadow:0 15px 35px rgba(1,62,55,.15);
+
+}
+
+.register-title{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+.register-title h2{
+
+color:var(--espresso);
+
+margin-bottom:10px;
+
+}
+
+.register-title p{
+
+color:var(--taupe);
+
+}
+
+.register-box form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:16px;
+
+}
+
+.register-box .form-row{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:16px;
+
+}
+
+.register-box label{
+
+display:block;
+
+margin-bottom:6px;
+
+font-weight:600;
+
+color:var(--espresso);
+
+}
+
+.register-box input,
+.register-box select{
+
+width:100%;
+
+padding:13px 15px;
+
+border:1px solid var(--border-tint);
+
+border-radius:10px;
+
+background:#fff;
+
+color:var(--espresso);
+
+}
+
+.register-box .terms{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+font-weight:400;
+
+color:var(--taupe);
+
+}
+
+.register-box button[type="submit"]{
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:var(--caramel);
+
+color:#fff;
+
+font-weight:600;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.register-box button[type="submit"]:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+.login-text{
+
+text-align:center;
+
+margin-top:20px;
+
+color:var(--taupe);
+
+}
+
+/*-------- Home page feature cards --------*/
+
+.features{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+padding:70px 7%;
+
+}
+
+.features .card{
+
+background:var(--cream);
+
+border:1px solid var(--border-tint);
+
+border-radius:18px;
+
+padding:32px 25px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(1,62,55,.1);
+
+transition:.3s;
+
+}
+
+.features .card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 16px 32px rgba(1,62,55,.18);
+
+}
+
+.features .card h3{
+
+color:var(--dusty-pink-dark);
+
+margin-bottom:12px;
+
+font-size:20px;
+
+}
+
+.features .card p{
+
+color:var(--taupe);
+
+}
+
+.about-home{
+
+background:var(--dusty-pink-light);
+
+text-align:center;
+
+padding:70px 7%;
+
+}
+
+.about-home h2{
+
+color:var(--espresso);
+
+margin-bottom:18px;
+
+}
+
+.about-home p{
+
+max-width:800px;
+
+margin:auto;
+
+color:var(--espresso);
+
+}
+
+.btn{
+
+display:inline-block;
+
+padding:15px 35px;
+
+background:var(--caramel);
+
+color:#fff;
+
+border-radius:30px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+.login-top-btn{
+
+background:var(--caramel);
+
+color:#fff;
+
+border:none;
+
+padding:11px 24px;
+
+border-radius:25px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.login-top-btn:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+/*-------- Login / Register popups --------*/
+
+.popup{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:9999;
+
+    justify-content:center;
+    align-items:center;
+
+    overflow-y:auto;
+    padding:25px;
+}
+
+.popup-box{
+
+    background:#fff;
+
+    width:430px;
+    max-width:95%;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    position:relative;
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+    animation:popup .3s ease;
+}
+
+.popup-box h2{
+
+color:var(--espresso);
+
+margin-bottom:20px;
+
+text-align:center;
+
+}
+
+.popup-box label{
+
+display:block;
+
+margin:14px 0 6px;
+
+font-weight:600;
+
+color:var(--espresso);
+
+}
+
+.popup-box input,
+.popup-box select{
+
+width:100%;
+
+padding:12px 15px;
+
+border:1px solid var(--border-tint);
+
+border-radius:10px;
+
+background:#fff;
+
+color:var(--espresso);
+
+}
+
+.popup-box .hint{
+
+display:block;
+
+color:var(--taupe);
+
+font-size:12px;
+
+margin-top:6px;
+
+white-space:pre-line;
+
+}
+
+/* TERMS & CONDITIONS CHECKBOX
+   Keep the checkbox aligned to the LEFT of the label
+   text instead of stacking above it. */
+
+.popup-box .terms{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:10px;
+
+margin:14px 0;
+
+}
+
+.popup-box .terms input[type="checkbox"]{
+
+width:auto;
+
+flex-shrink:0;
+
+margin-top:4px;
+
+}
+
+.popup-box .terms label{
+
+display:inline;
+
+margin:0;
+
+font-weight:400;
+
+color:var(--taupe);
+
+}
+
+.popup-box button[type="submit"]{
+
+width:100%;
+
+margin-top:20px;
+
+padding:14px;
+
+border:none;
+
+border-radius:12px;
+
+background:var(--caramel);
+
+color:#fff;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.popup-box button[type="submit"]:hover{
+
+background:var(--dusty-pink-dark);
+
+}
+
+/* login / register buttons: faded until all fields are filled, dark once ready */
+#loginForm button[type="submit"]:disabled,
+#registerForm button[type="submit"]:disabled,
+#standaloneRegisterForm button[type="submit"]:disabled,
+#otpForm button[type="submit"]:disabled,
+#registerOtpForm button[type="submit"]:disabled{
+
+opacity:.5;
+
+cursor:not-allowed;
+
+}
+
+#loginForm button[type="submit"]:not(:disabled),
+#registerForm button[type="submit"]:not(:disabled),
+#standaloneRegisterForm button[type="submit"]:not(:disabled),
+#otpForm button[type="submit"]:not(:disabled),
+#registerOtpForm button[type="submit"]:not(:disabled){
+
+background:var(--espresso);
+
+}
+
+.popup-box .close{
+
+position:absolute;
+
+top:14px;
+
+right:18px;
+
+font-size:24px;
+
+cursor:pointer;
+}
+
+/* Scrollbar */
+
+.popup-box::-webkit-scrollbar{
+    width:8px;
+}
+
+.popup-box::-webkit-scrollbar-track{
+    background:#eee;
+    border-radius:10px;
+}
+
+.popup-box::-webkit-scrollbar-thumb{
+    background:#b8860b;
+    border-radius:10px;
+}
+
+.popup-box::-webkit-scrollbar-thumb:hover{
+    background:#8b6508;
+}
+
+.popup-box .close{
+    position:absolute;
+    top:15px;
+    right:20px;
+    font-size:28px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.popup-box .close:hover{
+    color:var(--caramel);
+}
+}
+
+/* =========================================================
+   FINAL FIX - PROFILE LETTER + SAME HEADER
+========================================================= */
+
+header {
+    width: 100%;
+    min-height: 82px;
+    padding: 15px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+header .logo {
+    flex-shrink: 0;
+}
+
+header nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav > ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.header-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.profile-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon,
+.profile-initial {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px;
+    min-height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C06B76, #e5a2aa) !important;
+    border: 3px solid #F3C6CB !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-family:'DM Sans',sans-serif !important;
+    font-size: 21px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    object-fit: unset !important;
+    overflow: hidden;
+}
+
+.profile-icon:hover {
+    transform: scale(1.05);
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 0;
+    top: 58px;
+    width: 275px;
+    padding: 20px;
+    background: var(--cream);
+    border: 1px solid var(--border-tint);
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(1,62,55,.25);
+    z-index: 10000;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-dropdown-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropdown-profile-initial {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C06B76, #e5a2aa);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family:'DM Sans',sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.profile-dropdown h3 {
+    margin: 0;
+}
+
+.profile-dropdown p {
+    margin: 3px 0 0;
+}
+
+.profile-dropdown hr {
+    margin: 14px 0;
+    border: 0;
+    border-top: 1px solid var(--border-tint);
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 9px 0;
+    color: var(--mocha);
+    font-weight: 600;
+}
+
+.profile-dropdown button {
+    cursor: pointer;
+}
+
+.profile-letter-avatar {
+    width: 130px !important;
+    height: 130px !important;
+    min-width: 130px !important;
+    min-height: 130px !important;
+    margin: 0 auto 20px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #C06B76, #e5a2aa) !important;
+    border: 5px solid #F3C6CB !important;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family:'DM Sans',sans-serif !important;
+    font-size: 58px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 900px) {
+    header {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    header .logo {
+        width: 100%;
+        text-align: center;
+    }
+
+    header nav {
+        width: 100%;
+        order: 3;
+    }
+
+    header nav > ul {
+        flex-wrap: wrap;
+    }
+
+    .header-right {
+        position: absolute;
+        right: 5%;
+        top: 18px;
+    }
+}
+/* =========================================================
+   ADMIN DASHBOARD
+   ========================================================= */
+
+.dashboard {
+    padding: 35px 5%;
+    background: #fff1b8;
+    min-height: auto;
+}
+
+.dashboard h2 {
+    text-align: center;
+    color: #004d40;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.welcome {
+    text-align: center;
+    color: #004d40;
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   4 STAT CARDS
+   ========================================================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #fff9e6;
+    border-radius: 18px;
+    padding: 25px 20px;
+    text-align: center;
+
+    box-shadow: 0 8px 20px rgba(0, 77, 64, 0.15);
+
+    border-top: 5px solid var(--brass-deep);
+
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 77, 64, 0.22);
+}
+
+.card h3 {
+    color: #004d40;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.number {
+    font-size: 34px;
+    font-weight: bold;
+    color: var(--brass-deep);
+}
+
+
+/* =========================================================
+   LOWER TWO BOXES
+   ========================================================= */
+
+.dashboard-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+
+    padding: 0 5% 40px;
+    background: #fff1b8;
+}
+
+
+/* =========================================================
+   PLATFORM + AUCTION BOX
+   ========================================================= */
+
+.box {
+    background: #fff9e6;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    min-height: 260px;
+
+    box-shadow: 0 8px 20px rgba(0, 77, 64, 0.15);
+
+    border-left: 6px solid var(--brass-deep);
+}
+
+.box h3 {
+    color: #004d40;
+    font-size: 23px;
+    margin-bottom: 22px;
+}
+
+.box p {
+    color: #004d40;
+    font-size: 17px;
+
+    margin: 14px 0;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.highlight {
+    color: var(--brass-deep);
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    background: #004d40;
+    color: #fff9e6;
+
+    text-align: center;
+
+    padding: 25px;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard {
+        padding: 25px 4%;
+    }
+
+    .dashboard-section {
+        padding: 0 4% 30px;
+    }
+
+}
+
+
+/* =========================================================
+   FINAL PROFESSIONAL FONT SYSTEM
+   BRUSH and BID
+   ========================================================= */
+
+/* Main website text */
+body,
+p,
+span,
+a,
+li,
+label,
+input,
+select,
+textarea,
+button,
+small,
+strong,
+td,
+th {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* All headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-weight: 700;
+}
+
+/* BRUSH and BID logo */
+header .logo h1 {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    line-height: 1;
+}
+
+/* Navigation */
+header nav a {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+}
+
+/* Buttons */
+button,
+.btn,
+.hero-btn,
+.details-btn,
+.auction-bid-btn,
+.login-top-btn,
+.shipping-btn,
+.profile-save-btn,
+.artist-save-btn,
+.upload-artwork-btn {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+}
+
+/* Profile initials */
+.profile-icon,
+.profile-initial,
+.profile-letter-avatar,
+.dropdown-profile-initial {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+
+/* =========================================================
+   ABOUT PAGE - REMOVE EXTRA SPACE FROM DISCOVER BOX
+   Added to the full updated stylesheet
+   ========================================================= */
+
+/* Prevent the right-side About box from stretching to the
+   height of the left-side content. */
+.about-content {
+    align-items: start !important;
+}
+
+/* Make the Discover. Create. Bid. box only as tall as
+   its actual content. */
+.about-image {
+    height: fit-content !important;
+    min-height: 0 !important;
+    align-self: start !important;
+    padding: 28px !important;
+    box-sizing: border-box;
+}
+
+/* Keep the heading and paragraph close together. */
+.about-image h3 {
+    margin: 0 0 12px 0 !important;
+    line-height: 1.3;
+}
+
+.about-image p {
+    margin: 0 !important;
+    line-height: 1.6;
+}
+
+/* Responsive About page */
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr !important;
+        align-items: start !important;
+    }
+
+    .about-image {
+        width: 100%;
+        height: fit-content !important;
+    }
+}
+
+
+/* =========================================================
+   BRUSH AND BID - FINAL ABOUT PAGE LAYOUT
+   Vertically centers the Discover. Create. Bid. card
+   and removes the unnecessary empty space.
+   ========================================================= */
+
+.about-content {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 50px;
+    padding: 70px 7%;
+    align-items: center !important;
+}
+
+/* Left side */
+.about-text {
+    align-self: center;
+}
+
+.about-text h2 {
+    color: var(--espresso);
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    color: var(--taupe);
+    margin-bottom: 18px;
+    line-height: 1.8;
+}
+
+/* Right side - Discover box */
+.about-content > .about-image {
+    align-self: center !important;
+    justify-self: stretch;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    background: var(--cream);
+    border: 1px solid var(--border-tint);
+    border-radius: 20px;
+
+    padding: 35px 30px;
+
+    text-align: center;
+
+    box-shadow: 0 12px 30px rgba(1,62,55,.12);
+
+    box-sizing: border-box;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.about-content > .about-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 35px rgba(1,62,55,.18);
+}
+
+.about-content > .about-image::before {
+    content: "✦  🎨  ✦";
+    display: block;
+    color: var(--dusty-pink);
+    font-size: 22px;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+}
+
+.about-content > .about-image h3 {
+    color: var(--dusty-pink-dark);
+    margin: 0 0 14px 0 !important;
+    font-size: 28px;
+    line-height: 1.3;
+}
+
+.about-content > .about-image p {
+    color: var(--taupe);
+    margin: 0 !important;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .about-content {
+        grid-template-columns: 1.6fr 1fr;
+        gap: 35px;
+        padding: 60px 6%;
+    }
+
+    .about-content > .about-image {
+        padding: 30px 25px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 50px 6%;
+        align-items: start !important;
+    }
+
+    .about-text {
+        align-self: start;
+    }
+
+    .about-content > .about-image {
+        width: 100%;
+        align-self: start !important;
+        padding: 30px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-content {
+        padding: 40px 5%;
+    }
+
+    .about-content > .about-image {
+        padding: 25px 20px;
+    }
+
+    .about-content > .about-image h3 {
+        font-size: 25px;
+    }
+}
+
+
+/* ===== Interaction fixes ===== */
+.dropdown-content.show { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.role-menu-generated { position: relative; }
+.role-menu-generated .dropdown-content { z-index: 9999; }
+.header-right .profile-area { position: relative; }
+.profile-dropdown.show { display: block !important; }
+
+/* Home typography: clear hierarchy between headings and paragraphs */
+.hero h1, .hero h2, .hero h3 { font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.15; }
+.hero p, .home-hero p, .hero-section p { font-size: 1.05rem; line-height: 1.8; max-width: 760px; }
+
+.policy-page { max-width: 1000px; margin: 40px auto; padding: 40px; background: #fff; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.policy-page h3 { color:#6b1f2b; margin-top:28px; }
+.policy-page p { line-height:1.8; color:#5c4b45; }
+.terms a { color:#6b1f2b; font-weight:600; text-decoration:underline; }
+
+
+/* ==========================================
+   UPDATED GALLERY + PROFILE POLISH
+========================================== */
+
+.gallery-loading,
+.gallery-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 70px 25px;
+    background: var(--cream);
+    border: 1px solid var(--border-tint);
+    border-radius: 18px;
+    color: var(--taupe);
+}
+
+.gallery-empty h3 {
+    color: var(--espresso);
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--butter-light);
+    color: var(--mocha);
+    font-size: 48px;
+}
+
+.image-placeholder span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.gallery-image.image-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-image.image-error::after {
+    content: "Artwork image unavailable";
+    color: var(--taupe);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-icon,
+.profile-initial {
+    flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+@media (max-width: 900px) {
+    header {
+        padding: 14px 4%;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    header nav {
+        order: 3;
+        width: 100%;
+    }
+
+    nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px 20px;
+    }
+
+    .header-right {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* FINAL STABLE HEADER */
+html{scrollbar-gutter:stable;} body{overflow-x:hidden;}
+header{display:grid!important;grid-template-columns:280px minmax(420px,1fr) 280px!important;align-items:center!important;column-gap:20px!important;min-height:76px!important;padding:15px 5%!important;}
+header>.logo,header>h1{grid-column:1!important;width:280px!important;min-width:280px!important;margin:0!important;white-space:nowrap!important;}
+header>nav{grid-column:2!important;width:100%!important;display:flex!important;justify-content:center!important;}
+header>nav>ul{display:flex!important;justify-content:center!important;align-items:center!important;flex-wrap:nowrap!important;gap:25px!important;width:max-content!important;margin:0!important;padding:0!important;}
+header>nav>ul>li{flex:0 0 auto!important;}
+header>nav>ul>li>a{display:block!important;padding:4px 0!important;min-width:55px!important;text-align:center!important;white-space:nowrap!important;transform:none!important;border:0!important;}
+header>.header-right{grid-column:3!important;width:280px!important;min-width:280px!important;height:46px!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;margin:0!important;}
+header>.header-right .login-top-btn{min-width:86px!important;}
+header>.header-right .profile-area{width:46px!important;min-width:46px!important;margin-left:10px!important;}
+.policy-modal{position:fixed!important;inset:0!important;z-index:100000!important;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.68);backdrop-filter:blur(3px);}
+.policy-modal.show{display:flex!important}.policy-modal-box{position:relative;width:min(900px,96vw);max-height:86vh;overflow:hidden;background:#fffdf7;border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.35);display:flex;flex-direction:column;}
+.policy-modal-header{padding:20px 58px 16px 28px;background:var(--espresso,#013e37);color:#fff;}.policy-modal-header h2{margin:0;color:var(--blush,#f3c6cb);font-family:'Playfair Display',serif;}
+.policy-modal-close{position:absolute;top:12px;right:16px;width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:#fff;font-size:30px;cursor:pointer;}
+.policy-modal-content{overflow-y:auto;padding:26px 30px 30px;color:#4d403c;line-height:1.75}.policy-modal-content h3{color:var(--espresso,#013e37);margin:18px 0 6px}.policy-modal-content h3:first-child{margin-top:0}.policy-modal-content p{margin:0 0 12px}body.policy-modal-open{overflow:hidden!important}
+@media(max-width:1050px){header{grid-template-columns:220px minmax(350px,1fr) 180px!important}header>.logo,header>h1{width:220px!important;min-width:220px!important}header>.header-right{width:180px!important;min-width:180px!important}header>nav>ul{gap:18px!important}}
+@media(max-width:768px){header{display:flex!important;flex-direction:column!important;gap:14px!important;min-height:0!important;padding:15px!important}header>.logo,header>h1{width:100%!important;min-width:0!important;text-align:center!important}header>nav{width:100%!important}header>nav>ul{flex-wrap:wrap!important;gap:15px!important;width:100%!important}header>.header-right{width:auto!important;min-width:0!important}.policy-modal{padding:12px}.policy-modal-box{max-height:92vh}.policy-modal-content{padding:20px}}
+
+
+/* =========================================================
+   FINAL HEADER POSITION - LOGO LEFT / NAV RIGHT BY PROFILE
+   ========================================================= */
+html { scrollbar-gutter: stable; }
+body { overflow-x: hidden; }
+header {
+    width: 100% !important;
+    min-height: 82px !important;
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: minmax(260px, 1fr) auto auto !important;
+    align-items: center !important;
+    column-gap: 22px !important;
+    padding: 14px 5% !important;
+}
+header .logo {
+    grid-column: 1 !important;
+    justify-self: start !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+header .logo h1, header > h1 {
+    margin: 0 !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+}
+header nav {
+    grid-column: 2 !important;
+    justify-self: end !important;
+    width: auto !important;
+    flex: none !important;
+    margin: 0 !important;
+}
+header nav > ul {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+header nav > ul > li { flex: 0 0 auto !important; }
+header nav > ul > li > a {
+    display: block !important;
+    min-width: 0 !important;
+    padding: 4px 0 !important;
+    white-space: nowrap !important;
+    transform: none !important;
+}
+header > .header-right {
+    grid-column: 3 !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    height: 46px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+}
+header > .header-right .login-top-btn {
+    width: 86px !important;
+    min-width: 86px !important;
+    margin: 0 !important;
+}
+header > .header-right .profile-area {
+    width: 46px !important;
+    min-width: 46px !important;
+    margin: 0 !important;
+}
+
+/* Keep nav in the same physical place whether the page is short or long. */
+header, header nav, header nav > ul, header > .header-right { box-sizing: border-box !important; }
+
+/* Policy popup */
+.policy-modal { position: fixed !important; inset: 0 !important; z-index: 100000 !important; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.68); }
+.policy-modal.show { display: flex !important; }
+.policy-modal-box { width: min(900px, 94vw); max-height: 86vh; overflow: hidden; background: #fffdf7; border-radius: 18px; box-shadow: 0 25px 70px rgba(0,0,0,.35); display: flex; flex-direction: column; position: relative; }
+.policy-modal-header { padding: 20px 60px 18px 28px; background: var(--espresso, #013e37); color: white; }
+.policy-modal-header h2 { margin: 0; color: var(--blush, #f3c6cb); }
+.policy-modal-close { position: absolute; top: 10px; right: 14px; width: 42px; height: 42px; border: 0; background: transparent; color: white; font-size: 30px; cursor: pointer; }
+.policy-modal-content { overflow-y: auto; padding: 25px 30px 30px; color: #4d403c; line-height: 1.75; }
+.policy-modal-content h3 { color: var(--espresso, #013e37); margin: 18px 0 7px; }
+.policy-modal-content h3:first-child { margin-top: 0; }
+.policy-modal-content p { margin: 0 0 12px; }
+body.policy-modal-open { overflow: hidden !important; }
+
+@media (max-width: 1050px) {
+    header { grid-template-columns: minmax(210px, 1fr) auto auto !important; column-gap: 14px !important; padding-left: 3%; padding-right: 3%; }
+    header nav > ul { gap: 14px !important; }
+    header > .header-right { width: 92px !important; min-width: 92px !important; }
+}
+@media (max-width: 760px) {
+    header { display: flex !important; flex-direction: column !important; gap: 12px !important; min-height: 0 !important; }
+    header .logo { width: 100% !important; text-align: center !important; }
+    header .logo h1, header > h1 { text-align: center !important; }
+    header nav { width: 100% !important; }
+    header nav > ul { justify-content: center !important; flex-wrap: wrap !important; }
+    header > .header-right { width: auto !important; min-width: 0 !important; }
+}
+
+/* FINAL COMPACT POLICY POPUP */
+.policy-modal { padding: 16px !important; }
+.policy-modal-box { width: min(760px, 92vw) !important; max-height: 78vh !important; border-radius: 14px !important; }
+.policy-modal-header { padding: 14px 52px 12px 22px !important; }
+.policy-modal-header h2 { font-size: 25px !important; }
+.policy-modal-close { top: 7px !important; right: 10px !important; width: 38px !important; height: 38px !important; font-size: 27px !important; }
+.policy-modal-content { padding: 16px 22px 20px !important; line-height: 1.55 !important; }
+.policy-modal-content h3 { margin: 12px 0 4px !important; font-size: 17px !important; }
+.policy-modal-content h3:first-child { margin-top: 0 !important; }
+.policy-modal-content p { margin: 0 0 8px !important; font-size: 15px !important; }
+
+.print-report-btn {
+
+    margin-top: 20px;
+
+    padding: 12px 24px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #c96b7b;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.print-report-btn:hover {
+
+    opacity: 0.85;
+
+}
+
+
+
+/*=========================
+TOAST MESSAGES
+==========================*/
+
+.toast-container{
+
+position:fixed;
+
+top:20px;
+
+right:20px;
+
+z-index:20000;
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+max-width:min(380px, calc(100vw - 32px));
+
+}
+
+.toast{
+
+padding:14px 18px;
+
+border-radius:12px;
+
+background:var(--espresso);
+
+color:#fff;
+
+font-weight:500;
+
+line-height:1.4;
+
+box-shadow:0 8px 24px rgba(0,0,0,.18);
+
+border-left:5px solid var(--blush);
+
+cursor:pointer;
+
+animation:toast-in .3s ease;
+
+transition:opacity .3s, transform .3s;
+
+}
+
+.toast-success{
+
+border-left-color:#7BC47F;
+
+}
+
+.toast-error{
+
+background:#8E2F3C;
+
+border-left-color:#F3C6CB;
+
+}
+
+.toast-hide{
+
+opacity:0;
+
+transform:translateX(20px);
+
+}
+
+@keyframes toast-in{
+
+from{ opacity:0; transform:translateX(20px); }
+
+to{ opacity:1; transform:translateX(0); }
+
+}
+
+@media (max-width:600px){
+
+.toast-container{
+
+top:auto;
+
+bottom:16px;
+
+right:16px;
+
+left:16px;
+
+max-width:none;
+
+}
+
+}
+
+
+/*=========================
+SHOW / HIDE PASSWORD
+==========================*/
+
+.password-field{
+
+position:relative;
+
+display:block;
+
+width:100%;
+
+}
+
+.password-field input{
+
+display:block;
+
+width:100%;
+
+padding-right:48px !important;
+
+}
+
+.password-toggle{
+
+position:absolute;
+
+top:50%;
+
+right:10px;
+
+transform:translateY(-50%);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+width:34px;
+
+height:34px;
+
+padding:0;
+
+margin:0;
+
+border:none;
+
+border-radius:8px;
+
+background:transparent;
+
+color:var(--taupe);
+
+cursor:pointer;
+
+}
+
+.password-toggle:hover,
+.password-toggle:focus-visible{
+
+color:var(--espresso);
+
+background:rgba(1,62,55,.08);
+
+}
+
+
+/*=========================
+LOADING BAR
+==========================*/
+
+.loading-bar{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+height:3px;
+
+width:0;
+
+z-index:20001;
+
+background:var(--caramel);
+
+opacity:0;
+
+transition:opacity .2s;
+
+}
+
+.loading-bar.active{
+
+opacity:1;
+
+animation:loading-bar 1.2s ease-in-out infinite;
+
+}
+
+@keyframes loading-bar{
+
+0%{ left:0; width:0; }
+
+50%{ left:20%; width:60%; }
+
+100%{ left:100%; width:0; }
+
+}
+
+@media (prefers-reduced-motion:reduce){
+
+.toast, .loading-bar.active{ animation:none; }
+
+.loading-bar.active{ width:100%; }
+
+}
+
+
+/*==================================================
+  EVENING SALESROOM THEME
+  Loaded last so it takes precedence over the older
+  sections above. Dark salon-green walls, artwork
+  lit as the hero, brass reserved for money & bidding.
+===================================================*/
+
+:root{
+
+/* surfaces */
+--salon:#0F2E2A;          /* dark walls: header, hero, footer, banners */
+--salon-raised:#17403A;   /* raised panels on dark */
+--wall:#F3F4EF;           /* page background (cool gallery white) */
+--paper:#FFFFFF;          /* cards */
+--line:#D9DDD3;           /* hairlines on light */
+--line-dark:rgba(243,244,239,.14);
+
+/* text */
+--ink:#17201E;
+--ink-muted:#56625D;
+--ivory:#F3F1E7;
+--ivory-muted:rgba(243,241,231,.72);
+
+/* brass: money, bids, primary actions */
+--brass:#D4AF5A;          /* on dark surfaces */
+--brass-deep:#8C6A1C;     /* on light surfaces (white text passes AA) */
+--brass-deeper:#6F5313;
+
+--font-display:'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
+--font-ui:'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+/* remap the original tokens so every older rule follows the new theme */
+--espresso:var(--salon);
+--mocha:var(--brass-deep);
+--caramel:var(--brass-deep);
+--caramel-dark:var(--brass-deeper);
+--blush:#E9DDB8;
+--latte:var(--wall);
+--cream:var(--paper);
+--taupe:var(--ink-muted);
+--border-tint:var(--line);
+--butter:var(--wall);
+--butter-light:#FAFBF7;
+--dusty-pink:var(--brass-deep);
+--dusty-pink-dark:var(--brass-deeper);
+--dusty-pink-light:#EFE6CC;
+
+}
+
+
+/*-------- Base typography --------*/
+
+html{
+-webkit-text-size-adjust:100%;
+}
+
+body{
+background:var(--wall) !important;
+color:var(--ink);
+font-family:var(--font-ui) !important;
+font-size:16px;
+line-height:1.6;
+-webkit-font-smoothing:antialiased;
+}
+
+body,
+p,
+span,
+a,
+li,
+label,
+input,
+select,
+textarea,
+button,
+small,
+strong,
+td,
+th,
+header nav a,
+.btn,
+.hero-btn,
+.details-btn,
+.auction-bid-btn,
+.login-top-btn,
+.shipping-btn,
+.profile-save-btn,
+.artist-save-btn,
+.upload-artwork-btn,
+.profile-icon,
+.profile-initial,
+.profile-letter-avatar,
+.dropdown-profile-initial{
+font-family:var(--font-ui) !important;
+}
+
+h1,h2,h3,h4,h5,h6{
+font-family:var(--font-display) !important;
+font-weight:600;
+color:var(--ink);
+letter-spacing:-.01em;
+line-height:1.15;
+}
+
+p{
+color:var(--ink-muted);
+}
+
+a{
+color:inherit;
+}
+
+::selection{
+background:var(--brass);
+color:var(--salon);
+}
+
+:focus-visible{
+outline:2px solid var(--brass);
+outline-offset:2px;
+}
+
+
+/*-------- Header --------*/
+
+header{
+background:var(--salon) !important;
+border-bottom:1px solid var(--line-dark);
+box-shadow:none !important;
+}
+
+header h1,
+header .logo h1,
+header > h1{
+font-family:var(--font-display) !important;
+color:var(--ivory) !important;
+font-weight:600 !important;
+font-size:30px !important;
+letter-spacing:.02em !important;
+}
+
+header nav a{
+color:var(--ivory-muted) !important;
+font-weight:500 !important;
+transition:color .2s;
+}
+
+header nav a:hover,
+header nav a.active,
+header nav a[aria-current="page"]{
+color:var(--brass) !important;
+}
+
+header .login-top-btn,
+#loginBtn{
+background:var(--brass) !important;
+color:var(--salon) !important;
+border:none !important;
+border-radius:6px !important;
+font-weight:600 !important;
+}
+
+header .login-top-btn:hover,
+#loginBtn:hover{
+background:var(--ivory) !important;
+}
+
+
+/*-------- Buttons --------*/
+
+.btn,
+.hero-btn,
+.details-btn,
+.auction-bid-btn,
+.shipping-btn,
+.profile-save-btn,
+.artist-save-btn,
+.upload-artwork-btn,
+.popup-box button[type="submit"]{
+background:var(--brass-deep);
+color:#fff !important;
+border:none;
+border-radius:6px !important;
+font-weight:600;
+letter-spacing:.01em;
+transition:background .2s, transform .1s;
+}
+
+.btn:hover,
+.hero-btn:hover,
+.details-btn:hover,
+.auction-bid-btn:hover,
+.shipping-btn:hover,
+.profile-save-btn:hover,
+.artist-save-btn:hover,
+.upload-artwork-btn:hover,
+.popup-box button[type="submit"]:hover{
+background:var(--salon);
+}
+
+.btn:active,
+.hero-btn:active,
+.details-btn:active,
+.auction-bid-btn:active{
+transform:translateY(1px);
+}
+
+
+/*-------- Page banners (used on most pages) --------*/
+
+.about-hero,
+.auction-hero,
+.gallery-hero,
+.admin-hero{
+background:
+  radial-gradient(ellipse 60% 120% at 50% 0%, rgba(212,175,90,.14), transparent 70%),
+  var(--salon) !important;
+color:var(--ivory) !important;
+border-bottom:1px solid var(--line-dark);
+}
+
+.about-hero h1,.about-hero h2,
+.auction-hero h1,.auction-hero h2,
+.gallery-hero h1,.gallery-hero h2,
+.admin-hero h1,.admin-hero h2{
+color:var(--ivory) !important;
+font-size:clamp(2rem, 4vw, 3rem) !important;
+font-weight:500 !important;
+}
+
+.about-hero p,
+.auction-hero p,
+.gallery-hero p,
+.admin-hero p{
+color:var(--ivory-muted) !important;
+}
+
+
+/*-------- Section labels: sentence case, no shouting --------*/
+
+.gallery-small-title{
+text-transform:none !important;
+letter-spacing:0 !important;
+font-size:15px !important;
+font-weight:600 !important;
+color:var(--brass-deep) !important;
+}
+
+
+/*-------- Cards --------*/
+
+.card,
+.features .card{
+background:var(--paper) !important;
+border:1px solid var(--line);
+border-radius:10px !important;
+box-shadow:none !important;
+}
+
+.card:hover,
+.features .card:hover{
+transform:none !important;
+border-color:var(--brass-deep);
+}
+
+.card h3,
+.features .card h3{
+color:var(--ink) !important;
+}
+
+
+/*-------- Forms --------*/
+
+input,
+select,
+textarea{
+color:var(--ink);
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border-color:var(--brass-deep) !important;
+box-shadow:0 0 0 3px rgba(140,106,28,.18) !important;
+outline:none;
+}
+
+.popup{
+background:rgba(10,30,27,.72) !important;
+backdrop-filter:blur(3px);
+}
+
+.popup-box{
+background:var(--paper) !important;
+border-radius:12px !important;
+border-top:4px solid var(--brass);
+}
+
+.popup-box h2{
+color:var(--ink) !important;
+}
+
+
+/*-------- Footer --------*/
+
+footer{
+background:var(--salon) !important;
+color:var(--ivory-muted) !important;
+border-top:1px solid var(--line-dark);
+}
+
+footer p,
+footer a{
+color:var(--ivory-muted) !important;
+}
+
+footer a:hover{
+color:var(--brass) !important;
+}
+
+
+/*==================================================
+  HOME: THIS WEEK'S LOT
+===================================================*/
+
+.lot-hero{
+position:relative;
+padding:0 !important;
+background:var(--salon);
+color:var(--ivory);
+overflow:hidden;
+}
+
+/* the one bold moment: a spotlight on the wall behind the artwork */
+.lot-hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(ellipse 45% 70% at 30% 45%, rgba(243,241,231,.13), transparent 70%);
+pointer-events:none;
+}
+
+.lot-hero-inner{
+position:relative;
+max-width:1200px;
+margin:0 auto;
+padding:64px 24px 72px;
+display:grid;
+grid-template-columns:minmax(0,500px) minmax(0,1fr);
+justify-content:space-between;
+gap:72px;
+align-items:center;
+}
+
+.lot-frame{
+margin:0;
+background:#0A1F1C;
+padding:14px;
+border-radius:4px;
+box-shadow:
+  0 40px 80px -30px rgba(0,0,0,.7),
+  0 0 0 1px rgba(212,175,90,.35);
+}
+
+.lot-frame img{
+display:block;
+width:100%;
+aspect-ratio:4 / 5;
+object-fit:cover;
+border-radius:2px;
+background:var(--salon-raised);
+}
+
+.lot-frame figcaption{
+margin-top:12px;
+font-size:13px;
+color:var(--ivory-muted);
+}
+
+.lot-details{
+max-width:480px;
+}
+
+.lot-kicker{
+color:var(--brass) !important;
+font-weight:600;
+font-size:15px;
+margin:0 0 14px;
+}
+
+.lot-title{
+font-family:var(--font-display) !important;
+color:var(--ivory) !important;
+font-size:clamp(2.4rem, 5vw, 4.2rem) !important;
+font-weight:500 !important;
+line-height:1.02 !important;
+margin:0 0 12px;
+}
+
+.lot-artist{
+color:var(--ivory-muted) !important;
+font-size:18px;
+margin:0 0 36px;
+}
+
+.lot-facts{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:0;
+margin:0 0 32px;
+border-top:1px solid var(--line-dark);
+border-bottom:1px solid var(--line-dark);
+}
+
+.lot-facts > div{
+padding:18px 0;
+}
+
+.lot-facts > div + div{
+padding-left:24px;
+border-left:1px solid var(--line-dark);
+}
+
+.lot-facts dt{
+font-size:14px;
+color:var(--ivory-muted);
+margin-bottom:4px;
+}
+
+.lot-facts dd{
+margin:0;
+font-family:var(--font-display);
+font-size:30px;
+font-weight:500;
+color:var(--brass);
+font-variant-numeric:tabular-nums lining-nums;
+}
+
+.lot-actions{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.lot-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-height:48px;
+padding:0 26px;
+border-radius:6px;
+font-weight:600;
+text-decoration:none;
+transition:background .2s, color .2s, border-color .2s;
+}
+
+.lot-btn-primary{
+background:var(--brass);
+color:var(--salon) !important;
+}
+
+.lot-btn-primary:hover{
+background:var(--ivory);
+}
+
+.lot-btn-secondary{
+border:1px solid rgba(243,241,231,.4);
+color:var(--ivory) !important;
+}
+
+.lot-btn-secondary:hover{
+border-color:var(--brass);
+color:var(--brass) !important;
+}
+
+/* loading / no auction states */
+.lot-hero[data-state="loading"] .lot-frame img{
+animation:lot-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes lot-pulse{
+50%{ opacity:.55; }
+}
+
+.lot-hero[data-state="empty"] .lot-facts{
+display:none;
+}
+
+
+/*-------- Home: what you can do --------*/
+
+.home-paths{
+max-width:1200px;
+margin:0 auto;
+padding:80px 24px 40px !important;
+}
+
+.home-paths h2{
+font-size:clamp(1.8rem, 3vw, 2.4rem);
+margin:0 0 32px;
+max-width:20ch;
+}
+
+.home-paths-grid{
+display:grid;
+grid-template-columns:repeat(3, minmax(0,1fr));
+border-top:1px solid var(--line);
+}
+
+.home-path{
+padding:28px 28px 32px 0;
+}
+
+.home-path + .home-path{
+padding-left:28px;
+border-left:1px solid var(--line);
+}
+
+.home-path h3{
+font-size:24px;
+margin:0 0 10px;
+}
+
+.home-path p{
+margin:0 0 18px;
+max-width:34ch;
+}
+
+.home-path a{
+color:var(--brass-deep) !important;
+font-weight:600;
+text-decoration:underline;
+text-decoration-thickness:1px;
+text-underline-offset:4px;
+}
+
+.home-path a:hover{
+color:var(--salon) !important;
+}
+
+.home-rules{
+max-width:1200px;
+margin:0 auto;
+padding:40px 24px 96px !important;
+}
+
+.home-rules h2{
+font-size:clamp(1.6rem, 2.6vw, 2rem);
+margin:0 0 24px;
+}
+
+.home-rules ol{
+list-style:none;
+margin:0;
+padding:0;
+display:grid;
+grid-template-columns:repeat(4, minmax(0,1fr));
+gap:24px;
+counter-reset:rule;
+}
+
+.home-rules li{
+counter-increment:rule;
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:10px;
+padding:22px;
+}
+
+.home-rules li::before{
+content:counter(rule);
+display:block;
+font-family:var(--font-display);
+font-size:34px;
+line-height:1;
+color:var(--brass-deep);
+margin-bottom:12px;
+}
+
+.home-rules li strong{
+display:block;
+color:var(--ink);
+font-size:17px;
+margin-bottom:6px;
+}
+
+.home-rules li span{
+color:var(--ink-muted);
+font-size:15px;
+}
+
+
+/*-------- Responsive --------*/
+
+@media (max-width:900px){
+
+.lot-hero-inner{
+grid-template-columns:1fr;
+gap:36px;
+padding:40px 16px 56px;
+}
+
+.lot-frame{
+max-width:520px;
+}
+
+.lot-details{
+max-width:none;
+}
+
+.home-paths,
+.home-rules{
+padding-left:16px !important;
+padding-right:16px !important;
+}
+
+.home-paths-grid{
+grid-template-columns:1fr;
+}
+
+.home-path,
+.home-path + .home-path{
+padding:24px 0;
+border-left:none;
+border-bottom:1px solid var(--line);
+}
+
+.home-rules ol{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media (max-width:520px){
+
+.lot-facts dd{
+font-size:24px;
+}
+
+.home-rules ol{
+grid-template-columns:1fr;
+}
+
+}
+
+@media (prefers-reduced-motion:reduce){
+
+.lot-hero[data-state="loading"] .lot-frame img{
+animation:none;
+}
+
+}
+
+/* elements hidden by script must stay hidden */
+[hidden]{
+display:none !important;
+}
+
+
+/*-------- Header on phones: logo left, login/profile right, menu below --------*/
+
+@media (max-width:760px){
+
+header{
+display:grid !important;
+grid-template-columns:minmax(0,1fr) auto !important;
+grid-template-areas:"logo actions" "nav nav" !important;
+align-items:center !important;
+row-gap:10px !important;
+column-gap:12px !important;
+padding:12px 16px !important;
+}
+
+header > .logo,
+header > h1{
+grid-area:logo !important;
+width:auto !important;
+min-width:0 !important;
+}
+
+header .logo h1,
+header > h1{
+text-align:left !important;
+font-size:22px !important;
+white-space:nowrap !important;
+}
+
+header > nav{
+grid-area:nav !important;
+width:100% !important;
+}
+
+header > nav > ul{
+justify-content:flex-start !important;
+gap:6px 18px !important;
+}
+
+header > .header-right{
+grid-area:actions !important;
+position:static !important;
+width:auto !important;
+min-width:0 !important;
+height:auto !important;
+}
+
+}
+
+
+/*-------- Profile initials: brass coin on the dark header --------*/
+
+.profile-icon,
+.profile-initial,
+.dropdown-profile-initial,
+.profile-letter-avatar{
+background:var(--brass) !important;
+color:var(--salon) !important;
+border:2px solid rgba(243,241,231,.25) !important;
+box-shadow:none !important;
+}
+
+.profile-icon:hover,
+.profile-initial:hover{
+background:var(--ivory) !important;
+}
+
+
+/*-------- Fixes found in page review --------*/
+
+/* checkboxes and radios must not stretch to full width */
+input[type="checkbox"],
+input[type="radio"]{
+width:auto !important;
+flex:0 0 auto;
+accent-color:var(--brass-deep);
+}
+
+.register-box .terms,
+.popup-box .terms{
+display:flex !important;
+align-items:flex-start !important;
+gap:10px !important;
+text-align:left !important;
+}
+
+.register-box .terms label,
+.popup-box .terms label{
+display:block !important;
+margin:0 !important;
+font-weight:400 !important;
+line-height:1.5;
+}
+
+.policy-link,
+.terms a{
+color:var(--brass-deep) !important;
+}
+
+/* centre the registration card */
+.register-box{
+margin:0 auto !important;
+border-radius:12px !important;
+box-shadow:none !important;
+}
+
+/* artwork details: primary and secondary actions */
+.action-btn{
+background:var(--brass-deep) !important;
+color:#fff !important;
+border-radius:6px !important;
+}
+
+.action-btn:hover{
+background:var(--salon) !important;
+}
+
+.action-btn.secondary-btn{
+background:transparent !important;
+color:var(--salon) !important;
+border:1px solid var(--salon) !important;
+}
+
+.action-btn.secondary-btn:hover{
+background:var(--salon) !important;
+color:var(--ivory) !important;
+}
+
+/* admin login sits on the salon wall */
+.admin-login-container{
+background:
+  radial-gradient(ellipse 50% 60% at 50% 40%, rgba(243,241,231,.10), transparent 70%),
+  var(--salon);
+}
+
+.admin-login-box{
+border-top:4px solid var(--brass);
+}
+
+.admin-login-box .back-link{
+color:var(--brass-deep);
+}
+
+
+/* admin dashboard panels: plain wall, hairline dividers */
+.dashboard-section{
+background:transparent !important;
+border-top:1px solid var(--line);
+}
+
+.print-report-btn{
+background:var(--brass-deep) !important;
+color:#fff !important;
+border-radius:6px !important;
+}
+
+.print-report-btn:hover{
+background:var(--salon) !important;
+}
+
+/* stat numbers: clear sans-serif figures (the display serif's "1" reads as "I") */
+.dashboard-card h3,
+.admin-summary-card h3,
+.stat-card h3,
+.summary-card h3{
+font-family:var(--font-ui) !important;
+font-weight:600 !important;
+font-variant-numeric:tabular-nums;
+letter-spacing:-.02em;
+}
+
+.dashboard{
+background:transparent !important;
+}
+
+/* register page: .terms is the label itself, so keep it as flowing text */
+.register-box label.terms{
+display:block !important;
+line-height:1.6;
+font-weight:400 !important;
+}
+
+.register-box label.terms input[type="checkbox"]{
+margin:0 8px 0 0 !important;
+vertical-align:-2px;
+}
+
+
+/* profile pages: stack the summary card and form on small screens */
+@media (max-width:900px){
+
+.bidder-profile-container,
+.artist-profile-container{
+grid-template-columns:minmax(0,1fr) !important;
+}
+
+}
+
+@media (max-width:600px){
+
+.bidder-profile-form-container,
+.artist-profile-form-container{
+padding:22px !important;
+}
+
+.bidder-profile-form-container form,
+.artist-profile-form-container form{
+grid-template-columns:minmax(0,1fr) !important;
+}
+
+}
+
+
+/*-------- Header dropdowns (white panels): dark readable text --------*/
+
+header nav .dropdown-content{
+background:var(--paper) !important;
+border:1px solid var(--line) !important;
+border-radius:10px !important;
+box-shadow:0 16px 40px -12px rgba(10,30,27,.35) !important;
+padding:6px 0 !important;
+overflow:hidden;
+}
+
+header nav .dropdown-content a{
+color:var(--ink) !important;
+background:transparent !important;
+font-weight:500 !important;
+padding:12px 20px !important;
+text-align:left !important;
+}
+
+header nav .dropdown-content a:hover,
+header nav .dropdown-content a:focus-visible,
+header nav .dropdown-content a.active,
+header nav .dropdown-content a[aria-current="page"]{
+color:var(--brass-deep) !important;
+background:var(--wall) !important;
+}
+
+
+/*-------- Profile dropdown --------*/
+
+.profile-dropdown{
+background:var(--paper) !important;
+border:1px solid var(--line) !important;
+border-radius:10px !important;
+box-shadow:0 16px 40px -12px rgba(10,30,27,.35) !important;
+}
+
+.profile-dropdown .profile-header{
+display:block !important;
+padding:0 !important;
+background:transparent !important;
+color:var(--ink) !important;
+}
+
+.profile-dropdown h3{
+color:var(--ink) !important;
+font-size:20px !important;
+margin:0 0 2px !important;
+}
+
+.profile-dropdown p{
+color:var(--brass-deep) !important;
+font-weight:600;
+font-size:14px !important;
+margin:0 0 4px !important;
+}
+
+.profile-dropdown small{
+display:block;
+color:var(--ink-muted) !important;
+font-size:13px !important;
+overflow-wrap:anywhere;
+}
+
+.profile-dropdown a{
+color:var(--ink) !important;
+}
+
+.profile-dropdown a:hover{
+color:var(--brass-deep) !important;
+}
+
+.profile-dropdown button{
+background:var(--salon) !important;
+color:var(--ivory) !important;
+border:none !important;
+border-radius:6px !important;
+}
+
+.profile-dropdown button:hover{
+background:var(--brass-deep) !important;
+color:#fff !important;
+}
+
+
+/* logo links home */
+header .logo-link{
+color:inherit !important;
+text-decoration:none !important;
+}
+
+header .logo-link:hover{
+color:var(--brass) !important;
+}
+
+
+/*-------- Toast messages: below the header, light card --------*/
+
+.toast-container{
+top:96px !important;
+right:24px !important;
+}
+
+.toast{
+background:var(--paper) !important;
+color:var(--ink) !important;
+font-family:var(--font-ui) !important;
+font-size:15px;
+border:1px solid var(--line);
+border-left:4px solid var(--brass-deep) !important;
+border-radius:8px !important;
+box-shadow:0 18px 40px -14px rgba(10,30,27,.45) !important;
+}
+
+.toast-success{
+border-left-color:#2E7D4F !important;
+}
+
+.toast-error{
+background:#FDF1F2 !important;
+color:#7A1F2B !important;
+border-color:#F0C9CE !important;
+border-left-color:#B42335 !important;
+}
+
+@media (max-width:600px){
+
+.toast-container{
+top:auto !important;
+bottom:16px !important;
+left:16px !important;
+right:16px !important;
+}
+
+}
+
+/* the logo link keeps the display serif (links default to the UI font) */
+header .logo-link{
+font-family:var(--font-display) !important;
+font-weight:inherit !important;
+letter-spacing:inherit !important;
+}
+
+
+/*-------- Role-specific content (data-show-for="bidder artist") --------*/
+
+html[data-user-role="guest"]  [data-show-for]:not([data-show-for~="guest"]),
+html[data-user-role="bidder"] [data-show-for]:not([data-show-for~="bidder"]),
+html[data-user-role="artist"] [data-show-for]:not([data-show-for~="artist"]),
+html[data-user-role="admin"]  [data-show-for]:not([data-show-for~="admin"]){
+display:none !important;
+}
+
+/* hero buttons are chosen per role by script; hide them until then */
+.lot-hero[data-state="loading"] .lot-actions{
+visibility:hidden;
+}
+
+
+/*==================================================
+  HOME FOR LOGGED-OUT VISITORS
+  Invitation on the left, this week's lot hung on the
+  wall on the right with a gallery wall label.
+===================================================*/
+
+.welcome-hero{
+position:relative;
+padding:0 !important;
+background:var(--salon);
+color:var(--ivory);
+overflow:hidden;
+}
+
+.welcome-hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(ellipse 40% 70% at 72% 45%, rgba(243,241,231,.13), transparent 70%);
+pointer-events:none;
+}
+
+.welcome-inner{
+position:relative;
+max-width:1200px;
+margin:0 auto;
+padding:72px 24px 88px;
+display:grid;
+grid-template-columns:minmax(0,1fr) minmax(0,460px);
+gap:80px;
+align-items:center;
+}
+
+.welcome-hero[data-state="empty"] .welcome-inner{
+grid-template-columns:minmax(0,720px);
+}
+
+.welcome-title{
+font-family:var(--font-display) !important;
+color:var(--ivory) !important;
+font-size:clamp(2.6rem, 5.4vw, 4.6rem) !important;
+font-weight:500 !important;
+line-height:1.02 !important;
+letter-spacing:-.015em;
+margin:0 0 24px;
+max-width:13ch;
+}
+
+.welcome-lede{
+color:var(--ivory-muted) !important;
+font-size:18px;
+line-height:1.65;
+max-width:46ch;
+margin:0 0 36px;
+}
+
+.welcome-login{
+margin:22px 0 0;
+color:var(--ivory-muted) !important;
+font-size:15px;
+}
+
+.link-button{
+background:none !important;
+border:none !important;
+padding:0 !important;
+margin:0 0 0 4px;
+color:var(--brass) !important;
+font:inherit;
+font-weight:600 !important;
+text-decoration:underline;
+text-underline-offset:4px;
+cursor:pointer;
+}
+
+.link-button:hover{
+color:var(--ivory) !important;
+}
+
+
+/* the artwork on the wall */
+
+.welcome-artwork{
+position:relative;
+margin:0;
+padding-bottom:56px;
+}
+
+.welcome-artwork .lot-frame img{
+aspect-ratio:4 / 5;
+}
+
+.welcome-hero[data-state="loading"] .welcome-artwork img{
+animation:lot-pulse 1.6s ease-in-out infinite;
+}
+
+/* gallery wall label, pinned beside the bottom corner of the frame */
+
+.wall-label{
+position:absolute;
+left:-56px;
+bottom:0;
+width:min(300px, 80%);
+display:flex;
+flex-direction:column;
+gap:3px;
+padding:18px 20px 16px;
+background:#FBFAF5;
+color:var(--ink);
+border-radius:2px;
+box-shadow:0 24px 50px -20px rgba(0,0,0,.65);
+}
+
+.wall-label-kicker{
+color:var(--brass-deep) !important;
+font-size:13px;
+font-weight:600;
+margin-bottom:6px;
+}
+
+.wall-label-title{
+font-family:var(--font-display) !important;
+font-style:italic;
+font-weight:500 !important;
+font-size:22px;
+line-height:1.2;
+color:var(--ink) !important;
+}
+
+.wall-label-artist{
+color:var(--ink) !important;
+font-size:15px;
+}
+
+.wall-label-meta{
+color:var(--ink-muted) !important;
+font-size:13px;
+}
+
+.wall-label-bid{
+margin-top:10px;
+padding-top:10px;
+border-top:1px solid var(--line);
+color:var(--ink) !important;
+font-size:14px;
+font-weight:600;
+font-variant-numeric:tabular-nums;
+}
+
+
+/*-------- For bidders / for artists --------*/
+
+.home-audiences{
+max-width:1200px;
+margin:0 auto;
+padding:80px 24px 40px !important;
+}
+
+.home-audiences > h2{
+font-size:clamp(1.8rem, 3vw, 2.4rem);
+margin:0 0 28px;
+}
+
+.audience-grid{
+display:grid;
+grid-template-columns:repeat(2, minmax(0,1fr));
+gap:24px;
+}
+
+.audience{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:10px;
+padding:32px;
+display:flex;
+flex-direction:column;
+}
+
+.audience h3{
+font-size:28px;
+margin:0 0 6px;
+}
+
+.audience-lede{
+color:var(--brass-deep) !important;
+font-weight:600;
+margin:0 0 18px;
+}
+
+.audience ul{
+list-style:none;
+margin:0 0 28px;
+padding:0;
+display:grid;
+gap:10px;
+}
+
+.audience li{
+position:relative;
+padding-left:22px;
+color:var(--ink-muted);
+}
+
+.audience li::before{
+content:"";
+position:absolute;
+left:0;
+top:.6em;
+width:8px;
+height:8px;
+border-radius:50%;
+background:var(--brass);
+}
+
+.audience-btn{
+align-self:flex-start;
+margin-top:auto;
+background:var(--salon);
+color:var(--ivory) !important;
+}
+
+.audience-btn:hover{
+background:var(--brass-deep);
+color:#fff !important;
+}
+
+
+@media (max-width:900px){
+
+.welcome-inner{
+grid-template-columns:minmax(0,1fr);
+gap:44px;
+padding:44px 16px 56px;
+}
+
+.welcome-artwork{
+max-width:460px;
+padding-bottom:0;
+}
+
+.wall-label{
+position:relative;
+left:auto;
+bottom:auto;
+width:auto;
+margin:-28px 16px 0;
+}
+
+.home-audiences{
+padding:56px 16px 24px !important;
+}
+
+.audience-grid{
+grid-template-columns:minmax(0,1fr);
+}
+
+.audience{
+padding:24px;
+}
+
+}
+
+@media (prefers-reduced-motion:reduce){
+
+.welcome-hero[data-state="loading"] .welcome-artwork img{
+animation:none;
+}
+
+}
+
+
+/*-------- Forgot password --------*/
+
+#forgotRequestForm button[type="submit"]:disabled,
+#forgotResetForm button[type="submit"]:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+#forgotRequestForm button[type="submit"]:not(:disabled),
+#forgotResetForm button[type="submit"]:not(:disabled){
+background:var(--espresso);
+}
+
+/* link-style buttons inside white popups need the darker brass */
+.popup-box .link-button{
+color:var(--brass-deep) !important;
+}
+
+.popup-box .link-button:hover{
+color:var(--salon) !important;
+}
+
+.popup-box .forgot-link{
+display:block;
+margin:8px 0 4px auto !important;
+font-size:14px;
+}
+
+.popup-intro{
+color:var(--ink-muted) !important;
+font-size:15px;
+line-height:1.55;
+margin:0 0 18px;
+text-align:left;
+}
+
+.popup-intro strong{
+color:var(--ink);
+overflow-wrap:anywhere;
+}
+
+.popup-footnote{
+margin:14px 0 0;
+font-size:14px;
+color:var(--ink-muted) !important;
+}

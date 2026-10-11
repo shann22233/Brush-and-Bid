@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Gallery - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="gallery.html"
+                class="active">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <!-- Role-specific menu -->
+
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        id="loginBtn"
+        class="login-top-btn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        id="profileArea"
+        class="profile-area"
+        style="display:none;">
+
+
+        <div
+            id="profileIcon"
+            class="profile-icon profile-initial"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            id="profileMenu"
+            class="profile-dropdown">
+
+
+            <div class="profile-header">
+
+                <h3 id="profileName"></h3>
+
+                <p id="profileRole"></p>
+
+                <small id="profileEmail"></small>
+
+            </div>
+
+
+            <hr>
+
+
+            <a
+                id="profilePage"
+                href="#">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     GALLERY HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2>
+    Explore Our Artists
+</h2>
+
+
+<p>
+
+    Discover talented artists and explore
+    their unique creative collections.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     SEARCH AND FILTER
+================================= -->
+
+<section class="search-section">
+
+ 
+<div class="search-container">
+
+
+    <input
+        type="text"
+        id="searchArtist"
+        placeholder="Search artist by name...">
+
+
+    <select id="styleFilter">
+
+
+        <option value="all">
+
+            All Styles
+
+        </option>
+
+
+        <option value="Painting">
+
+            Painting
+
+        </option>
+
+
+        <option value="Abstract">
+
+            Abstract
+
+        </option>
+
+
+        <option value="Portrait">
+
+            Portrait
+
+        </option>
+
+
+        <option value="Landscape">
+
+            Landscape
+
+        </option>
+
+
+        <option value="Digital Art">
+
+            Digital Art
+
+        </option>
+
+
+        <option value="Illustration">
+
+            Illustration
+
+        </option>
+
+
+    </select>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     ARTISTS
+================================= -->
+
+<section class="gallery-section">
+
+ 
+<div class="gallery-title">
+
+
+    <p class="gallery-small-title">
+
+        Our artists
+
+    </p>
+
+
+    <h2>
+
+        Meet the Artists
+
+    </h2>
+
+
+    <p>
+
+        Explore talented artists and discover
+        their creative work.
+
+    </p>
+
+
+</div>
+
+
+<!-- =================================
+     ARTISTS FROM DATABASE
+================================= -->
+
+<div
+    class="gallery-grid"
+    id="artistsContainer">
+
+
+    <div class="gallery-loading">
+
+        <p>
+
+            Loading artists...
+
+        </p>
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     GALLERY JAVASCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           GET CONTAINER
+        ================================= */
+
+        const container =
+            document.getElementById(
+                "artistsContainer"
+            );
+
+
+        if (!container) {
+
+            return;
+
+        }
+
+
+        let artists = [];
+
+
+        /* =================================
+           PLACEHOLDER IMAGE
+           (used when an artist has no
+           profile image, or the image
+           fails to load)
+
+           This now points directly to a
+           real image URL instead of a
+           broken SVG data string.
+        ================================= */
+
+        const PLACEHOLDER_IMG =
+            "https://satgurus.com/cdn/shop/articles/indian-art_paintings.jpg?v=1712575516";
+
+
+        /* =================================
+           LOAD ARTISTS
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    "/api/users"
+                );
+
+
+            /*
+             * Backend may return either:
+             *
+             * [
+             *   {...}
+             * ]
+             *
+             * or
+             *
+             * {
+             *   users: [...]
+             * }
+             */
+
+            const users =
+                Array.isArray(response)
+                    ? response
+                    : (
+                        response.users ||
+                        []
+                    );
+
+
+            /* =================================
+               ONLY ARTISTS
+            ================================= */
+
+            artists =
+                users.filter(
+                    function (user) {
+
+                        return String(
+                            user.role || ""
+                        ).toLowerCase() ===
+                            "artist";
+
+                    }
+                );
+
+
+            /* =================================
+               NO ARTISTS
+            ================================= */
+
+            if (
+                artists.length === 0
+            ) {
+
+                container.innerHTML = `
+
+                    <div class="gallery-empty">
+
+                        <p>
+                            No artists found.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* =================================
+               DISPLAY ARTISTS
+            ================================= */
+
+            function displayArtists(
+                list
+            ) {
+
+
+                container.innerHTML =
+                    "";
+
+
+                if (
+                    list.length === 0
+                ) {
+
+                    container.innerHTML = `
+
+                        <div class="gallery-empty">
+
+                            <p>
+                                No matching artists found.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                list.forEach(
+                    function (artist) {
+
+
+                        const userId =
+                            artist.user_id ||
+                            artist.userId ||
+                            artist.id ||
+                            "";
+
+
+                        const name =
+                            artist.full_name ||
+                            artist.name ||
+                            "Artist";
+
+
+                        const specialization =
+                            artist.specialization ||
+                            artist.style ||
+                            "Artist";
+
+
+                        const biography =
+                            artist.biography ||
+                            artist.bio ||
+                            "Explore the creative work of this artist.";
+
+
+                        const image =
+                            artist.profile_image ||
+                            artist.profileImage ||
+                            artist.image ||
+                            PLACEHOLDER_IMG;
+
+
+                        /* =================================
+                           CARD
+                        ================================= */
+
+                        const card =
+                            document.createElement(
+                                "article"
+                            );
+
+
+                        card.className =
+                            "gallery-card";
+
+
+                        card.innerHTML = `
+
+                            <div class="gallery-image">
+
+                                <img
+
+                                    src="${escapeHTML(image)}"
+
+                                    alt="${escapeHTML(name)}"
+
+                                    onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';"
+
+                                >
+
+                            </div>
+
+
+                            <div class="gallery-info">
+
+
+                                <h3>
+
+                                    ${escapeHTML(name)}
+
+                                </h3>
+
+
+                                <p class="artist">
+
+                                    <strong>
+
+                                        ${escapeHTML(
+                                            specialization
+                                        )}
+
+                                    </strong>
+
+                                </p>
+
+
+                                <p class="art-description">
+
+                                    ${escapeHTML(
+                                        biography
+                                    )}
+
+                                </p>
+
+
+                                <div class="price-row">
+
+
+                                    <div>
+
+                                        <span>
+                                            Artist
+                                        </span>
+
+
+                                        <strong>
+                                            BRUSH and BID
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <a
+
+                                    href="artist-artworks.html?artistId=${encodeURIComponent(
+                                        userId
+                                    )}&artist=${encodeURIComponent(
+                                        name
+                                    )}"
+
+                                    class="details-btn">
+
+                                    View Artworks →
+
+                                </a>
+
+
+                            </div>
+
+                        `;
+
+
+                        container.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================
+               DISPLAY ALL
+            ================================= */
+
+            displayArtists(
+                artists
+            );
+
+
+            /* =================================
+               SEARCH
+            ================================= */
+
+            const search =
+                document.getElementById(
+                    "searchArtist"
+                );
+
+
+            if (search) {
+
+                search.addEventListener(
+                    "input",
+                    applyFilters
+                );
+
+            }
+
+
+            /* =================================
+               STYLE FILTER
+            ================================= */
+
+            const styleFilter =
+                document.getElementById(
+                    "styleFilter"
+                );
+
+
+            if (styleFilter) {
+
+                styleFilter.addEventListener(
+                    "change",
+                    applyFilters
+                );
+
+            }
+
+
+            /* =================================
+               FILTER FUNCTION
+            ================================= */
+
+            function applyFilters() {
+
+
+                const searchValue =
+                    (
+                        search?.value ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                const selectedStyle =
+                    (
+                        styleFilter?.value ||
+                        "all"
+                    )
+                    .toLowerCase();
+
+
+                const filtered =
+                    artists.filter(
+                        function (artist) {
+
+
+                            const name =
+                                (
+                                    artist.full_name ||
+                                    artist.name ||
+                                    ""
+                                )
+                                .toLowerCase();
+
+
+                            const specialization =
+                                (
+                                    artist.specialization ||
+                                    artist.style ||
+                                    ""
+                                )
+                                .toLowerCase();
+
+
+                            const matchesName =
+                                name.includes(
+                                    searchValue
+                                );
+
+
+                            const matchesStyle =
+                                selectedStyle ===
+                                    "all" ||
+                                specialization.includes(
+                                    selectedStyle
+                                );
+
+
+                            return (
+                                matchesName &&
+                                matchesStyle
+                            );
+
+                        }
+                    );
+
+
+                displayArtists(
+                    filtered
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Gallery Error:",
+                error
+            );
+
+
+            container.innerHTML = `
+
+                <div class="gallery-empty">
+
+                    <p>
+
+                        Unable to load artists.
+
+                    </p>
+
+
+                    <small>
+
+                        Please make sure the
+                        server and MySQL database
+                        are running.
+
+                    </small>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+
+/* =================================
+   HTML ESCAPE
+================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+</body>
+
+</html>

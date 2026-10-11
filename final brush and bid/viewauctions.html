@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js" data-roles="artist"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ 
+<title>View Auctions - BRUSH and BID</title>
+
+<link href="style.css" rel="stylesheet">
+ 
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>BRUSH and BID</h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+        <!-- Role-specific menu -->
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+            <h3 id="profileName"></h3>
+
+            <p id="profileRole"></p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+            <a id="profilePage">
+                My Profile
+            </a>
+
+            <button onclick="logoutUser()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PAGE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2>
+    My Artwork Auctions
+</h2>
+
+<p>
+    View the artworks you have uploaded and
+    check their starting bid, current bid,
+    approval status, and auction status.
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     VIEW AUCTIONS SECTION
+================================= -->
+
+<section class="view-auctions-section">
+
+ 
+<div class="view-auctions-title">
+
+    <p class="gallery-small-title">
+        Artist auction dashboard
+    </p>
+
+    <h2>
+        My Uploaded Artworks
+    </h2>
+
+    <p>
+        This page displays the artworks uploaded by you.
+        You can view the starting bid, current bid,
+        approval status, and auction status for every artwork.
+    </p>
+
+</div>
+
+
+<!-- =================================
+     SEARCH / FILTER
+================================= -->
+
+<div
+    style="
+        max-width:1200px;
+        margin:0 auto 30px;
+        display:flex;
+        justify-content:center;
+        gap:15px;
+        flex-wrap:wrap;
+    ">
+
+    <input
+        type="text"
+        id="auctionSearch"
+        placeholder="Search your artworks..."
+        style="
+            padding:12px 16px;
+            min-width:280px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:15px;
+        ">
+
+
+    <select
+        id="statusFilter"
+        style="
+            padding:12px 16px;
+            min-width:180px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:15px;
+        ">
+
+        <option value="">
+            All Status
+        </option>
+
+        <option value="Pending">
+            Pending Approval
+        </option>
+
+        <option value="Approved">
+            Approved
+        </option>
+
+        <option value="Rejected">
+            Rejected
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- =================================
+     AUCTION ARTWORK GRID
+================================= -->
+
+<div
+    class="artist-auction-grid"
+    id="artistAuctionGrid">
+
+    <p style="text-align:center;">
+        Loading your artworks...
+    </p>
+
+</div>
+
+
+<!-- =================================
+     EMPTY MESSAGE
+================================= -->
+
+<div
+    class="no-artwork-message"
+    id="noArtworkMessage"
+    style="display:none;">
+
+    <h3>
+        No Artwork Uploaded Yet
+    </h3>
+
+    <p>
+        You have not uploaded any artwork.
+        Upload your first artwork to see it here.
+    </p>
+
+    <a
+        class="details-btn"
+        href="uploadartwork.html">
+
+        Upload Artwork →
+
+    </a>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     PAGE JAVASCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+        /*
+         * Only Artists can access this page.
+         */
+
+        const user = getCurrentUser();
+
+        const resolvedId = await ensureUserId();
+
+        if (resolvedId) {
+            user.id = resolvedId;
+        }
+
+
+        if (
+            !user.loggedIn ||
+            user.role !== "Artist"
+        ) {
+
+            window.location.href =
+                "index.html?login=true";
+
+            return;
+        }
+
+
+        const grid =
+            document.getElementById(
+                "artistAuctionGrid"
+            );
+
+        const empty =
+            document.getElementById(
+                "noArtworkMessage"
+            );
+
+        const searchInput =
+            document.getElementById(
+                "auctionSearch"
+            );
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        let artworks = [];
+
+
+        /*
+         * Escape HTML output.
+         */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /*
+         * Format currency.
+         */
+
+        function formatCurrency(value) {
+
+            return "₹" +
+                Number(value || 0)
+                    .toLocaleString("en-IN");
+
+        }
+
+
+        /*
+         * Get auction information for an artwork.
+         *
+         * The backend may return auction information
+         * directly with the artwork. If not, this function
+         * safely uses the available values.
+         */
+
+        function getAuctionStatus(artwork) {
+
+            return (
+                artwork.auction_status ||
+                artwork.auctionStatus ||
+                artwork.status ||
+                "Not Scheduled"
+            );
+
+        }
+function formatAuctionDateTime(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "Asia/Kolkata"
+        }
+    );
+}
+
+        /*
+         * Render artwork cards.
+         */
+
+        function renderArtworks() {
+
+            const search =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+            const selectedStatus =
+                statusFilter.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const filtered =
+                artworks.filter(function (artwork) {
+
+                    const name =
+                        String(
+                            artwork.title || ""
+                        ).toLowerCase();
+
+                    const description =
+                        String(
+                            artwork.description || ""
+                        ).toLowerCase();
+
+                    const category =
+                        String(
+                            artwork.category || ""
+                        ).toLowerCase();
+
+
+                    const adminStatus =
+                        String(
+                            artwork.status ||
+                            artwork.adminStatus ||
+                            "Pending"
+                        ).toLowerCase();
+
+
+                    const matchesSearch =
+                        !search ||
+                        name.includes(search) ||
+                        description.includes(search) ||
+                        category.includes(search);
+
+
+                    const matchesStatus =
+                        !selectedStatus ||
+                        adminStatus === selectedStatus;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesStatus
+                    );
+
+                });
+
+
+            if (!filtered.length) {
+
+                grid.innerHTML = `
+                    <p style="
+                        text-align:center;
+                        width:100%;
+                    ">
+                        No artworks match your search.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            grid.innerHTML =
+                filtered.map(function (artwork) {
+
+                    const artworkId =
+                        artwork.artwork_id ??
+                        artwork.id;
+
+
+                    const name =
+                        artwork.title ||
+                        "Untitled Artwork";
+
+
+                    const description =
+                        artwork.description ||
+                        "No description available.";
+
+
+                    const image =
+                        artwork.image_url ||
+                        artwork.image ||
+                        "";
+
+
+                    const adminStatus =
+                        artwork.status ||
+                        artwork.adminStatus ||
+                        "Pending";
+
+
+                    const auctionStatus =
+                        getAuctionStatus(
+                            artwork
+                        );
+
+
+                    const startingBid =
+                        artwork.starting_price ??
+                        artwork.startingBid ??
+                        0;
+
+
+                    const currentBid =
+                        artwork.current_bid ??
+                        artwork.currentBid ??
+                        startingBid;
+
+
+const startDateTime =
+    artwork.start_time ||
+    artwork.startDate ||
+    artwork.start_date ||
+    "";
+
+
+const endDateTime =
+    artwork.end_time ||
+    artwork.endDate ||
+    artwork.end_date ||
+    "";
+
+                    let statusClass = "";
+
+                    if (
+                        String(adminStatus)
+                            .toLowerCase() ===
+                        "approved"
+                    ) {
+
+                        statusClass =
+                            "color:green;";
+
+                    } else if (
+                        String(adminStatus)
+                            .toLowerCase() ===
+                        "rejected"
+                    ) {
+
+                        statusClass =
+                            "color:#b00020;";
+
+                    } else {
+
+                        statusClass =
+                            "color:#9a6700;";
+
+                    }
+
+
+                    return `
+
+                        <article
+                            class="gallery-card">
+
+                            <div
+                                class="gallery-image">
+
+                                ${
+                                    image
+                                        ? `
+                                            <img
+                                                src="${escapeHTML(image)}"
+                                                alt="${escapeHTML(name)}"
+                                                loading="lazy">
+                                          `
+                                        : `
+                                            <div
+                                                style="
+                                                    min-height:250px;
+                                                    display:flex;
+                                                    align-items:center;
+                                                    justify-content:center;
+                                                    background:#f1f1f1;
+                                                    color:#777;
+                                                ">
+
+                                                No Image Available
+
+                                            </div>
+                                          `
+                                }
+
+                            </div>
+
+
+                            <div
+                                class="gallery-info">
+
+                                <h3>
+                                    ${escapeHTML(name)}
+                                </h3>
+
+
+                                <p
+                                    class="art-description">
+
+                                    ${escapeHTML(
+                                        description
+                                    )}
+
+                                </p>
+
+
+                                <div
+                                    class="price-row">
+
+                                    <div>
+
+                                        <span>
+                                            Starting Bid
+                                        </span>
+
+                                        <strong>
+                                            ${formatCurrency(
+                                                startingBid
+                                            )}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <span>
+                                            Current Bid
+                                        </span>
+
+                                        <strong>
+                                            ${formatCurrency(
+                                                currentBid
+                                            )}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <p>
+
+                                    <strong>
+                                        Approval:
+                                    </strong>
+
+                                    <span
+                                        style="${statusClass}">
+
+                                        ${escapeHTML(
+                                            adminStatus
+                                        )}
+
+                                    </span>
+
+                                </p>
+
+
+                                <p>
+
+                                    <strong>
+                                        Auction:
+                                    </strong>
+
+                                    ${escapeHTML(
+                                        auctionStatus
+                                    )}
+
+                                </p>
+
+
+${
+    startDateTime
+        ? `
+            <p
+                style="
+                    font-size:14px;
+                    color:#666;
+                ">
+
+                <strong>
+                    Starts:
+                </strong>
+
+                ${escapeHTML(
+                    formatAuctionDateTime(
+                        startDateTime
+                    )
+                )}
+
+            </p>
+          `
+        : ""
+}
+
+${
+    endDateTime
+        ? `
+            <p
+                style="
+                    font-size:14px;
+                    color:#666;
+                ">
+
+                <strong>
+                    Ends:
+                </strong>
+
+                ${escapeHTML(
+                    formatAuctionDateTime(
+                        endDateTime
+                    )
+                )}
+
+            </p>
+          `
+        : ""
+}
+
+                                <a
+                                    class="details-btn"
+                                    href="
+                                        artwork-details.html?id=${encodeURIComponent(
+                                            artworkId
+                                        )}
+                                    ">
+
+                                    View Full Details →
+
+                                </a>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+        /*
+         * Load this artist's artworks.
+         */
+
+        async function loadArtworks() {
+
+            try {
+
+                grid.innerHTML = `
+                    <p style="text-align:center;">
+                        Loading your artworks...
+                    </p>
+                `;
+
+
+                const response =
+                    await apiFetch(
+                        `/api/artworks/artist/${encodeURIComponent(
+                            user.id
+                        )}`
+                    );
+
+
+                artworks =
+                    Array.isArray(response)
+                        ? response
+                        : (
+                            Array.isArray(
+                                response?.artworks
+                            )
+                                ? response.artworks
+                                : []
+                        );
+
+
+                /*
+                 * No artworks.
+                 */
+
+                if (!artworks.length) {
+
+                    grid.innerHTML = "";
+
+                    empty.style.display = "block";
+
+                    return;
+                }
+
+
+                empty.style.display = "none";
+
+
+                /*
+                 * Render the returned artworks.
+                 */
+
+                renderArtworks();
+
+            } catch (error) {
+
+                console.error(
+                    "VIEW AUCTIONS ERROR:",
+                    error
+                );
+
+
+                empty.style.display = "none";
+
+
+                grid.innerHTML = `
+
+                    <p
+                        style="
+                            text-align:center;
+                            color:#b00020;
+                            width:100%;
+                        ">
+
+                        Unable to load your artworks.
+
+                        <br>
+
+                        ${escapeHTML(
+                            error.message
+                        )}
+
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        /*
+         * Search.
+         */
+
+        searchInput.addEventListener(
+            "input",
+            renderArtworks
+        );
+
+
+        /*
+         * Status filter.
+         */
+
+        statusFilter.addEventListener(
+            "change",
+            renderArtworks
+        );
+
+
+        /*
+         * Initial load.
+         */
+
+        await loadArtworks();
+
+    });
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+    <div
+        class="policy-modal-header">
+
+        <h2 id="policyModalTitle"></h2>
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+        <p>
+            Loading...
+        </p>
+
+    </div>
+
+</div>
+ 
+
+</div>
+
+</body>
+</html>

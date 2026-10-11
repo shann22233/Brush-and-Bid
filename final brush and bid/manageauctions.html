@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<!-- Admins only: redirects everyone else to admin login -->
+<script src="admin-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Manage Auctions - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+ 
+<style>
+
+.auction-result-badge {
+
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-top: 8px;
+
+}
+
+
+.sold-badge {
+
+    background: #f3e5f5;
+
+    color: #6a1b9a;
+
+}
+
+
+.scheduled-badge {
+
+    background: #fff3cd;
+
+    color: #856404;
+
+}
+
+
+.unsold-badge {
+
+    background: #ffebee;
+
+    color: #c62828;
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="about.html">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="gallery.html">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="auctions.html">
+                Auctions
+            </a>
+        </li>
+
+        <li id="roleMenu"></li>
+
+    </ul>
+
+</nav>
+
+
+<div class="header-right">
+
+    <button
+        id="loginBtn"
+        class="login-top-btn"
+        onclick="window.location.href='adminlogin.html'">
+
+        Admin Login
+
+    </button>
+
+
+    <div
+        id="profileArea"
+        class="profile-area"
+        style="display:none;">
+
+        <div
+            id="profileIcon"
+            class="profile-icon profile-initial"
+            onclick="toggleProfileMenu()">
+
+            A
+
+        </div>
+
+
+        <div
+            id="profileMenu"
+            class="profile-dropdown">
+
+            <h3 id="profileName">
+                Administrator
+            </h3>
+
+            <p id="profileRole">
+                Admin
+            </p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+
+            <a href="admindashboard.html">
+                Dashboard
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     PAGE HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<p class="gallery-small-title">
+    Administration
+</p>
+
+
+<h2>
+    Manage Weekly Auction
+</h2>
+
+
+<p>
+
+    Select an approved artwork, schedule its
+    auction, and control the 24-hour auction period.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     MANAGE AUCTION
+================================= -->
+
+<section class="manage-auctions-section">
+
+ 
+<div class="admin-section-title">
+
+    <h2>
+        Weekly Auction Management
+    </h2>
+
+
+    <p>
+
+        Only approved artworks can be scheduled.
+        Each auction lasts for 24 hours from its
+        selected starting date and time.
+
+    </p>
+
+</div>
+
+
+
+<!-- =================================
+     STATUS CARD
+================================= -->
+
+<div class="auction-admin-status-card">
+
+
+    <div>
+
+        <span>
+            Current Auction Status
+        </span>
+
+
+        <h3 id="adminAuctionStatus">
+            Not Scheduled
+        </h3>
+
+    </div>
+
+
+    <div>
+
+        <span>
+            Auction Duration
+        </span>
+
+
+        <h3>
+            24 Hours
+        </h3>
+
+    </div>
+
+
+    <div>
+
+        <span>
+            Selected Artwork
+        </span>
+
+
+        <h3 id="selectedArtworkName">
+            No Artwork Selected
+        </h3>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================
+     MESSAGE
+     (kept sticky near the top of the
+     viewport when it's shown, so it's
+     never missed when scrolled down
+     near the Start/Close buttons)
+================================= -->
+
+<div
+    id="auctionMessage"
+    style="
+        display:none;
+        position:sticky;
+        top:10px;
+        z-index:500;
+        max-width:1200px;
+        margin:20px auto;
+        padding:14px 18px;
+        border-radius:8px;
+        text-align:center;
+        font-weight:600;
+        box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    ">
+</div>
+
+
+
+<!-- =================================
+     APPROVED ARTWORKS
+================================= -->
+
+<div
+    id="approvedArtworksSection"
+    style="
+        max-width:1200px;
+        margin:35px auto;
+    ">
+
+    <div class="admin-section-title">
+
+        <h2>
+            Approved Artworks
+        </h2>
+
+
+        <p>
+            Select one approved artwork for the weekly auction.
+        </p>
+
+    </div>
+
+
+    <div
+        id="approvedArtworksGrid"
+        class="gallery-grid">
+
+        <p style="text-align:center;width:100%;">
+            Loading approved artworks...
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================
+     NO ARTWORK
+================================= -->
+
+<div
+    id="noSelectedArtworkMessage"
+    class="auction-empty-message"
+    style="display:none;">
+
+    <h3>
+        No Approved Artwork Available
+    </h3>
+
+
+    <p>
+        There are currently no approved artworks
+        available for auction.
+    </p>
+
+</div>
+
+
+
+<!-- =================================
+     SELECTED ARTWORK
+================================= -->
+
+<div
+    class="selected-auction-artwork"
+    id="selectedAuctionArtwork"
+    style="display:none;">
+
+</div>
+
+
+
+<!-- =================================
+     AUCTION SCHEDULE
+================================= -->
+
+<div
+    class="auction-schedule-container"
+    id="auctionScheduleContainer"
+    style="display:none;">
+
+    <h2>
+        Set Auction Schedule
+    </h2>
+
+
+    <p>
+
+        Select the starting date and time.
+        The end date and time will automatically
+        be calculated as 24 hours later.
+
+    </p>
+
+
+    <form id="auctionScheduleForm">
+
+
+        <div class="artist-input-group">
+
+            <label for="auctionDate">
+                Auction Date
+            </label>
+
+
+            <input
+                type="date"
+                id="auctionDate"
+                required>
+
+        </div>
+
+
+
+        <div class="artist-input-group">
+
+            <label for="auctionStartTime">
+                Auction Start Time
+            </label>
+
+
+            <input
+                type="time"
+                id="auctionStartTime"
+                required>
+
+        </div>
+
+
+
+        <div class="artist-input-group">
+
+            <label for="auctionEndDate">
+                Auction End Date
+            </label>
+
+
+            <input
+                type="date"
+                id="auctionEndDate"
+                readonly>
+
+        </div>
+
+
+
+        <div class="artist-input-group">
+
+            <label for="auctionEndTime">
+                Auction End Time
+            </label>
+
+
+            <input
+                type="time"
+                id="auctionEndTime"
+                readonly>
+
+        </div>
+
+
+
+        <div class="artist-input-group full-width">
+
+            <label for="auctionStartingBid">
+                Artwork Starting Bid
+            </label>
+
+
+            <input
+                type="text"
+                id="auctionStartingBid"
+                readonly>
+
+        </div>
+
+
+
+        <button
+            type="submit"
+            class="artist-save-btn"
+            id="saveAuctionButton">
+
+            Save Auction Schedule
+
+        </button>
+
+
+    </form>
+
+
+    <p id="auctionScheduleMessage"></p>
+
+</div>
+
+
+
+<!-- =================================
+     AUCTION CONTROL
+================================= -->
+
+<div
+    class="auction-control-buttons"
+    id="auctionControlButtons"
+    style="display:none;">
+
+
+    <button
+        type="button"
+        class="admin-action-btn start-auction-btn"
+        id="startAuctionButton">
+
+        Start Auction
+
+    </button>
+
+
+    <button
+        type="button"
+        class="admin-action-btn close-auction-btn"
+        id="closeAuctionButton">
+
+        Close Auction
+
+    </button>
+
+</div>
+
+
+
+<!-- =================================
+     CURRENT AUCTION INFORMATION
+================================= -->
+
+<div
+    id="currentAuctionSection"
+    style="
+        max-width:1200px;
+        margin:40px auto;
+    ">
+
+    <div class="box">
+
+        <h3>
+            Current / Scheduled Auction
+        </h3>
+
+
+        <div id="currentAuctionDetails">
+
+            <p>
+                No auction is currently scheduled.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+    Online Art Auction Platform |
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     PAGE SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           ADMIN ACCESS
+        ================================= */
+
+        const user =
+            getCurrentUser();
+
+
+        if (
+            !user.loggedIn ||
+            user.role !== "Admin"
+        ) {
+
+            window.location.href =
+                "adminlogin.html";
+
+            return;
+
+        }
+
+
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const grid =
+            document.getElementById(
+                "approvedArtworksGrid"
+            );
+
+
+        const selectedArtworkBox =
+            document.getElementById(
+                "selectedAuctionArtwork"
+            );
+
+
+        const selectedArtworkName =
+            document.getElementById(
+                "selectedArtworkName"
+            );
+
+
+        const noArtworkMessage =
+            document.getElementById(
+                "noSelectedArtworkMessage"
+            );
+
+
+        const scheduleContainer =
+            document.getElementById(
+                "auctionScheduleContainer"
+            );
+
+
+        const controlButtons =
+            document.getElementById(
+                "auctionControlButtons"
+            );
+
+
+        const statusDisplay =
+            document.getElementById(
+                "adminAuctionStatus"
+            );
+
+
+        const message =
+            document.getElementById(
+                "auctionMessage"
+            );
+
+
+        const scheduleMessage =
+            document.getElementById(
+                "auctionScheduleMessage"
+            );
+
+
+        const dateInput =
+            document.getElementById(
+                "auctionDate"
+            );
+
+
+        const startTimeInput =
+            document.getElementById(
+                "auctionStartTime"
+            );
+
+
+        const endDateInput =
+            document.getElementById(
+                "auctionEndDate"
+            );
+
+
+        const endTimeInput =
+            document.getElementById(
+                "auctionEndTime"
+            );
+
+
+        const startingBidInput =
+            document.getElementById(
+                "auctionStartingBid"
+            );
+
+
+        const currentAuctionDetails =
+            document.getElementById(
+                "currentAuctionDetails"
+            );
+
+
+        const startButton =
+            document.getElementById(
+                "startAuctionButton"
+            );
+
+
+        const closeButton =
+            document.getElementById(
+                "closeAuctionButton"
+            );
+
+
+        let approvedArtworks = [];
+
+        let selectedArtwork = null;
+
+        let currentAuction = null;
+
+
+
+        /* =================================
+           ESCAPE HTML
+        ================================= */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* =================================
+           CURRENCY
+        ================================= */
+
+        function formatCurrency(value) {
+
+            return "₹" +
+                Number(value || 0)
+                    .toLocaleString("en-IN");
+
+        }
+
+
+
+        /* =================================
+           DATE FORMAT
+        ================================= */
+
+function formatDateTime(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return String(value);
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "Asia/Kolkata"
+        }
+    );
+}
+
+
+        /* =================================
+           MESSAGE
+
+           IMPORTANT FIX:
+           The message box is scrolled into
+           view whenever it is shown, so a
+           result (success OR error) is never
+           missed just because the admin is
+           scrolled down near the Start/Close
+           Auction buttons. The box is also
+           made "sticky" in the CSS above, as
+           an extra safety net.
+        ================================= */
+
+        function showMessage(
+            text,
+            type = "success"
+        ) {
+
+            message.textContent = text;
+
+            message.style.display =
+                "block";
+
+
+            if (type === "success") {
+
+                message.style.background =
+                    "#e8f5e9";
+
+                message.style.color =
+                    "#2e7d32";
+
+            } else {
+
+                message.style.background =
+                    "#ffebee";
+
+                message.style.color =
+                    "#c62828";
+
+            }
+
+
+            message.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+
+
+
+        /* =================================
+           SELECT ARTWORK
+        ================================= */
+
+        function selectArtwork(artwork) {
+
+            selectedArtwork =
+                artwork;
+
+
+            const artworkId =
+                artwork.artwork_id ??
+                artwork.id;
+
+
+            const name =
+                artwork.title ||
+                "Untitled Artwork";
+
+
+            const image =
+                artwork.image_url ||
+                artwork.image ||
+                "";
+
+
+            const startingBid =
+                artwork.starting_price ??
+                artwork.startingBid ??
+                0;
+
+
+            selectedArtworkName.textContent =
+                name;
+
+
+            selectedArtworkBox.style.display =
+                "block";
+
+
+            selectedArtworkBox.innerHTML = `
+
+                <div
+                    style="
+                        display:flex;
+                        gap:25px;
+                        align-items:center;
+                        flex-wrap:wrap;
+                    ">
+
+                    ${
+                        image
+                            ? `
+                                <img
+                                    src="${escapeHTML(image)}"
+                                    alt="${escapeHTML(name)}"
+                                    style="
+                                        width:260px;
+                                        height:220px;
+                                        object-fit:cover;
+                                        border-radius:8px;
+                                    ">
+                              `
+                            : `
+                                <div
+                                    style="
+                                        width:260px;
+                                        height:220px;
+                                        display:flex;
+                                        align-items:center;
+                                        justify-content:center;
+                                        background:#eee;
+                                        color:#777;
+                                        border-radius:8px;
+                                    ">
+
+                                    No Image Available
+
+                                </div>
+                              `
+                    }
+
+
+                    <div>
+
+                        <span>
+                            SELECTED FOR AUCTION
+                        </span>
+
+
+                        <h2>
+                            ${escapeHTML(name)}
+                        </h2>
+
+
+                        <p>
+
+                            <strong>
+                                Artist:
+                            </strong>
+
+                            ${escapeHTML(
+                                artwork.artist_name ||
+                                artwork.artistName ||
+                                artwork.full_name ||
+                                "Artist"
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Category:
+                            </strong>
+
+                            ${escapeHTML(
+                                artwork.category ||
+                                "-"
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Starting Bid:
+                            </strong>
+
+                            ${formatCurrency(
+                                startingBid
+                            )}
+
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="admin-action-btn"
+                            id="changeArtworkButton">
+
+                            Change Artwork
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            startingBidInput.value =
+                formatCurrency(
+                    startingBid
+                );
+
+
+            scheduleContainer.style.display =
+                "block";
+
+
+            controlButtons.style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "changeArtworkButton"
+                )
+                .addEventListener(
+                    "click",
+                    function () {
+
+                        selectedArtwork = null;
+
+                        selectedArtworkBox.style.display =
+                            "none";
+
+                        scheduleContainer.style.display =
+                            "none";
+
+                        selectedArtworkName.textContent =
+                            "No Artwork Selected";
+
+                        startingBidInput.value =
+                            "";
+
+                    }
+                );
+
+        }
+
+
+
+        /* =================================
+           RENDER APPROVED ARTWORKS
+        ================================= */
+
+        function renderApprovedArtworks() {
+
+            if (!approvedArtworks.length) {
+
+                grid.innerHTML = "";
+
+                noArtworkMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            noArtworkMessage.style.display =
+                "none";
+
+
+            grid.innerHTML =
+                approvedArtworks
+                    .map(function (artwork) {
+
+                        const id =
+                            artwork.artwork_id ??
+                            artwork.id;
+
+
+                        const name =
+                            artwork.title ||
+                            "Untitled Artwork";
+
+
+                        const image =
+                            artwork.image_url ||
+                            artwork.image ||
+                            "";
+
+
+                        const artist =
+                            artwork.artist_name ||
+                            artwork.artistName ||
+                            artwork.full_name ||
+                            "Artist";
+
+
+                        const category =
+                            artwork.category ||
+                            "Artwork";
+
+
+                        const startingBid =
+                            artwork.starting_price ??
+                            artwork.startingBid ??
+                            0;
+
+const auctionStatus =
+    String(
+        artwork.auction_status || ""
+    ).trim();
+
+const auctionResult =
+    String(
+        artwork.auction_result || "Available"
+    ).trim();
+
+const isSelectedForAuction =
+    auctionStatus === "Scheduled" ||
+    auctionStatus === "Active";
+
+const isSold =
+    auctionResult.toLowerCase() === "sold";
+
+const isUnsold =
+    auctionResult.toLowerCase() === "unsold";                        return `
+
+                            <article
+                                class="gallery-card">
+
+                                <div
+                                    class="gallery-image">
+
+                                    ${
+                                        image
+                                            ? `
+                                                <img
+                                                    src="${escapeHTML(image)}"
+                                                    alt="${escapeHTML(name)}"
+                                                    loading="lazy">
+                                              `
+                                            : `
+                                                <div
+                                                    style="
+                                                        min-height:220px;
+                                                        display:flex;
+                                                        align-items:center;
+                                                        justify-content:center;
+                                                        background:#eee;
+                                                        color:#777;
+                                                    ">
+
+                                                    No Image Available
+
+                                                </div>
+                                              `
+                                    }
+
+                                </div>
+
+
+                                <div
+                                    class="gallery-info">
+
+                                    <h3>
+                                        ${escapeHTML(name)}
+                                    </h3>
+
+
+                                    <p>
+
+                                        <strong>
+                                            Artist:
+                                        </strong>
+
+                                        ${escapeHTML(artist)}
+
+                                    </p>
+
+
+                                    <p>
+
+                                        <strong>
+                                            Category:
+                                        </strong>
+
+                                        ${escapeHTML(category)}
+
+                                    </p>
+
+
+                                    <p>
+
+                                        <strong>
+                                            Starting Bid:
+                                        </strong>
+
+                                        ${formatCurrency(
+                                            startingBid
+                                        )}
+
+                                    </p>
+
+
+${
+    isSold
+        ? `
+            <span
+                class="auction-result-badge sold-badge">
+
+                SOLD
+
+            </span>
+          `
+        : isSelectedForAuction
+            ? `
+                <span
+                    class="auction-result-badge scheduled-badge">
+
+                    ${
+                        auctionStatus === "Active"
+                            ? "CURRENTLY IN AUCTION"
+                            : "ALREADY SCHEDULED"
+                    }
+
+                </span>
+              `
+            : isUnsold
+                ? `
+                    <div>
+
+                        <span
+                            class="auction-result-badge unsold-badge">
+
+                            UNSOLD
+
+                        </span>
+
+                        <button
+                            type="button"
+                            class="details-btn select-artwork-btn"
+                            data-artwork-id="${escapeHTML(id)}">
+
+                            Select for Auction →
+
+                        </button>
+
+                    </div>
+                  `
+                : `
+                    <button
+                        type="button"
+                        class="details-btn select-artwork-btn"
+                        data-artwork-id="${escapeHTML(id)}">
+
+                        Select for Auction →
+
+                    </button>
+                  `
+}
+                                </div>
+
+                            </article>
+
+                        `;
+
+                    })
+                    .join("");
+
+
+            document
+                .querySelectorAll(
+                    ".select-artwork-btn"
+                )
+                .forEach(
+                    function (button) {
+
+                        button.addEventListener(
+                            "click",
+                            function () {
+
+                                const id =
+                                    button.dataset.artworkId;
+
+
+                                const artwork =
+                                    approvedArtworks.find(
+                                        function (item) {
+
+                                            return String(
+                                                item.artwork_id ??
+                                                item.id
+                                            ) === String(id);
+
+                                        }
+                                    );
+
+
+if (artwork) {
+
+    const auctionStatus =
+        String(
+            artwork.auction_status || ""
+        ).trim();
+
+    const auctionResult =
+        String(
+            artwork.auction_result || ""
+        ).trim();
+
+
+    /*
+     * Never allow an artwork that is
+     * already scheduled or active to
+     * be selected again.
+     */
+
+    if (
+        auctionStatus === "Scheduled" ||
+        auctionStatus === "Active"
+    ) {
+
+        showMessage(
+            "This artwork is already selected for an auction.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Sold artworks can never be auctioned again.
+     */
+
+    if (auctionResult === "Sold") {
+
+        showMessage(
+            "This artwork has already been sold and cannot be auctioned again.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectArtwork(
+        artwork
+    );
+
+
+    window.scrollTo({
+                                                top:
+                                            scheduleContainer
+                                                .offsetTop -
+                                            100,
+                                        behavior:
+                                            "smooth"
+                                    });
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+
+        /* =================================
+           LOAD APPROVED ARTWORKS
+        ================================= */
+
+        async function loadApprovedArtworks() {
+
+            try {
+
+                const response =
+                    await apiFetch(
+                        "/api/admin/artworks?status=Approved"
+                    );
+
+
+                approvedArtworks =
+                    Array.isArray(response)
+                        ? response
+                        : (
+                            Array.isArray(
+                                response?.artworks
+                            )
+                                ? response.artworks
+                                : []
+                        );
+
+
+                /*
+                 * Extra frontend safety:
+                 * only Approved artwork is shown.
+                 */
+
+                approvedArtworks =
+                    approvedArtworks.filter(
+                        function (artwork) {
+
+                            return String(
+                                artwork.status ||
+                                artwork.adminStatus ||
+                                ""
+                            ).toLowerCase() ===
+                            "approved";
+
+                        }
+                    );
+
+
+                renderApprovedArtworks();
+
+
+            } catch (error) {
+
+                console.error(
+                    "APPROVED ARTWORKS ERROR:",
+                    error
+                );
+
+
+                grid.innerHTML = `
+
+                    <p
+                        style="
+                            color:#b00020;
+                            text-align:center;
+                            width:100%;
+                        ">
+
+                        Unable to load approved artworks.
+
+                        <br>
+
+                        ${escapeHTML(
+                            error.message
+                        )}
+
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           CALCULATE END
+        ================================= */
+
+        function calculateAuctionEnd() {
+
+            if (
+                !dateInput.value ||
+                !startTimeInput.value
+            ) {
+
+                endDateInput.value = "";
+
+                endTimeInput.value = "";
+
+                return;
+
+            }
+
+
+            const start =
+                new Date(
+                    `${dateInput.value}T${startTimeInput.value}`
+                );
+
+
+            if (Number.isNaN(
+                start.getTime()
+            )) {
+
+                return;
+
+            }
+
+
+            const end =
+                new Date(
+                    start.getTime() +
+                    24 * 60 * 60 * 1000
+                );
+
+
+            const year =
+                end.getFullYear();
+
+
+            const month =
+                String(
+                    end.getMonth() + 1
+                ).padStart(2, "0");
+
+
+            const day =
+                String(
+                    end.getDate()
+                ).padStart(2, "0");
+
+
+            const hours =
+                String(
+                    end.getHours()
+                ).padStart(2, "0");
+
+
+            const minutes =
+                String(
+                    end.getMinutes()
+                ).padStart(2, "0");
+
+
+            endDateInput.value =
+                `${year}-${month}-${day}`;
+
+
+            endTimeInput.value =
+                `${hours}:${minutes}`;
+
+        }
+
+
+
+        dateInput.addEventListener(
+            "change",
+            calculateAuctionEnd
+        );
+
+
+        startTimeInput.addEventListener(
+            "change",
+            calculateAuctionEnd
+        );
+
+
+
+        /* =================================
+           SAVE AUCTION
+        ================================= */
+
+        document
+            .getElementById(
+                "auctionScheduleForm"
+            )
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    if (!selectedArtwork) {
+
+                        scheduleMessage.textContent =
+                            "Please select an approved artwork first.";
+
+                        scheduleMessage.style.color =
+                            "#b00020";
+
+                        return;
+
+                    }
+
+
+                    calculateAuctionEnd();
+
+
+                    if (
+                        !dateInput.value ||
+                        !startTimeInput.value
+                    ) {
+
+                        scheduleMessage.textContent =
+                            "Please select the auction date and start time.";
+
+                        scheduleMessage.style.color =
+                            "#b00020";
+
+                        return;
+
+                    }
+
+
+                    const artworkId =
+                        selectedArtwork.artwork_id ??
+                        selectedArtwork.id;
+
+
+                    try {
+
+                        const response =
+                            await apiFetch(
+                                "/api/admin/auctions",
+                                {
+                                    method: "POST",
+
+                                    body: {
+
+                                        artwork_id:
+                                            artworkId,
+
+                                        start_date:
+                                            dateInput.value,
+
+                                        start_time:
+                                            startTimeInput.value
+
+                                    }
+                                }
+                            );
+
+
+                        currentAuction =
+                            response?.auction ||
+                            (Array.isArray(response?.auctions) ? response.auctions[0] : null) ||
+                            response;
+
+
+                        statusDisplay.textContent =
+                            currentAuction.status ||
+                            "Scheduled";
+
+
+                        scheduleMessage.textContent =
+                            response?.message ||
+                            "Auction schedule saved successfully.";
+
+                        scheduleMessage.style.color =
+                            "#2e7d32";
+
+
+                        controlButtons.style.display =
+                            "flex";
+
+
+                        setMinimumAuctionDate();
+                        await loadCurrentAuction();
+
+                        await loadApprovedArtworks();
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "SAVE AUCTION ERROR:",
+                            error
+                        );
+
+
+                        scheduleMessage.textContent =
+                            error.message ||
+                            "Unable to save auction.";
+
+                        scheduleMessage.style.color =
+                            "#b00020";
+
+                    }
+
+                }
+            );
+
+
+
+        function setMinimumAuctionDate() {
+            const dateInput = document.getElementById("auctionDate");
+            if (!dateInput) return;
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, "0");
+            const dd = String(now.getDate()).padStart(2, "0");
+            dateInput.min = `${yyyy}-${mm}-${dd}`;
+            if (dateInput.value && dateInput.value < dateInput.min) dateInput.value = "";
+        }
+
+        /* =================================
+           LOAD CURRENT AUCTION
+        ================================= */
+
+        async function loadCurrentAuction() {
+
+            try {
+
+                const response =
+                    await apiFetch(
+                        "/api/admin/auction/current"
+                    );
+
+
+                currentAuction =
+                    response?.auction ||
+                    response ||
+                    null;
+
+
+                if (!currentAuction) {
+
+                    statusDisplay.textContent =
+                        "Not Scheduled";
+
+
+                    currentAuctionDetails.innerHTML = `
+
+                        <p>
+                            No auction is currently scheduled.
+                        </p>
+
+                    `;
+
+
+                    controlButtons.style.display =
+                        "none";
+
+
+                    return;
+
+                }
+
+
+                const artwork =
+                    currentAuction.artwork ||
+                    currentAuction;
+
+
+                const name =
+                    currentAuction.artwork_name ||
+                    currentAuction.artworkName ||
+                    artwork.title ||
+                    "Artwork";
+
+
+                const artist =
+                    currentAuction.artist_name ||
+                    currentAuction.artistName ||
+                    artwork.artist_name ||
+                    artwork.artistName ||
+                    "Artist";
+
+
+const startTime =
+    currentAuction.start_time ||
+    currentAuction.startDateTime ||
+    currentAuction.start_datetime ||
+    "";
+                const endDate =
+                    currentAuction.end_date ||
+                    currentAuction.endDate;
+
+
+                const endTime =
+                    currentAuction.end_time ||
+                    currentAuction.endTime;
+
+
+                const status =
+                    currentAuction.status ||
+                    "Scheduled";
+
+
+                const currentBid =
+                    currentAuction.current_bid ??
+                    currentAuction.currentBid ??
+                    artwork.current_bid ??
+                    0;
+const totalBids =
+    Number(
+        currentAuction.total_bids ??
+        currentAuction.bid_count ??
+        0
+    );
+
+
+let auctionResult =
+    "—";
+
+
+if (status === "Closed") {
+
+    auctionResult =
+        totalBids > 0
+            ? "SOLD"
+            : "UNSOLD";
+
+}
+
+                statusDisplay.textContent =
+                    status;
+
+
+                selectedArtworkName.textContent =
+                    name;
+
+
+currentAuctionDetails.innerHTML = `
+
+    <p>
+
+        <strong>
+            Artwork:
+        </strong>
+
+        ${escapeHTML(name)}
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Artist:
+        </strong>
+
+        ${escapeHTML(artist)}
+
+    </p>
+
+
+<p>
+
+    <strong>
+        Starting:
+    </strong>
+
+    ${escapeHTML(
+        formatDateTime(startTime)
+    )}
+
+</p>
+
+<p>
+
+    <strong>
+        Ending:
+    </strong>
+
+    ${escapeHTML(
+        formatDateTime(endTime)
+    )}
+
+</p>
+
+    <p>
+
+        <strong>
+            Current Highest Bid:
+        </strong>
+
+        ${formatCurrency(currentBid)}
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Status:
+        </strong>
+
+        ${escapeHTML(status)}
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Result:
+        </strong>
+
+        ${escapeHTML(auctionResult)}
+
+    </p>
+
+`;
+
+                if (
+                    status === "Scheduled" ||
+                    status === "Live" ||
+                    status === "Active"
+                ) {
+
+                    controlButtons.style.display =
+                        "flex";
+
+                } else {
+
+                    controlButtons.style.display =
+                        "none";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "CURRENT AUCTION ERROR:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================
+           START AUCTION
+
+           FIX: the button is disabled and its
+           label changes to "Starting..." the
+           instant it is clicked, so there is
+           always immediate visible feedback
+           that the click registered — even
+           before the network request finishes.
+        ================================= */
+
+        startButton.addEventListener(
+            "click",
+            async function () {
+
+                if (!currentAuction) {
+
+                    showMessage(
+                        "Please schedule an auction first.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                const originalLabel =
+                    startButton.textContent;
+
+
+                startButton.disabled = true;
+
+                startButton.textContent =
+                    "Starting...";
+
+
+                try {
+
+                    // Re-fetch immediately before acting so the ID is not stale.
+                    const latestResponse =
+                        await apiFetch("/api/admin/auction/current");
+
+                    currentAuction =
+                        latestResponse?.auction ||
+                        (Array.isArray(latestResponse?.auctions)
+                            ? latestResponse.auctions[0]
+                            : latestResponse) ||
+                        null;
+
+                    if (!currentAuction) {
+                        showMessage("No auction is currently available.", "error");
+                        await loadCurrentAuction();
+                        return;
+                    }
+
+                    const auctionId =
+                        currentAuction.auction_id ??
+                        currentAuction.auctionId ??
+                        currentAuction.id;
+
+
+                    if (!auctionId) {
+
+                        showMessage(
+                            "Auction ID is missing.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    await apiFetch(
+                        `/api/admin/auctions/${encodeURIComponent(
+                            auctionId
+                        )}/start`,
+                        {
+                            method: "PUT"
+                        }
+                    );
+
+
+                    showMessage(
+                        "The auction is now live."
+                    );
+
+
+                    await loadCurrentAuction();
+
+                    await loadApprovedArtworks();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "START AUCTION ERROR:",
+                        error
+                    );
+
+                    /*
+                     * The most common reason this fails is that
+                     * another auction is still marked Active in
+                     * the database (only one auction can be Active
+                     * at a time). Surface that clearly.
+                     */
+
+                    showMessage(
+                        error.message ||
+                        "Unable to start auction.",
+                        "error"
+                    );
+
+                } finally {
+
+                    startButton.disabled = false;
+
+                    startButton.textContent =
+                        originalLabel;
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================
+           CLOSE AUCTION
+
+           Same immediate-feedback fix applied
+           here as well.
+        ================================= */
+
+        closeButton.addEventListener(
+            "click",
+            async function () {
+
+                if (!currentAuction) {
+
+                    showMessage(
+                        "No auction is currently scheduled.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                const confirmation =
+                    confirm(
+                        "Are you sure you want to close the current auction?"
+                    );
+
+
+                if (!confirmation) {
+                    return;
+                }
+
+
+                const originalLabel =
+                    closeButton.textContent;
+
+
+                closeButton.disabled = true;
+
+                closeButton.textContent =
+                    "Closing...";
+
+
+                try {
+
+                    // Re-fetch immediately before acting so the ID is not stale.
+                    const latestResponse =
+                        await apiFetch("/api/admin/auction/current");
+
+                    currentAuction =
+                        latestResponse?.auction ||
+                        (Array.isArray(latestResponse?.auctions)
+                            ? latestResponse.auctions[0]
+                            : latestResponse) ||
+                        null;
+
+                    if (!currentAuction) {
+                        showMessage("No auction is currently available.", "error");
+                        await loadCurrentAuction();
+                        return;
+                    }
+
+                    const auctionId =
+                        currentAuction.auction_id ??
+                        currentAuction.auctionId ??
+                        currentAuction.id;
+
+
+                    if (!auctionId) {
+
+                        showMessage(
+                            "Auction ID is missing.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    await apiFetch(
+                        `/api/admin/auctions/${encodeURIComponent(
+                            auctionId
+                        )}/close`,
+                        {
+                            method: "PUT"
+                        }
+                    );
+
+
+                    showMessage(
+                        "The auction has been closed."
+                    );
+
+
+                    await loadCurrentAuction();
+
+                    await loadApprovedArtworks();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "CLOSE AUCTION ERROR:",
+                        error
+                    );
+
+
+                    showMessage(
+                        error.message ||
+                        "Unable to close auction.",
+                        "error"
+                    );
+
+                } finally {
+
+                    closeButton.disabled = false;
+
+                    closeButton.textContent =
+                        originalLabel;
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================
+           INITIAL LOAD
+        ================================= */
+
+        await loadApprovedArtworks();
+
+        await loadCurrentAuction();
+
+    });
+
+</script>
+
+</body>
+
+</html>

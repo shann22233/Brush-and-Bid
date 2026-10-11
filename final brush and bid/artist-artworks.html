@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<!-- Members only: sends logged-out visitors to login -->
+<script src="member-guard.js"></script>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    Artist Artworks - BRUSH and BID
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+
+<!-- =================================
+     PORTRAIT ARTWORK CARDS
+     (scoped to this page only)
+================================= -->
+
+<style>
+
+    /*
+     * Narrower cards + a taller image area
+     * so each artwork photo displays in
+     * portrait orientation. The description,
+     * medium, size, prices and status already
+     * sit below the image in the markup, so
+     * this only changes the image proportions.
+     */
+
+    #artistArtworks{
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(280px, 340px));
+
+        justify-content:center;
+
+    }
+
+    #artistArtworks .gallery-image{
+
+        height:460px;
+
+    }
+
+    #artistArtworks .gallery-image img{
+
+        width:100%;
+
+        height:100%;
+
+        object-fit:cover;
+
+        object-position:center;
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+ 
+<div class="logo">
+
+    <h1>
+        BRUSH and BID
+    </h1>
+
+</div>
+
+
+<nav>
+
+    <ul id="navbar">
+
+
+        <li>
+
+            <a href="index.html">
+
+                Home
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="gallery.html"
+                class="active">
+
+                Gallery
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="auctions.html">
+
+                Auctions
+
+            </a>
+
+        </li>
+
+
+        <li id="roleMenu"></li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- =================================
+     LOGIN / PROFILE
+================================= -->
+
+<div class="header-right">
+
+
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="window.location.href='index.html?login=true'">
+
+        Login
+
+    </button>
+
+
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+
+            U
+
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+
+            <h3 id="profileName"></h3>
+
+
+            <p id="profileRole"></p>
+
+
+            <small id="profileEmail"></small>
+
+
+            <hr>
+
+
+            <a
+                href="#"
+                id="profilePage">
+
+                My Profile
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =================================
+     ARTIST HERO
+================================= -->
+
+<section class="gallery-hero">
+
+ 
+<h2 id="artistName">
+
+    Artist Artworks
+
+</h2>
+
+
+<p id="artistDescription">
+
+    Explore the creative collection and unique
+    artworks created by this artist.
+
+</p>
+ 
+
+</section>
+
+<!-- =================================
+     SEARCH / FILTER
+================================= -->
+
+<section class="search-section">
+
+ 
+<div class="search-container">
+
+
+    <input
+        type="text"
+        id="artworkSearch"
+        placeholder="Search artwork...">
+
+
+    <select id="priceFilter">
+
+
+        <option value="all">
+
+            All Prices
+
+        </option>
+
+
+        <option value="15000">
+
+            Below ₹15,000
+
+        </option>
+
+
+        <option value="25000">
+
+            ₹15,000 - ₹25,000
+
+        </option>
+
+
+        <option value="30000">
+
+            Above ₹25,000
+
+        </option>
+
+
+    </select>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     ARTIST COLLECTION
+================================= -->
+
+<section class="gallery-section">
+
+ 
+<div class="gallery-title">
+
+
+    <p class="gallery-small-title">
+
+        Artist collection
+
+    </p>
+
+
+    <h2 id="artistCollectionTitle">
+
+        Featured Artworks
+
+    </h2>
+
+
+    <p>
+
+        Explore the artworks created by this
+        artist. Each artwork includes its
+        description, starting bid and auction
+        information.
+
+    </p>
+
+
+    <a
+        class="details-btn"
+        href="gallery.html">
+
+        ← Back to Artists
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =================================
+     ARTWORKS
+================================= -->
+
+<div
+    class="gallery-grid"
+    id="artistArtworks">
+
+
+    <div class="gallery-loading">
+
+        <p>
+
+            Loading artworks...
+
+        </p>
+
+    </div>
+
+
+</div>
+ 
+
+</section>
+
+<!-- =================================
+     FOOTER
+================================= -->
+
+<footer>
+
+ 
+<p>
+
+    © 2026 BRUSH and BID |
+
+    Online Art Auction Platform |
+
+    All Rights Reserved
+
+</p>
+ 
+
+</footer>
+
+<!-- =================================
+     SHARED SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =================================
+     ARTIST ARTWORK SCRIPT
+================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =================================
+           URL PARAMETERS
+        ================================= */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+const artistIdFromURL =
+    params.get("artistId");
+
+
+const artistNameFromURL =
+    params.get("artist");
+
+
+const currentUser =
+    getCurrentUser();
+
+
+/*
+ * If an artist was selected from Gallery,
+ * use the artistId from the URL.
+ *
+ * If there is no artistId in the URL,
+ * this page is being opened as the
+ * logged-in artist's own artwork page.
+ */
+
+const isPublicArtistView =
+    !!artistIdFromURL;
+
+
+const artistId =
+    artistIdFromURL ||
+    (
+        currentUser &&
+        currentUser.loggedIn &&
+        String(currentUser.role).toLowerCase() === "artist"
+            ? (
+                currentUser.userId ||
+                currentUser.id
+            )
+            : null
+    );
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const artistName =
+            document.getElementById(
+                "artistName"
+            );
+
+
+        const collectionTitle =
+            document.getElementById(
+                "artistCollectionTitle"
+            );
+
+
+        const container =
+            document.getElementById(
+                "artistArtworks"
+            );
+
+
+        const search =
+            document.getElementById(
+                "artworkSearch"
+            );
+
+
+        const priceFilter =
+            document.getElementById(
+                "priceFilter"
+            );
+
+
+
+/* =================================
+   CHECK ARTIST INFORMATION
+================================= */
+
+/*
+ * If artistId came from the URL,
+ * this is a public artist collection.
+ *
+ * Therefore:
+ * DO NOT require login.
+ */
+
+if (!artistId) {
+
+    container.innerHTML = `
+
+        <div class="gallery-empty">
+
+            <p>
+
+                Artist information could not be loaded.
+
+            </p>
+
+        </div>
+
+    `;
+
+    return;
+
+}
+
+if (!artistId) {
+
+    container.innerHTML = `
+
+        <div class="gallery-empty">
+
+            <p>
+
+                Artist information could not be loaded.
+
+            </p>
+
+        </div>
+
+    `;
+
+    return;
+
+}
+        /* =================================
+           LOAD ARTWORKS
+        ================================= */
+
+        try {
+
+
+            const response =
+                await apiFetch(
+                    `/api/artworks/artist/${encodeURIComponent(
+                        artistId
+                    )}`
+                );
+
+
+            artworks =
+                Array.isArray(response)
+                    ? response
+                    : (
+                        response.artworks ||
+                        []
+                    );
+
+artworks =
+    artworks.filter(
+        function (artwork) {
+
+            const status =
+                String(
+                    artwork.admin_status ||
+                    artwork.adminStatus ||
+                    artwork.status ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+            return status === "approved";
+
+        }
+    );
+
+            /* =================================
+               DISPLAY ARTIST NAME
+            ================================= */
+
+const displayedArtistName =
+    artistNameFromURL ||
+    (
+        currentUser &&
+        currentUser.loggedIn &&
+        String(currentUser.role).toLowerCase() === "artist"
+            ? (
+                currentUser.fullName ||
+                currentUser.full_name ||
+                currentUser.name
+            )
+            : ""
+    ) ||
+    "Artist";
+
+
+artistName.textContent =
+    displayedArtistName;
+
+
+collectionTitle.textContent =
+    displayedArtistName +
+    "'s Artworks";
+
+
+            /* =================================
+               NO ARTWORKS
+            ================================= */
+
+            /* =================================
+   NO ARTWORKS — SHOW A DEFAULT
+================================= */
+
+if (
+    artworks.length === 0
+) {
+
+    artworks = [
+        {
+            artwork_id: 0,
+            title: "Sample Artwork",
+            description:
+                "This artist hasn't uploaded any approved artworks yet. This is a placeholder preview.",
+            category: "Art",
+            medium: "Not specified",
+            dimensions: "Not specified",
+            starting_price: 18000,
+            current_bid: 18000,
+            status: "Pending",
+            image_url:
+                "https://satgurus.com/cdn/shop/articles/indian-art_paintings.jpg?v=1712575516"
+        }
+    ];
+
+}
+
+
+            /* =================================
+               DISPLAY FUNCTION
+
+               PLACEHOLDER_IMG is now a real image
+               URL used directly as the default
+               artwork photo whenever an artwork has
+               no image_url, or its image fails to
+               load.
+            ================================= */
+
+            const PLACEHOLDER_IMG =
+                "https://satgurus.com/cdn/shop/articles/indian-art_paintings.jpg?v=1712575516";
+
+function formatAuctionDateTime(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "Asia/Kolkata"
+        }
+    );
+}
+            function displayArtworks(
+                list
+            ) {
+
+
+                container.innerHTML =
+                    "";
+
+
+                if (
+                    list.length === 0
+                ) {
+
+
+                    container.innerHTML = `
+
+                        <div class="gallery-empty">
+
+                            <p>
+
+                                No matching artworks found.
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+
+                list.forEach(
+                    function (artwork) {
+
+
+                        const artworkId =
+                            artwork.artwork_id ||
+                            artwork.id;
+
+
+                        const name =
+                            artwork.title ||
+                            "Untitled Artwork";
+
+
+                        const description =
+                            artwork.description ||
+                            "No description available.";
+
+
+                        const category =
+                            artwork.category ||
+                            "Art";
+
+
+                        const medium =
+                            artwork.medium ||
+                            "Not specified";
+
+
+                        const size =
+                            artwork.dimensions ||
+                            "Not specified";
+
+
+                        const startingBid =
+                            Number(
+                                artwork.starting_price ||
+                                artwork.startingBid ||
+                                0
+                            );
+
+
+                        const currentBid =
+                            Number(
+                                artwork.current_bid ||
+                                artwork.currentBid ||
+                                startingBid
+                            );
+
+
+                        const status =
+                            artwork.status ||
+                            artwork.adminStatus ||
+                            "Pending";
+
+const auctionStart =
+    artwork.auction_start_time ||
+    artwork.start_time ||
+    artwork.startDateTime ||
+    "";
+
+const auctionEnd =
+    artwork.auction_end_time ||
+    artwork.end_time ||
+    artwork.endDateTime ||
+    "";
+                        const image =
+                            artwork.image_url ||
+                            artwork.image ||
+                            PLACEHOLDER_IMG;
+
+
+
+                        /* =================================
+                           CARD
+                        ================================= */
+
+                        const card =
+                            document.createElement(
+                                "article"
+                            );
+
+
+                        card.className =
+                            "gallery-card";
+
+
+                        card.innerHTML = `
+
+                            <div class="gallery-image">
+
+                                <img
+
+                                    src="${escapeHTML(
+                                        image
+                                    )}"
+
+                                    alt="${escapeHTML(
+                                        name
+                                    )}"
+
+                                    onerror="
+                                        this.onerror=null;this.src='${PLACEHOLDER_IMG}';
+                                    "
+
+                                >
+
+                            </div>
+
+
+                            <div class="gallery-info">
+
+
+                                <h3>
+
+                                    ${escapeHTML(
+                                        name
+                                    )}
+
+                                </h3>
+
+
+                                <p class="artist">
+
+                                    Category:
+
+                                    <strong>
+
+                                        ${escapeHTML(
+                                            category
+                                        )}
+
+                                    </strong>
+
+                                </p>
+
+
+                                <p class="art-description">
+
+                                    ${escapeHTML(
+                                        description
+                                    )}
+
+                                </p>
+
+
+                                <p>
+
+                                    Medium:
+
+                                    <strong>
+
+                                        ${escapeHTML(
+                                            medium
+                                        )}
+
+                                    </strong>
+
+                                </p>
+
+
+                                <p>
+
+                                    Size:
+
+                                    <strong>
+
+                                        ${escapeHTML(
+                                            size
+                                        )}
+
+                                    </strong>
+
+                                </p>
+
+
+                                <div class="price-row">
+
+
+                                    <div>
+
+                                        <span>
+
+                                            Starting Price
+
+                                        </span>
+
+
+                                        <strong>
+
+                                            ₹${startingBid.toLocaleString(
+                                                "en-IN"
+                                            )}
+
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <span>
+
+                                            Current Bid
+
+                                        </span>
+
+
+                                        <strong>
+
+                                            ₹${currentBid.toLocaleString(
+                                                "en-IN"
+                                            )}
+
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <p>
+
+                                    Status:
+
+                                    <strong>
+
+                                        ${escapeHTML(
+                                            status
+                                        )}
+
+                                    </strong>
+
+                                </p>
+
+
+                            </div>
+
+                        `;
+
+
+                        container.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+            }
+
+
+
+            /* =================================
+               INITIAL DISPLAY
+            ================================= */
+
+            displayArtworks(
+                artworks
+            );
+
+
+
+            /* =================================
+               SEARCH
+            ================================= */
+
+            if (search) {
+
+                search.addEventListener(
+                    "input",
+                    applyFilters
+                );
+
+            }
+
+
+
+            /* =================================
+               PRICE FILTER
+            ================================= */
+
+            if (priceFilter) {
+
+                priceFilter.addEventListener(
+                    "change",
+                    applyFilters
+                );
+
+            }
+
+
+
+            /* =================================
+               FILTER FUNCTION
+            ================================= */
+
+            function applyFilters() {
+
+
+                const searchValue =
+                    (
+                        search?.value ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                const selectedPrice =
+                    priceFilter?.value ||
+                    "all";
+
+
+                const filtered =
+                    artworks.filter(
+                        function (artwork) {
+
+
+                            const name =
+                                (
+                                    artwork.title ||
+                                    ""
+                                )
+                                .toLowerCase();
+
+
+                            const description =
+                                (
+                                    artwork.description ||
+                                    ""
+                                )
+                                .toLowerCase();
+
+
+                            const category =
+                                (
+                                    artwork.category ||
+                                    ""
+                                )
+                                .toLowerCase();
+
+
+                            const amount =
+                                Number(
+                                    artwork.starting_price ||
+                                    artwork.startingBid ||
+                                    0
+                                );
+
+
+                            /* SEARCH */
+
+                            const matchesSearch =
+                                name.includes(
+                                    searchValue
+                                ) ||
+                                description.includes(
+                                    searchValue
+                                ) ||
+                                category.includes(
+                                    searchValue
+                                );
+
+
+
+                            /* PRICE */
+
+                            let matchesPrice =
+                                true;
+
+
+                            if (
+                                selectedPrice ===
+                                "15000"
+                            ) {
+
+                                matchesPrice =
+                                    amount <
+                                    15000;
+
+                            }
+
+
+                            else if (
+                                selectedPrice ===
+                                "25000"
+                            ) {
+
+                                matchesPrice =
+                                    amount >= 15000 &&
+                                    amount <= 25000;
+
+                            }
+
+
+                            else if (
+                                selectedPrice ===
+                                "30000"
+                            ) {
+
+                                matchesPrice =
+                                    amount >
+                                    25000;
+
+                            }
+
+
+
+                            return (
+                                matchesSearch &&
+                                matchesPrice
+                            );
+
+                        }
+                    );
+
+
+                displayArtworks(
+                    filtered
+                );
+
+            }
+
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Artist artworks error:",
+                error
+            );
+
+
+            container.innerHTML = `
+
+                <div class="gallery-empty">
+
+                    <p>
+
+                        Unable to load artworks.
+
+                    </p>
+
+
+                    <small>
+
+                        Please make sure the server
+                        and MySQL database are running.
+
+                    </small>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+
+/* =================================
+   HTML ESCAPE
+================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+<!-- =================================
+     POLICY MODAL
+================================= -->
+
+<div
+    id="policyModal"
+    class="policy-modal"
+    aria-hidden="true">
+
+ 
+<div
+    class="policy-modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="policyModalTitle">
+
+
+    <div class="policy-modal-header">
+
+
+        <h2 id="policyModalTitle"></h2>
+
+
+        <button
+            type="button"
+            class="policy-modal-close"
+            id="policyModalClose"
+            aria-label="Close">
+
+            &times;
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="policyModalContent"
+        class="policy-modal-content">
+
+
+        <p>
+
+            Loading...
+
+        </p>
+
+
+    </div>
+
+
+</div>
+ 
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,3022 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ 
+<title>BRUSH and BID - Online Art Auction Platform</title>
+
+<link rel="stylesheet" href="style.css">
+ 
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+ 
+<div class="logo">
+    <h1>BRUSH and BID</h1>
+</div>
+
+<nav>
+    <ul id="navbar">
+
+        <li>
+            <a class="active" href="index.html">Home</a>
+        </li>
+
+        <li>
+            <a href="about.html">About</a>
+        </li>
+
+        <li>
+            <a href="gallery.html">Gallery</a>
+        </li>
+
+        <li>
+            <a href="auctions.html">Auctions</a>
+        </li>
+
+        <!-- Role-based menu is created by script.js -->
+        <li id="roleMenu"></li>
+
+    </ul>
+</nav>
+
+
+<!-- =================================================
+     RIGHT SIDE
+================================================= -->
+
+<div class="header-right">
+
+    <!-- Login -->
+    <button
+        class="login-top-btn"
+        id="loginBtn"
+        type="button"
+        onclick="openLogin()">
+        Login
+    </button>
+
+
+    <!-- Profile -->
+    <div
+        class="profile-area"
+        id="profileArea"
+        style="display:none;">
+
+        <div
+            class="profile-icon profile-initial"
+            id="profileIcon"
+            onclick="toggleProfileMenu()">
+            U
+        </div>
+
+
+        <div
+            class="profile-dropdown"
+            id="profileMenu">
+
+            <h3 id="profileName">
+                User Name
+            </h3>
+
+            <p id="profileRole">
+                Bidder
+            </p>
+
+            <small id="profileEmail"></small>
+
+            <hr>
+
+            <a
+                href="#"
+                id="profilePage">
+                My Profile
+            </a>
+
+            <button
+                type="button"
+                onclick="logoutUser()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</header>
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<!-- Logged-out visitors: invitation to join, with this week's lot as a teaser -->
+
+<section
+    class="welcome-hero"
+    id="welcomeHero"
+    data-show-for="guest"
+    data-state="loading"
+    aria-labelledby="welcomeHeading">
+
+    <div class="welcome-inner">
+
+        <div class="welcome-copy">
+
+            <h1 class="welcome-title" id="welcomeHeading">
+                Original Indian art, one auction a week
+            </h1>
+
+            <p class="welcome-lede">
+                Every week one artwork by an independent artist goes up
+                for auction. Create a free account to explore the full
+                collection, see every artwork's details and bid on the
+                piece you want to own.
+            </p>
+
+            <div class="lot-actions">
+
+                <a
+                    class="lot-btn lot-btn-primary"
+                    href="register.html?role=bidder">
+                    Join as a bidder
+                </a>
+
+                <a
+                    class="lot-btn lot-btn-secondary"
+                    href="register.html?role=artist">
+                    Join as an artist
+                </a>
+
+            </div>
+
+            <p class="welcome-login">
+                Already a member?
+                <button
+                    type="button"
+                    class="link-button"
+                    onclick="openLogin()">
+                    Log in
+                </button>
+            </p>
+
+        </div>
+
+
+        <figure class="welcome-artwork" id="welcomeArtwork">
+
+            <div class="lot-frame">
+
+                <img
+                    id="welcomeImage"
+                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                    alt="">
+
+            </div>
+
+            <!-- gallery wall label -->
+
+            <figcaption class="wall-label">
+
+                <span class="wall-label-kicker">
+                    On the block this week
+                </span>
+
+                <strong class="wall-label-title" id="welcomeTitle">
+                    &nbsp;
+                </strong>
+
+                <span class="wall-label-artist" id="welcomeArtist"></span>
+
+                <span class="wall-label-meta" id="welcomeMeta"></span>
+
+                <span class="wall-label-bid" id="welcomeBidLine">
+                    &nbsp;
+                </span>
+
+            </figcaption>
+
+        </figure>
+
+    </div>
+
+</section>
+
+
+<!-- Members: this week's lot, filled from /api/auction/current -->
+
+<section
+    class="lot-hero"
+    id="lotHero"
+    data-show-for="bidder artist admin"
+    data-state="loading"
+    aria-labelledby="lotTitle">
+
+    <div class="lot-hero-inner">
+
+        <figure class="lot-frame">
+
+            <img
+                id="lotImage"
+                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                alt="">
+
+            <figcaption id="lotCaption"></figcaption>
+
+        </figure>
+
+
+        <div class="lot-details">
+
+            <p class="lot-kicker" id="lotKicker">
+                This week's lot
+            </p>
+
+            <h1 class="lot-title" id="lotTitle">
+                Loading this week's lot…
+            </h1>
+
+            <p class="lot-artist" id="lotArtist">
+                &nbsp;
+            </p>
+
+            <dl class="lot-facts">
+
+                <div>
+                    <dt>Current bid</dt>
+                    <dd id="lotBid">–</dd>
+                </div>
+
+                <div>
+                    <dt id="lotTimeLabel">Ends in</dt>
+                    <dd id="lotCountdown">–</dd>
+                </div>
+
+            </dl>
+
+            <div class="lot-actions">
+
+                <a
+                    class="lot-btn lot-btn-primary"
+                    id="lotBidLink"
+                    href="auctions.html">
+                    Place a bid
+                </a>
+
+                <a
+                    class="lot-btn lot-btn-secondary"
+                    id="lotSecondaryLink"
+                    href="gallery.html">
+                    Browse the gallery
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WHAT YOU CAN DO
+===================================================== -->
+
+<!-- Artists -->
+
+<section class="home-paths" data-show-for="artist">
+
+    <h2>
+        Your studio on Brush and Bid
+    </h2>
+
+    <div class="home-paths-grid">
+
+        <div class="home-path">
+
+            <h3>Upload new work</h3>
+
+            <p>
+                Add an artwork with its photo, size, medium and
+                starting price. An admin reviews it before it can
+                go to auction.
+            </p>
+
+            <a href="uploadartwork.html">Upload artwork</a>
+
+        </div>
+
+
+        <div class="home-path">
+
+            <h3>Track your artworks</h3>
+
+            <p>
+                See which of your artworks are approved, waiting
+                for review or selected for an auction.
+            </p>
+
+            <a href="artist-artworks.html">My artworks</a>
+
+        </div>
+
+
+        <div class="home-path">
+
+            <h3>Follow your auctions</h3>
+
+            <p>
+                Watch the current bid and time left on any of your
+                artworks that are up for auction.
+            </p>
+
+            <a href="viewauctions.html">View my auctions</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Admins -->
+
+<section class="home-paths" data-show-for="admin">
+
+    <h2>
+        Run this week's auction
+    </h2>
+
+    <div class="home-paths-grid">
+
+        <div class="home-path">
+
+            <h3>Review artworks</h3>
+
+            <p>
+                Approve or reject new submissions and choose the
+                artwork for the next auction.
+            </p>
+
+            <a href="manageartworks.html">Manage artworks</a>
+
+        </div>
+
+
+        <div class="home-path">
+
+            <h3>Start or close auctions</h3>
+
+            <p>
+                Schedule the weekly auction, start it on auction day
+                and close it when the time is up.
+            </p>
+
+            <a href="manageauctions.html">Manage auctions</a>
+
+        </div>
+
+
+        <div class="home-path">
+
+            <h3>See the numbers</h3>
+
+            <p>
+                Users, artworks, bids and payments across the whole
+                platform in one report.
+            </p>
+
+            <a href="reports.html">Open reports</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Guests: what each kind of member gets -->
+
+<section class="home-audiences" data-show-for="guest">
+
+    <h2>
+        Join Brush and Bid
+    </h2>
+
+    <div class="audience-grid">
+
+        <div class="audience">
+
+            <h3>For bidders</h3>
+
+            <p class="audience-lede">
+                Own an original artwork, not a print.
+            </p>
+
+            <ul>
+                <li>Browse every artist and artwork in the gallery</li>
+                <li>See full details: medium, size, year and price</li>
+                <li>Follow the live countdown and the highest bid</li>
+                <li>Win, add your delivery address and pay online</li>
+            </ul>
+
+            <a
+                class="lot-btn audience-btn"
+                href="register.html?role=bidder">
+                Join as a bidder
+            </a>
+
+        </div>
+
+
+        <div class="audience">
+
+            <h3>For artists</h3>
+
+            <p class="audience-lede">
+                Put your work in front of collectors.
+            </p>
+
+            <ul>
+                <li>Upload artworks with photos, size, medium and price</li>
+                <li>Get reviewed and chosen for a weekly auction</li>
+                <li>Watch bids on your work as they come in</li>
+                <li>Build a profile collectors can come back to</li>
+            </ul>
+
+            <a
+                class="lot-btn audience-btn"
+                href="register.html?role=artist">
+                Join as an artist
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Bidders -->
+
+<section class="home-paths" data-show-for="bidder">
+
+    <h2>
+        Bid, browse or sell your own work
+    </h2>
+
+    <div class="home-paths-grid">
+
+        <div class="home-path">
+
+            <h3>Bid on the weekly lot</h3>
+
+            <p>
+                One artwork goes up each week. Place a bid and watch
+                the highest bid update live.
+            </p>
+
+            <a href="auctions.html">See this week's auction</a>
+
+        </div>
+
+
+        <div class="home-path">
+
+            <h3>Browse the gallery</h3>
+
+            <p>
+                Meet the artists on Brush and Bid and explore the
+                work in their collections.
+            </p>
+
+            <a href="gallery.html">Open the gallery</a>
+
+        </div>
+
+
+        <div class="home-path">
+
+            <h3>Sell your artwork</h3>
+
+            <p>
+                Register as an artist, upload your work and have it
+                considered for a weekly auction.
+            </p>
+
+            <a href="register.html?role=artist">Register as an artist</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW THE AUCTION WORKS
+===================================================== -->
+
+<section class="home-rules">
+
+    <h2>
+        How the weekly auction works
+    </h2>
+
+    <ol>
+
+        <li>
+            <strong>One artwork is chosen</strong>
+            <span>Each week a single approved artwork is featured.</span>
+        </li>
+
+        <li>
+            <strong>Bidding opens</strong>
+            <span>The auction starts on the scheduled auction day.</span>
+        </li>
+
+        <li>
+            <strong>Bids stay open</strong>
+            <span>Raise your bid any time until the countdown ends.</span>
+        </li>
+
+        <li>
+            <strong>The highest bid wins</strong>
+            <span>The winner adds shipping details and completes payment.</span>
+        </li>
+
+    </ol>
+
+</section>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+ 
+<p>
+    © 2026 BRUSH and BID | Online Art Auction Platform
+</p>
+ 
+
+</footer>
+
+<!-- =====================================================
+     LOGIN POPUP
+===================================================== -->
+
+<div
+    class="popup"
+    id="loginPopup">
+
+ 
+<div class="popup-box">
+
+    <span
+        class="close"
+        onclick="closeLogin()">
+        ×
+    </span>
+
+    <h2>
+        Login
+    </h2>
+
+
+    <form id="loginForm">
+
+        <label for="loginEmail">
+            Email
+        </label>
+
+        <input
+            id="loginEmail"
+            type="email"
+            placeholder="example@gmail.com"
+            required>
+
+        <small
+            class="error"
+            id="loginEmailError">
+        </small>
+
+
+        <label for="loginPassword">
+            Password
+        </label>
+
+        <input
+            id="loginPassword"
+            type="password"
+            placeholder="Enter Password"
+            required>
+
+        <button
+            type="button"
+            class="link-button forgot-link"
+            onclick="openForgotPassword()">
+            Forgot password?
+        </button>
+
+
+        <label for="loginRole">
+            Login As
+        </label>
+
+        <select
+            id="loginRole"
+            required>
+
+            <option value="">
+                Select Role
+            </option>
+
+            <option value="Bidder">
+                Bidder
+            </option>
+
+            <option value="Artist">
+                Artist
+            </option>
+
+        </select>
+
+        <small
+            class="error"
+            id="loginError"
+            role="alert">
+        </small>
+
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+
+    <p>
+        Don't have an account?
+
+        <a
+            href="#"
+            onclick="openRegister(); closeLogin(); return false;">
+            Register
+        </a>
+    </p>
+
+</div>
+
+
+</div>
+
+<!-- =====================================================
+     FORGOT PASSWORD POPUP
+     Step 1: email -> reset code is emailed
+     Step 2: code + new password
+===================================================== -->
+
+<div
+    class="popup"
+    id="forgotPopup">
+
+<div class="popup-box">
+
+    <span
+        class="close"
+        onclick="closeForgotPassword()">
+        ×
+    </span>
+
+    <h2>
+        Reset your password
+    </h2>
+
+
+    <!-- Step 1 -->
+
+    <form id="forgotRequestForm">
+
+        <p class="popup-intro">
+            Enter the email you registered with. We'll send you a
+            6-digit code to reset your password.
+        </p>
+
+        <label for="forgotEmail">
+            Email
+        </label>
+
+        <input
+            id="forgotEmail"
+            type="email"
+            placeholder="example@gmail.com"
+            autocomplete="email"
+            required>
+
+        <small
+            class="error"
+            id="forgotRequestError"
+            role="alert">
+        </small>
+
+        <button type="submit">
+            Send reset code
+        </button>
+
+    </form>
+
+
+    <!-- Step 2 -->
+
+    <form
+        id="forgotResetForm"
+        hidden>
+
+        <p class="popup-intro">
+            We sent a code to
+            <strong id="forgotEmailDisplay"></strong>.
+            It's valid for 10 minutes.
+        </p>
+
+        <label for="forgotCode">
+            Reset code
+        </label>
+
+        <input
+            id="forgotCode"
+            type="text"
+            maxlength="6"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            placeholder="Enter 6-digit code"
+            autocomplete="one-time-code"
+            required>
+
+        <label for="forgotNewPassword">
+            New password
+        </label>
+
+        <input
+            id="forgotNewPassword"
+            type="password"
+            placeholder="New password"
+            autocomplete="new-password"
+            required>
+
+        <small class="hint">
+            At least 8 characters, with an uppercase letter, a
+            lowercase letter, a number and a special character.
+        </small>
+
+        <label for="forgotConfirmPassword">
+            Confirm new password
+        </label>
+
+        <input
+            id="forgotConfirmPassword"
+            type="password"
+            placeholder="Confirm new password"
+            autocomplete="new-password"
+            required>
+
+        <small
+            class="error"
+            id="forgotResetError"
+            role="alert">
+        </small>
+
+        <button type="submit">
+            Reset password
+        </button>
+
+        <p class="popup-footnote">
+            Didn't get the code?
+            <button
+                type="button"
+                class="link-button"
+                id="forgotResendBtn"
+                onclick="resendResetCode()">
+                Send a new code
+            </button>
+        </p>
+
+    </form>
+
+
+    <p>
+        Remembered it?
+        <a
+            href="#"
+            onclick="closeForgotPassword(); openLogin(); return false;">
+            Back to login
+        </a>
+    </p>
+
+</div>
+
+</div>
+
+<!-- =====================================================
+     REGISTER POPUP
+===================================================== -->
+
+<div
+    class="popup"
+    id="registerPopup">
+
+ 
+<div class="popup-box">
+
+    <span
+        class="close"
+        onclick="closeRegister()">
+        ×
+    </span>
+
+    <h2>
+        Create Account
+    </h2>
+
+
+    <form id="registerForm">
+
+        <!-- Full Name -->
+
+        <label for="regName">
+            Full Name
+        </label>
+
+        <input
+            id="regName"
+            type="text"
+            placeholder="Enter Full Name"
+            required>
+
+        <small
+            class="error"
+            id="nameError">
+        </small>
+
+
+        <!-- Email -->
+
+        <label for="regEmail">
+            Email Address
+        </label>
+
+        <input
+            id="regEmail"
+            type="email"
+            placeholder="example@gmail.com"
+            required>
+
+        <small
+            class="error"
+            id="emailError">
+        </small>
+
+
+        <!-- Phone -->
+
+        <label for="regPhone">
+            Phone Number
+        </label>
+
+        <input
+            id="regPhone"
+            type="text"
+            maxlength="10"
+            placeholder="9876543210"
+            required>
+
+        <small
+            class="error"
+            id="phoneError">
+        </small>
+
+
+        <!-- Role -->
+
+        <label for="regRole">
+            User Type
+        </label>
+
+        <select
+            id="regRole"
+            required>
+
+            <option value="">
+                Select User
+            </option>
+
+            <option value="Bidder">
+                Bidder
+            </option>
+
+            <option value="Artist">
+                Artist
+            </option>
+
+        </select>
+
+        <small
+            class="error"
+            id="roleError">
+        </small>
+
+
+        <!-- Password -->
+
+        <label for="regPassword">
+            Password
+        </label>
+
+        <input
+            id="regPassword"
+            type="password"
+            placeholder="Password"
+            required>
+
+        <small class="hint">
+            Password must contain • 8 Characters •
+            1 Uppercase Letter • 1 Lowercase Letter •
+            1 Number • 1 Special Character
+        </small>
+
+        <small
+            class="error"
+            id="passwordError">
+        </small>
+
+
+        <!-- Confirm Password -->
+
+        <label for="confirmPassword">
+            Confirm Password
+        </label>
+
+        <input
+            id="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            required>
+
+        <small
+            class="error"
+            id="confirmError">
+        </small>
+
+
+        <!-- Terms -->
+
+        <div class="terms">
+
+            <input
+                id="terms"
+                type="checkbox"
+                required>
+
+            <label for="terms">
+
+                I agree to the
+
+                <a
+                    href="terms.html"
+                    class="policy-link">
+                    Terms & Conditions
+                </a>
+
+                and
+
+                <a
+                    href="privacy.html"
+                    class="policy-link">
+                    Privacy Policy
+                </a>
+
+            </label>
+
+        </div>
+
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+
+    <p>
+
+        Already have an account?
+
+        <a
+            href="#"
+            onclick="openLogin(); closeRegister(); return false;">
+            Login
+        </a>
+
+    </p>
+
+</div>
+ 
+
+</div>
+
+<!-- =====================================================
+     OTP VERIFICATION POPUP
+===================================================== -->
+
+<div
+    class="popup"
+    id="otpPopup">
+
+ 
+<div class="popup-box">
+
+    <span
+        class="close"
+        onclick="closeOTP()">
+        ×
+    </span>
+
+    <h2>
+        Verify Your Email
+    </h2>
+
+    <p>
+        We have sent a 6-digit OTP to:
+    </p>
+
+    <strong id="otpEmailDisplay">
+        your email
+    </strong>
+
+
+    <form id="otpForm">
+
+        <label for="otpCode">
+            Enter OTP
+        </label>
+
+        <input
+            id="otpCode"
+            type="text"
+            maxlength="6"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            placeholder="Enter 6-digit OTP"
+            required>
+
+
+        <small
+            class="error"
+            id="otpError">
+        </small>
+
+
+        <button type="submit">
+            Verify Email
+        </button>
+
+    </form>
+
+
+    <p>
+        Didn't receive the OTP?
+    </p>
+
+    <button
+        type="button"
+        id="resendOtpBtn"
+        onclick="resendOTP()">
+        Resend OTP
+    </button>
+
+</div>
+ 
+
+</div>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   API CONFIGURATION
+===================================================== */
+
+const API_BASE = "http://localhost:5010";
+
+
+/* =====================================================
+   POPUP FUNCTIONS
+===================================================== */
+
+function openLogin() {
+
+    const popup = document.getElementById("loginPopup");
+
+    if (popup) {
+        popup.style.display = "flex";
+    }
+
+    updateLoginButton();
+}
+
+
+/*
+ * Enable the login button only when email,
+ * password and role are all filled in.
+ */
+function updateLoginButton() {
+
+    const button =
+        document.querySelector(
+            "#loginForm button[type='submit']"
+        );
+
+    if (!button) {
+        return;
+    }
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const role =
+        document.getElementById("loginRole").value;
+
+    button.disabled =
+        !(email && password && role);
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    ["loginEmail", "loginPassword", "loginRole"]
+    .forEach(function (id) {
+
+        const field = document.getElementById(id);
+
+        if (field) {
+            field.addEventListener("input", updateLoginButton);
+            field.addEventListener("change", updateLoginButton);
+        }
+    });
+
+    updateLoginButton();
+});
+
+
+function closeLogin() {
+
+    const popup = document.getElementById("loginPopup");
+
+    if (popup) {
+        popup.style.display = "none";
+    }
+}
+
+
+function openRegister() {
+
+    const popup = document.getElementById("registerPopup");
+
+    if (popup) {
+        popup.style.display = "flex";
+    }
+}
+
+
+function closeRegister() {
+
+    const popup = document.getElementById("registerPopup");
+
+    if (popup) {
+        popup.style.display = "none";
+    }
+}
+
+
+function openOTP() {
+
+    const popup = document.getElementById("otpPopup");
+
+    if (popup) {
+        popup.style.display = "flex";
+    }
+}
+
+
+function closeOTP() {
+
+    const popup = document.getElementById("otpPopup");
+
+    if (popup) {
+        popup.style.display = "none";
+    }
+}
+
+
+/* =====================================================
+   VALIDATION
+===================================================== */
+
+const nameRegex =
+    /^[A-Za-z ]{3,40}$/;
+
+const emailRegex =
+    /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+const phoneRegex =
+    /^[6-9][0-9]{9}$/;
+
+const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+document
+.getElementById("registerForm")
+.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+
+    const name =
+        document.getElementById("regName")
+        .value
+        .trim();
+
+
+    const email =
+        document.getElementById("regEmail")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const phone =
+        document.getElementById("regPhone")
+        .value
+        .trim();
+
+
+    const role =
+        document.getElementById("regRole")
+        .value;
+
+
+    const password =
+        document.getElementById("regPassword")
+        .value;
+
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+
+    /* Clear previous errors */
+
+    document.getElementById("nameError").textContent = "";
+
+    document.getElementById("emailError").textContent = "";
+
+    document.getElementById("phoneError").textContent = "";
+
+    document.getElementById("passwordError").textContent = "";
+
+    document.getElementById("confirmError").textContent = "";
+
+    document.getElementById("roleError").textContent = "";
+
+
+    /* Name */
+
+    if (!nameRegex.test(name)) {
+
+        document.getElementById("nameError")
+            .textContent =
+            "Only alphabets and spaces are allowed.";
+
+        return;
+    }
+
+
+    /* Email */
+
+    if (!emailRegex.test(email)) {
+
+        document.getElementById("emailError")
+            .textContent =
+            "Enter a valid lowercase email.";
+
+        return;
+    }
+
+
+    /* Phone */
+
+    if (!phoneRegex.test(phone)) {
+
+        document.getElementById("phoneError")
+            .textContent =
+            "Enter a valid 10 digit phone number.";
+
+        return;
+    }
+
+
+    /* Role */
+
+    if (!["Bidder", "Artist"].includes(role)) {
+
+        document.getElementById("roleError")
+            .textContent =
+            "Please select Bidder or Artist.";
+
+        return;
+    }
+
+
+    /* Password */
+
+    if (!passwordRegex.test(password)) {
+
+        document.getElementById("passwordError")
+            .textContent =
+            "Password is not strong enough.";
+
+        return;
+    }
+
+
+    /* Confirm Password */
+
+    if (password !== confirmPassword) {
+
+        document.getElementById("confirmError")
+            .textContent =
+            "Passwords do not match.";
+
+        return;
+    }
+
+
+    const submitButton =
+        document.querySelector(
+            "#registerForm button[type='submit']"
+        );
+
+
+    try {
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Registering...";
+
+
+        const response =
+            await fetch(
+                API_BASE + "/api/register",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        full_name: name,
+
+                        name: name,
+
+                        email: email,
+
+                        phone: phone,
+
+                        role: role
+
+                            .toLowerCase(),
+
+                        password: password
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "Registration failed."
+            );
+        }
+
+
+        /*
+         * Save only temporary registration
+         * information required for OTP.
+         *
+         * Password is NOT stored here.
+         */
+
+        sessionStorage.setItem(
+            "pendingOtpEmail",
+            email
+        );
+
+
+        document.getElementById(
+            "otpEmailDisplay"
+        ).textContent = email;
+
+
+        closeRegister();
+
+        openOTP();
+
+
+        showToast(
+            data.message ||
+            "Registration successful. Check your email for the OTP.",
+            "success"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "REGISTRATION ERROR:",
+            error
+        );
+
+        const message =
+            error.message ||
+            "Unable to register. Please try again.";
+
+        /* Email problems (e.g. already registered) go next to the email field. */
+
+        if (/email/i.test(message)) {
+
+            document.getElementById("emailError")
+                .textContent = message;
+
+        }
+
+        else {
+
+            showToast(message, "error");
+
+        }
+
+    }
+
+    finally {
+
+        submitButton.textContent =
+            "Register";
+
+        updateSubmitState(
+            document.getElementById("registerForm")
+        );
+
+    }
+
+});
+
+
+/* =====================================================
+   OTP VERIFICATION
+===================================================== */
+
+document
+.getElementById("otpForm")
+.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+
+    const email =
+        sessionStorage.getItem(
+            "pendingOtpEmail"
+        );
+
+
+    const otp =
+        document.getElementById("otpCode")
+        .value
+        .trim();
+
+
+    const otpError =
+        document.getElementById("otpError");
+
+
+    otpError.textContent = "";
+
+
+    if (!email) {
+
+        otpError.textContent =
+            "Registration session expired. Please register again.";
+
+        return;
+    }
+
+
+    if (!/^[0-9]{6}$/.test(otp)) {
+
+        otpError.textContent =
+            "Enter a valid 6-digit OTP.";
+
+        return;
+    }
+
+
+    const button =
+        document.querySelector(
+            "#otpForm button[type='submit']"
+        );
+
+
+    try {
+
+        button.disabled = true;
+
+        button.textContent =
+            "Verifying...";
+
+
+        const response =
+            await fetch(
+                API_BASE + "/api/verify-otp",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email,
+
+                        otp: otp
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "OTP verification failed."
+            );
+        }
+
+
+        sessionStorage.removeItem(
+            "pendingOtpEmail"
+        );
+
+
+        closeOTP();
+
+
+        document.getElementById(
+            "otpCode"
+        ).value = "";
+
+
+        /*
+         * Log the user in automatically after
+         * successful verification.
+         */
+
+        if (data.user) {
+
+            saveLoginSession(data.user);
+
+            flashToast(
+                "Email verified. Welcome " +
+                (data.user.full_name || data.user.name || "User"),
+                "success"
+            );
+
+            goAfterLogin();
+
+            return;
+        }
+
+
+        showToast(
+            data.message ||
+            "Email verified successfully. You can now login.",
+            "success"
+        );
+
+
+        openLogin();
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "OTP VERIFICATION ERROR:",
+            error
+        );
+
+        otpError.textContent =
+            error.message ||
+            "Invalid or expired OTP.";
+
+    }
+
+    finally {
+
+        button.textContent =
+            "Verify Email";
+
+        updateSubmitState(
+            document.getElementById("otpForm")
+        );
+
+    }
+
+});
+
+
+/* =====================================================
+   RESEND OTP
+===================================================== */
+
+async function resendOTP() {
+
+    const email =
+        sessionStorage.getItem(
+            "pendingOtpEmail"
+        );
+
+
+    if (!email) {
+
+        showToast(
+            "Registration session expired. Please register again.",
+            "error"
+        );
+
+        closeOTP();
+
+        openRegister();
+
+        return;
+    }
+
+
+    const button =
+        document.getElementById(
+            "resendOtpBtn"
+        );
+
+
+    try {
+
+        button.disabled = true;
+
+        button.textContent =
+            "Sending...";
+
+
+        const response =
+            await fetch(
+                API_BASE + "/api/resend-otp",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "Unable to resend OTP."
+            );
+        }
+
+
+        showToast(
+            data.message ||
+            "A new OTP has been sent to your email.",
+            "success"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "RESEND OTP ERROR:",
+            error
+        );
+
+        showToast(
+            error.message ||
+            "Unable to resend OTP.",
+            "error"
+        );
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "Resend OTP";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+
+    const email =
+        document.getElementById("loginEmail")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const password =
+        document.getElementById("loginPassword")
+        .value;
+
+
+    const role =
+        document.getElementById("loginRole")
+        .value;
+
+
+    const loginEmailError =
+        document.getElementById("loginEmailError");
+
+    const loginError =
+        document.getElementById("loginError");
+
+    loginEmailError.textContent = "";
+
+    loginError.textContent = "";
+
+
+    if (!emailRegex.test(email)) {
+
+        loginEmailError.textContent =
+            "Enter a valid email, e.g. name@gmail.com";
+
+        return;
+    }
+
+
+    if (!["Bidder", "Artist"].includes(role)) {
+
+        loginError.textContent =
+            "Please select Bidder or Artist.";
+
+        return;
+    }
+
+
+    const button =
+        document.querySelector(
+            "#loginForm button[type='submit']"
+        );
+
+
+    try {
+
+        button.disabled = true;
+
+        button.textContent =
+            "Logging in...";
+
+
+        const response =
+            await fetch(
+                API_BASE + "/api/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email,
+
+                        password: password,
+
+                        role: role.toLowerCase()
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "Invalid login credentials."
+            );
+        }
+
+
+        const user =
+            data.user || data;
+
+
+        /*
+         * Store session information.
+         *
+         * Password is NEVER stored.
+         */
+
+        localStorage.setItem(
+            "loggedIn",
+            "true"
+        );
+
+
+        localStorage.setItem(
+            "userId",
+            user.user_id ||
+            user.userId ||
+            user.id ||
+            ""
+        );
+
+
+        localStorage.setItem(
+            "userName",
+            user.full_name ||
+            user.name ||
+            "User"
+        );
+
+
+        localStorage.setItem(
+            "userEmail",
+            user.email ||
+            email
+        );
+
+
+        localStorage.setItem(
+            "userRole",
+            normalizeRole(
+                user.role || role
+            )
+        );
+
+
+        localStorage.setItem(
+            "userPhone",
+            user.phone ||
+            ""
+        );
+
+
+        closeLogin();
+
+
+        flashToast(
+            "Welcome " +
+            (
+                user.full_name ||
+                user.name ||
+                "User"
+            ),
+            "success"
+        );
+
+
+        /*
+         * Go to the page the user was heading to,
+         * or reload the homepage so the profile and
+         * role menu appear.
+         */
+
+        goAfterLogin();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
+
+        loginError.textContent =
+            error.message ||
+            "Invalid login credentials.";
+
+    }
+
+    finally {
+
+        button.textContent =
+            "Login";
+
+        updateLoginButton();
+
+    }
+
+});
+
+
+/* =====================================================
+   ROLE NORMALIZATION
+===================================================== */
+
+function normalizeRole(role) {
+
+    const value =
+        String(role || "")
+        .toLowerCase();
+
+
+    if (value === "artist") {
+        return "Artist";
+    }
+
+
+    if (value === "bidder") {
+        return "Bidder";
+    }
+
+
+    if (value === "admin") {
+        return "Admin";
+    }
+
+
+    return role;
+}
+
+
+/* =====================================================
+   LOAD LOGGED-IN USER
+===================================================== */
+
+function loadLoggedInUser() {
+
+    const loggedIn =
+        localStorage.getItem(
+            "loggedIn"
+        );
+
+
+    if (loggedIn !== "true") {
+
+        return;
+    }
+
+
+    const loginButton =
+        document.getElementById(
+            "loginBtn"
+        );
+
+
+    const profileArea =
+        document.getElementById(
+            "profileArea"
+        );
+
+
+    if (loginButton) {
+
+        loginButton.style.display =
+            "none";
+    }
+
+
+    if (profileArea) {
+
+        profileArea.style.display =
+            "flex";
+    }
+
+
+    const name =
+        localStorage.getItem(
+            "userName"
+        ) ||
+        "User";
+
+
+    const email =
+        localStorage.getItem(
+            "userEmail"
+        ) ||
+        "";
+
+
+    const role =
+        normalizeRole(
+            localStorage.getItem(
+                "userRole"
+            )
+        );
+
+
+    const profileName =
+        document.getElementById(
+            "profileName"
+        );
+
+
+    const profileEmail =
+        document.getElementById(
+            "profileEmail"
+        );
+
+
+    const profileRole =
+        document.getElementById(
+            "profileRole"
+        );
+
+
+    const profileIcon =
+        document.getElementById(
+            "profileIcon"
+        );
+
+
+    if (profileName) {
+
+        profileName.textContent =
+            name;
+    }
+
+
+    if (profileEmail) {
+
+        profileEmail.textContent =
+            email;
+    }
+
+
+    if (profileRole) {
+
+        profileRole.textContent =
+            role;
+    }
+
+
+    if (profileIcon) {
+
+        profileIcon.textContent =
+            name
+                .trim()
+                .charAt(0)
+                .toUpperCase() ||
+            "U";
+    }
+
+
+    /* Profile page */
+
+    const profilePage =
+        document.getElementById(
+            "profilePage"
+        );
+
+
+    if (profilePage) {
+
+        if (role === "Bidder") {
+
+            profilePage.href =
+                "bidderprofile.html";
+
+        }
+
+        else if (role === "Artist") {
+
+            profilePage.href =
+                "artistprofile.html";
+
+        }
+
+        else if (role === "Admin") {
+
+            profilePage.href =
+                "admindashboard.html";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   PROFILE MENU
+===================================================== */
+
+function toggleProfileMenu() {
+
+    const menu =
+        document.getElementById(
+            "profileMenu"
+        );
+
+
+    if (!menu) {
+        return;
+    }
+
+
+    if (
+        menu.classList.contains("show")
+    ) {
+
+        menu.classList.remove("show");
+
+    }
+
+    else {
+
+        menu.classList.add("show");
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userId"
+    );
+
+    localStorage.removeItem(
+        "user_id"
+    );
+
+    localStorage.removeItem(
+        "userName"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    localStorage.removeItem(
+        "userPhone"
+    );
+
+
+    window.location.href =
+        "index.html";
+}
+
+
+/* =====================================================
+   PROFILE / DROPDOWN OUTSIDE CLICK
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        const profileArea =
+            document.getElementById(
+                "profileArea"
+            );
+
+
+        const profileMenu =
+            document.getElementById(
+                "profileMenu"
+            );
+
+
+        if (
+            profileArea &&
+            profileMenu &&
+            !profileArea.contains(
+                event.target
+            )
+        ) {
+
+            profileMenu.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE POPUPS WHEN CLICKING OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        const popups =
+            document.querySelectorAll(
+                ".popup"
+            );
+
+
+        popups.forEach(function (popup) {
+
+            if (
+                event.target === popup
+            ) {
+
+                popup.style.display =
+                    "none";
+
+            }
+
+        });
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key !== "Escape") {
+            return;
+        }
+
+
+        closeLogin();
+
+        closeRegister();
+
+        closeOTP();
+
+        closeForgotPassword();
+
+        if (typeof closePolicy === "function") {
+
+            closePolicy();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+let forgotEmail = "";
+
+/* Where to go after a reset: admins log in on their own page. */
+let forgotReturnTo = "login";
+
+
+function showForgotStep(step) {
+
+    document.getElementById("forgotRequestForm").hidden =
+        step !== "request";
+
+    document.getElementById("forgotResetForm").hidden =
+        step !== "reset";
+
+    updateSubmitState(document.getElementById("forgotRequestForm"));
+
+    updateSubmitState(document.getElementById("forgotResetForm"));
+}
+
+
+function openForgotPassword(prefillEmail) {
+
+    closeLogin();
+
+    document.getElementById("forgotRequestError").textContent = "";
+
+    document.getElementById("forgotResetError").textContent = "";
+
+    const typedEmail =
+        prefillEmail ||
+        document.getElementById("loginEmail").value.trim();
+
+    if (typedEmail) {
+        document.getElementById("forgotEmail").value = typedEmail;
+    }
+
+    showForgotStep("request");
+
+    document.getElementById("forgotPopup").style.display = "flex";
+
+    document.getElementById("forgotEmail").focus();
+}
+
+
+function closeForgotPassword() {
+
+    document.getElementById("forgotPopup").style.display = "none";
+}
+
+
+async function requestResetCode(email) {
+
+    const response =
+        await fetch(
+            API_BASE + "/api/forgot-password",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email })
+            }
+        );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || data.message || "Unable to send a reset code.");
+    }
+
+    return data;
+}
+
+
+document
+.getElementById("forgotRequestForm")
+.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    const error = document.getElementById("forgotRequestError");
+
+    const email =
+        document.getElementById("forgotEmail").value.trim().toLowerCase();
+
+    error.textContent = "";
+
+    if (!emailRegex.test(email)) {
+
+        error.textContent = "Enter a valid email, e.g. name@gmail.com";
+
+        return;
+    }
+
+    const button = this.querySelector("button[type='submit']");
+
+    try {
+
+        button.disabled = true;
+
+        button.textContent = "Sending code...";
+
+        const data = await requestResetCode(email);
+
+        forgotEmail = email;
+
+        document.getElementById("forgotEmailDisplay").textContent = email;
+
+        document.getElementById("forgotResetForm").reset();
+
+        showForgotStep("reset");
+
+        document.getElementById("forgotCode").focus();
+
+        showToast(data.message, "info");
+
+    }
+
+    catch (err) {
+
+        error.textContent = err.message;
+
+    }
+
+    finally {
+
+        button.textContent = "Send reset code";
+
+        updateSubmitState(this);
+
+    }
+});
+
+
+async function resendResetCode() {
+
+    const button = document.getElementById("forgotResendBtn");
+
+    const error = document.getElementById("forgotResetError");
+
+    error.textContent = "";
+
+    try {
+
+        button.disabled = true;
+
+        const data = await requestResetCode(forgotEmail);
+
+        showToast(data.message, "info");
+
+    }
+
+    catch (err) {
+
+        error.textContent = err.message;
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+    }
+}
+
+
+document
+.getElementById("forgotResetForm")
+.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    const error = document.getElementById("forgotResetError");
+
+    const otp = document.getElementById("forgotCode").value.trim();
+
+    const password = document.getElementById("forgotNewPassword").value;
+
+    const confirm = document.getElementById("forgotConfirmPassword").value;
+
+    error.textContent = "";
+
+    if (!/^[0-9]{6}$/.test(otp)) {
+
+        error.textContent = "Enter the 6-digit code from the email.";
+
+        return;
+    }
+
+    if (!passwordRegex.test(password)) {
+
+        error.textContent =
+            "Password needs at least 8 characters, with an uppercase letter, a lowercase letter, a number and a special character (@$!%*?&).";
+
+        return;
+    }
+
+    if (password !== confirm) {
+
+        error.textContent = "The two passwords don't match.";
+
+        return;
+    }
+
+    const button = this.querySelector("button[type='submit']");
+
+    try {
+
+        button.disabled = true;
+
+        button.textContent = "Resetting...";
+
+        const response =
+            await fetch(
+                API_BASE + "/api/reset-password",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: forgotEmail,
+                        otp: otp,
+                        password: password
+                    })
+                }
+            );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || data.message || "Unable to reset the password.");
+        }
+
+        closeForgotPassword();
+
+        if (forgotReturnTo === "admin") {
+
+            window.location.href = "adminlogin.html?reset=done";
+
+            return;
+        }
+
+        showToast(data.message, "success");
+
+        document.getElementById("loginEmail").value = forgotEmail;
+
+        document.getElementById("loginPassword").value = "";
+
+        openLogin();
+
+        document.getElementById("loginPassword").focus();
+
+    }
+
+    catch (err) {
+
+        error.textContent = err.message;
+
+    }
+
+    finally {
+
+        button.textContent = "Reset password";
+
+        updateSubmitState(this);
+
+    }
+});
+
+
+/* index.html?forgot=true opens the reset popup (?forgot=admin from admin login). */
+
+function handleForgotLink() {
+
+    const value = new URLSearchParams(window.location.search).get("forgot");
+
+    if (!value) {
+        return;
+    }
+
+    forgotReturnTo = value === "admin" ? "admin" : "login";
+
+    openForgotPassword();
+}
+
+
+/* =====================================================
+   THIS WEEK'S LOT (home hero)
+===================================================== */
+
+function formatRupees(value) {
+
+    const amount = Number(value);
+
+    if (!isFinite(amount)) {
+        return "–";
+    }
+
+    return "₹" + amount.toLocaleString("en-IN", {
+        maximumFractionDigits: 0
+    });
+}
+
+
+function formatTimeLeft(ms) {
+
+    const total = Math.max(0, Math.floor(ms / 1000));
+
+    const days = Math.floor(total / 86400);
+    const hours = Math.floor((total % 86400) / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const seconds = total % 60;
+
+    const pad = function (n) {
+        return String(n).padStart(2, "0");
+    };
+
+    if (days > 0) {
+        return days + "d " + hours + "h " + pad(minutes) + "m";
+    }
+
+    return pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+}
+
+
+function artworkImageSource(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    /* Raw base64 from the database needs a data: prefix. */
+
+    if (/^(https?:|data:|\/)/i.test(value)) {
+        return value;
+    }
+
+    return "data:image/jpeg;base64," + value;
+}
+
+
+function showNoLot() {
+
+    const hero = document.getElementById("lotHero");
+
+    hero.dataset.state = "empty";
+
+    document.getElementById("lotKicker").textContent =
+        "Weekly auction";
+
+    document.getElementById("lotTitle").textContent =
+        "No auction is running right now";
+
+    document.getElementById("lotArtist").textContent =
+        "The next lot is being chosen. Meanwhile, browse the artists in the gallery.";
+
+    setLotActions(null);
+
+    document.querySelector("#lotHero .lot-frame").hidden = true;
+
+
+    /* Logged-out hero: just the invitation, no artwork */
+
+    document.getElementById("welcomeHero").dataset.state = "empty";
+
+    document.getElementById("welcomeArtwork").hidden = true;
+}
+
+
+/*
+ * Hero buttons depend on who is looking:
+ * only bidders (and guests, who get the login popup) can bid.
+ */
+function setLotActions(bidHref) {
+
+    const role =
+        typeof currentRoleKey === "function" ? currentRoleKey() : "guest";
+
+    const actions = {
+
+        artist: [
+            ["Upload artwork", "uploadartwork.html"],
+            ["My artworks", "artist-artworks.html"]
+        ],
+
+        admin: [
+            ["Manage auctions", "manageauctions.html"],
+            ["Open dashboard", "admindashboard.html"]
+        ]
+
+    }[role] || (
+        bidHref
+            ? [["Place a bid", bidHref], ["View auction details", "auctions.html"]]
+            : [["Browse the gallery", "gallery.html"], null]
+    );
+
+    const primary = document.getElementById("lotBidLink");
+
+    const secondary = document.getElementById("lotSecondaryLink");
+
+    primary.textContent = actions[0][0];
+
+    primary.href = actions[0][1];
+
+    if (actions[1]) {
+
+        secondary.textContent = actions[1][0];
+
+        secondary.href = actions[1][1];
+
+        secondary.hidden = false;
+
+    }
+
+    else {
+
+        secondary.hidden = true;
+
+    }
+}
+
+
+async function loadWeeklyLot() {
+
+    const hero = document.getElementById("lotHero");
+
+    if (!hero) {
+        return;
+    }
+
+    try {
+
+        const auctionResponse =
+            await fetch(API_BASE + "/api/auction/current");
+
+        const auctionData =
+            await auctionResponse.json();
+
+        const auction =
+            auctionData && auctionData.auction;
+
+        if (!auctionResponse.ok || !auction || !auction.artwork_id) {
+
+            showNoLot();
+
+            return;
+        }
+
+
+        let artwork = {};
+
+        try {
+
+            const artworkResponse =
+                await fetch(API_BASE + "/api/artworks/" + encodeURIComponent(auction.artwork_id));
+
+            const artworkData =
+                await artworkResponse.json();
+
+            artwork = (artworkData && artworkData.artwork) || {};
+
+        }
+
+        catch (error) {
+
+            console.error("Artwork load error:", error);
+
+        }
+
+
+        const title =
+            artwork.title || auction.artwork_name || "This week's lot";
+
+        const artist =
+            artwork.artist_name || auction.artist_name || "";
+
+
+        document.getElementById("lotTitle").textContent = title;
+
+        document.getElementById("lotArtist").textContent =
+            artist
+                ? "by " + artist + (artwork.artist_city ? ", " + artwork.artist_city : "")
+                : "";
+
+        document.getElementById("lotBid").textContent =
+            formatRupees(
+                auction.current_bid ||
+                artwork.current_bid ||
+                artwork.starting_price
+            );
+
+
+        const image = document.getElementById("lotImage");
+
+        const src = artworkImageSource(artwork.image_url || artwork.image);
+
+        if (src) {
+            image.src = src;
+        }
+
+        image.alt = title + (artist ? " by " + artist : "");
+
+
+        const details =
+            [artwork.medium, artwork.dimensions, artwork.year_created]
+                .filter(Boolean)
+                .join(", ");
+
+        document.getElementById("lotCaption").textContent = details;
+
+
+        /* Logged-out hero: the same lot as a wall label teaser */
+
+        const welcomeImage = document.getElementById("welcomeImage");
+
+        if (src) {
+            welcomeImage.src = src;
+        }
+
+        welcomeImage.alt = image.alt;
+
+        document.getElementById("welcomeTitle").textContent = title;
+
+        document.getElementById("welcomeArtist").textContent =
+            artist + (artwork.artist_city ? ", " + artwork.artist_city : "");
+
+        document.getElementById("welcomeMeta").textContent = details;
+
+        const welcomeBidLine = document.getElementById("welcomeBidLine");
+
+        const fromPrice =
+            formatRupees(
+                auction.current_bid ||
+                artwork.current_bid ||
+                artwork.starting_price
+            );
+
+
+        setLotActions(
+            "placebid.html?artworkId=" + encodeURIComponent(auction.artwork_id)
+        );
+
+
+        /* Live countdown */
+
+        const start = new Date(auction.start_time).getTime();
+
+        const end = new Date(auction.end_time).getTime();
+
+        const label = document.getElementById("lotTimeLabel");
+
+        const countdown = document.getElementById("lotCountdown");
+
+        function tick() {
+
+            const now = Date.now();
+
+            if (isFinite(start) && now < start) {
+
+                label.textContent = "Opens in";
+
+                countdown.textContent = formatTimeLeft(start - now);
+
+                welcomeBidLine.textContent =
+                    "Bidding opens in " + formatTimeLeft(start - now);
+
+            }
+
+            else if (isFinite(end) && now < end) {
+
+                label.textContent = "Ends in";
+
+                countdown.textContent = formatTimeLeft(end - now);
+
+                welcomeBidLine.textContent =
+                    "Bidding at " + fromPrice + ", closes in " + formatTimeLeft(end - now);
+
+            }
+
+            else {
+
+                label.textContent = "Status";
+
+                countdown.textContent = "Closed";
+
+                welcomeBidLine.textContent = "This auction has closed";
+
+                clearInterval(timer);
+
+            }
+        }
+
+        const timer = setInterval(tick, 1000);
+
+        tick();
+
+
+        hero.dataset.state = "ready";
+
+        document.getElementById("welcomeHero").dataset.state = "ready";
+
+    }
+
+    catch (error) {
+
+        console.error("Weekly lot load error:", error);
+
+        showNoLot();
+
+    }
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadLoggedInUser();
+
+        loadWeeklyLot();
+
+        handleForgotLink();
+
+    }
+);
+
+</script>
+
+<!-- =====================================================
+     SHARED SCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
